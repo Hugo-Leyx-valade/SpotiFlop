@@ -1,11 +1,11 @@
-                                                                    ███████╗██████╗  ██████╗ ████████╗██╗███████╗██╗      ██████╗ ██████╗ 
-                                                                    ██╔════╝██╔══██╗██╔═══██╗╚══██╔══╝██║██╔════╝██║     ██╔═══██╗██╔══██╗
-                                                                    ███████╗██████╔╝██║   ██║   ██║   ██║█████╗  ██║     ██║   ██║██████╔╝
-                                                                    ╚════██║██╔═══╝ ██║   ██║   ██║   ██║██╔══╝  ██║     ██║   ██║██╔═══╝ 
-                                                                    ███████║██║     ╚██████╔╝   ██║   ██║██║     ███████╗╚██████╔╝██║     
-                                                                    ╚══════╝╚═╝      ╚═════╝    ╚═╝   ╚═╝╚═╝     ╚══════╝ ╚═════╝ ╚═╝     
-                                                                                          
-			                                                                            By Leyx-valade Hugo and Chitam Harone
+					    ███████╗██████╗  ██████╗ ████████╗██╗███████╗██╗      ██████╗ ██████╗ 
+					    ██╔════╝██╔══██╗██╔═══██╗╚══██╔══╝██║██╔════╝██║     ██╔═══██╗██╔══██╗
+					    ███████╗██████╔╝██║   ██║   ██║   ██║█████╗  ██║     ██║   ██║██████╔╝
+					    ╚════██║██╔═══╝ ██║   ██║   ██║   ██║██╔══╝  ██║     ██║   ██║██╔═══╝ 
+					    ███████║██║     ╚██████╔╝   ██║   ██║██║     ███████╗╚██████╔╝██║     
+					    ╚══════╝╚═╝      ╚═════╝    ╚═╝   ╚═╝╚═╝     ╚══════╝ ╚═════╝ ╚═╝     
+								  
+							    By Leyx-valade Hugo and Chitam Harone
                                                                                
 
 Music is a subject that can be created by many artists with their own style. Furthermore, since music is made and listened to worldwide, it was necessary to categorize them into different categories and genres to make it easier for listeners to search for them. For example, if I like US rap, I can search for a specific category to find music that matches my taste.
