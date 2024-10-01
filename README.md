@@ -17,7 +17,7 @@ Tables :
 
 -Playlist : possesses a primary key (id_playlist), a name (title), the date of a playlist's post (date of post), how many users saved it (number of save), a brief explanation of the playlist about the types it contains (description) and finaly the attribute "state" signifying if the playlist is public or private.
 
--Users : has a primary key called "id_users", an username, a first and a last name, an email (jnzjkvnzjk@gmail.com), a password (Kjd?!LMo+), a role (if he is a user or a creator), an age (18y old) and finaly a foreign key of the playlist table (to make some relations between them).
+-Users : has a primary key called "id_users", an username, a first and a last name, an email (example@something.com), a password (Kjd?!LMo+), a role (if he is a user or a creator), an age (18y old) and finaly a foreign key of the playlist table (to make some relations between them).
 
 -Genre : a really simple table that has an id (id_genre) and a name (name).
 
