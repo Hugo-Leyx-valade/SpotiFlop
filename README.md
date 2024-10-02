@@ -31,6 +31,3 @@ Their relations :
 -song/author: The song table has a 1,1 relation with the author table while author has a 1,N relation with it.
 
 -The table song with the tables playlist, author and genre : Song table has a 1,N relation with genre and playlist and they also has the same type of relation wich leads to the creation of the connectors tables "genre_has_song" and "playlist_has_song" that contains the primary keys of each tables as foreign keys.
-
-test for commiting
-
