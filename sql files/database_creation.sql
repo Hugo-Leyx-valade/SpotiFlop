@@ -23,15 +23,15 @@ CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`author` (
   `first name` VARCHAR(45) NOT NULL,
   `last name` VARCHAR(45) NOT NULL,
   `biography` varchar(1000),
-  `virified` boolean NOT NULL default Falseauthor,
+  `virified` boolean NOT NULL default False,
   PRIMARY KEY (`id_author`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `projet_harone_hugo`.`users_copy1`
+-- Table `projet_harone_hugo`.`users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`users_copy1` (
+CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`users` (
   `id_users` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   `first name` VARCHAR(45) NOT NULL,
@@ -78,11 +78,11 @@ CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`playlist` (
   `description` VARCHAR(500) NULL,
   `state` VARCHAR(45) NULL DEFAULT 'private',
   `users_id` INT NOT NULL,
-  PRIMARY KEY (`id_playlist`, `users_copy1_id_users`),
-  INDEX `fk_playlist_users_copy11_idx` (`users_copy1_id_users` ASC) VISIBLE,
-  CONSTRAINT `fk_playlist_users_copy11`
-    FOREIGN KEY (`users_copy1_id_users`)
-    REFERENCES `projet_harone_hugo`.`users_copy1` (`id_users`)
+  PRIMARY KEY (`id_playlist`, `users_id_users`),
+  INDEX `fk_playlist_users1_idx` (`users_id_users` ASC) VISIBLE,
+  CONSTRAINT `fk_playlist_users1`
+    FOREIGN KEY (`users_id_users`)
+    REFERENCES `projet_harone_hugo`.`users` (`id_users`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -186,7 +186,7 @@ INSERT INTO users (`username`, `first name`, `last name`, `email`, `password`, `
 
 
 INSERT INTO song (`title`,`duration`, `number of stream`, `date of post`, `lyrics`, `author_id_author`) VALUES 
-("Let's Groove", 5.39, 597458154, "2013-09-01", NULL, 1),
+("Let's Groove", 5.36, 597458154, "2013-09-01", NULL, 1),
 ("Smooth Criminal", 9.25, 988804859, "2010-11-19", NULL, 2),
 ("Enemy", 2.53, 1588206980, "2021-10-28" , NULL, 3),
 ("Heartless", 3.18, 1018698991, "2020-12-03" , NULL, 4),
