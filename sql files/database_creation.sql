@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`author` (
   `first name` VARCHAR(45) NOT NULL,
   `last name` VARCHAR(45) NOT NULL,
   `biography` varchar(1000),
-  `virified` boolean NOT NULL default Falseauthor,
+  `virified` boolean NOT NULL default False,
   PRIMARY KEY (`id_author`))
 ENGINE = InnoDB;
 
