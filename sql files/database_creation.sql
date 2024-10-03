@@ -243,15 +243,27 @@ INSERT INTO playlist (`title`, `date of post`, `number of save`, `description`, 
 ('Ambiance travail', '2022-06-20', 510, 'Les sons qui m\'aident à me concentrer et à travailler efficacement.', 'private', 5);
 
 
-INSERT INTO genre VALUES 
-(1, "Funk"),
-(2, "Pop"),
-(3, "Metal"),
-(4, "Electro"),
-(5, "RnB"),
-(6, "K-pop"),
-(7, "Zouk"),
-(8, "Reggae");
+INSERT INTO genre (`name`) VALUES
+('Rock'),
+('Jazz'),
+('Hip Hop'),
+('Classical'),
+('Pop'),
+('Electronic'),
+('Reggae'),
+('Blues'),
+('R&B'),
+('Country'),
+('Folk'),
+('Metal'),
+('Indie'),
+('Techno'),
+('Soul'),
+('Funk'),
+('Psytrance'),
+('Afrobeat'),
+('Salsa'),
+('Dubstep');
 
 INSERT INTO playlist_has_song VALUES 
 (1, 1),
