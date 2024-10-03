@@ -34,6 +34,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`user` (
   `id_user` INT NOT NULL AUTO_INCREMENT,
+-- Table `projet_harone_hugo`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`users` (
+  `id_users` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   `first name` VARCHAR(45) NOT NULL,
   `last name` VARCHAR(45) NOT NULL,
@@ -84,6 +88,12 @@ CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`playlist` (
   CONSTRAINT `fk_playlist_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `projet_harone_hugo`.`user` (`id_user`)
+  `users_id` INT NOT NULL,
+  PRIMARY KEY (`id_playlist`, `users_id_users`),
+  INDEX `fk_playlist_users1_idx` (`users_id_users` ASC) VISIBLE,
+  CONSTRAINT `fk_playlist_users1`
+    FOREIGN KEY (`users_id_users`)
+    REFERENCES `projet_harone_hugo`.`users` (`id_users`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
