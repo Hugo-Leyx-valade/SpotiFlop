@@ -1,3 +1,4 @@
+drop schema projet_harone_hugo;
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -29,19 +30,19 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `projet_harone_hugo`.`users`
+-- Table `projet_harone_hugo`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`users` (
-  `id_users` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`user` (
+  `id_user` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
   `first name` VARCHAR(45) NOT NULL,
   `last name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
   `role` VARCHAR(45) NOT NULL DEFAULT 'user',
-  `age` DATE NOT NULL,
-  PRIMARY KEY (`id_users`),
-  UNIQUE INDEX `idusers_UNIQUE` (`id_users` ASC) VISIBLE,
+  `date_of_birth` DATE NOT NULL,
+  PRIMARY KEY (`id_user`),
+  UNIQUE INDEX `iduser_UNIQUE` (`id_user` ASC) VISIBLE,
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
 ENGINE = InnoDB;
 
@@ -73,19 +74,19 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `projet_harone_hugo`.`playlist` (
   `id_playlist` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NOT NULL,
-  `date of post` DATE NOT NULL,
-  `number of save` INT NULL,
+  `date_of_post` DATE NOT NULL,
+  `number_of_save` INT NULL,
   `description` VARCHAR(500) NULL,
   `state` VARCHAR(45) NULL DEFAULT 'private',
-  `users_id` INT NOT NULL,
-  PRIMARY KEY (`id_playlist`, `users_id_users`),
-  INDEX `fk_playlist_users1_idx` (`users_id_users` ASC) VISIBLE,
-  CONSTRAINT `fk_playlist_users1`
-    FOREIGN KEY (`users_id_users`)
-    REFERENCES `projet_harone_hugo`.`users` (`id_users`)
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id_playlist`),
+  INDEX `fk_playlist_user1_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_playlist_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `projet_harone_hugo`.`user` (`id_user`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION
+) ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -161,7 +162,7 @@ INSERT INTO author (`alias`,`first name`,`last name`,`biography`,`virified`)  VA
 
 
 
-INSERT INTO users (`username`, `first name`, `last name`, `email`, `password`, `role`, `date of birth`) VALUES
+INSERT INTO user (`username`, `first name`, `last name`, `email`, `password`, `role`, `date_of_birth`) VALUES
 ('kallan93', 'Kallan', 'Giraud', 'kallan.giraud@gmail.com', 'aZ4@pQr7nDgR', 'user', '1992-11-15'),
 ('mila86', 'Mila', 'Rochefort', 'mila.rochefort@yahoo.fr', '8Fg&kH%JxE12', 'admin', '1995-06-21'),
 ('levan_12', 'Levan', 'Aubert', 'levan.aubert@orange.fr', 'Vh!3fWq$97T', 'user', '1989-03-03'),
@@ -196,7 +197,7 @@ INSERT INTO song (`title`,`duration`, `number of stream`, `date of post`, `lyric
 ("One More Time", 5.20, 638173590, "2001-03-12" , NULL, 8),
 ("VeridisQuo", 5.20, 638173590, "2001-03-12" , NULL, 8);
 
-INSERT INTO playlist (`title`, `date of post`, `number of save`, `description`, `state`, `users_id`) VALUES
+INSERT INTO playlist (`title`, `date of post`, `number of save`, `description`, `state`, `user_id`) VALUES
 ('Chill Vibes', '2021-06-15', 482, 'A playlist with relaxing tracks to wind down your day.', 'public', 1),
 ('Workout Hits', '2020-03-12', 1728, 'The perfect playlist to pump up your workout sessions.', 'public', 2),
 ('Soirée Electro', '2019-11-20', 1156, 'A mix of the best electro tracks for an unforgettable party.', 'public', 3),
@@ -272,4 +273,4 @@ INSERT INTO playlist_has_song VALUES
 
 INSERT INTO song_has_genre VALUES
 (1,1),
-(2,2);
+(2,2);INSERT INTO user (`username`, `first name`, `last name`, `email`, `password`, `role`, `date_of_birth`) VALUES ('kallan93', 'Kallan', 'Giraud', 'kallan.giraud@gmail.com', 'aZ4@pQr7nDgR', 'user', '1992-11-15'), ('mila86', 'Mila', 'Rochefort', 'mila.rochefort@yahoo.fr', '8Fg&kH%JxE12', 'admin', '1995-06-21'), ('levan_12', 'Levan', 'Aubert', 'levan.aubert@orange.fr', 'Vh!3fWq$97T', 'user', '1989-03-03'), ('camille92', 'Camille', 'Perret', 'camille.perret@gmail.com', 'jP7!9hR6cOpM2', 'user', '1996-09-12'), ('zoe74', 'Zoe', 'Fontaine', 'zoe.fontaine@sfr.fr', 'Nf3#bP9kYl8', 'admin', '1993-07-19'), ('jules23', 'Jules', 'Bernard', 'jules.bernard@hotmail.fr', 'xP2&aM4nT7qJ9', 'user', '2001-04-27'), ('mathis41', 'Mathis', 'Lemoine', 'mathis.lemoine@laposte.net', 'D4s$F7gA3vC6', 'user', '1997-02-11'), ('lea59', 'Lea', 'Renard', 'lea.renard@gmail.com', 'eB9&zW5rC3yK8', 'admin', '1998-08-30'), ('lucie84', 'Lucie', 'Descamps', 'lucie.descamps@yahoo.com', 'Qj6@pL8nF4dT2', 'user', '1994-11-05'), ('mael37', 'Mael', 'Dumont', 'mael.dumont@orange.fr', 'K7l!R2mB3vG5', 'user', '1990-05-23'), ('nina66', 'Nina', 'Gautier', 'nina.gautier@sfr.fr', 'Hj9*E3mW8xL6', 'admin', '1991-12-14'), ('axel49', 'Axel', 'Fleury', 'axel.fleury@gmail.com', 'uT2&gV7nL5pC4', 'user', '1999-03-18'), ('lola77', 'Lola', 'Collet', 'lola.collet@hotmail.fr', 'Rf3#D9bY2vG1', 'user', '1992-10-09'), ('ethan63', 'Ethan', 'Poulain', 'ethan.poulain@laposte.net', 'M6l@cR8zY3pG5', 'admin', '1996-12-28'), ('emma52', 'Emma', 'Blanc', 'emma.blanc@yahoo.fr', 'Xf8*V3jL2qR9', 'user', '1995-07-17'), ('leo88', 'Leo', 'Morel', 'leo.morel@orange.fr', 'T4k!P2jG5mC7', 'user', '2000-04-02'), ('alice38', 'Alice', 'Noir', 'alice.noir@sfr.fr', 'Bp7#T9kD3wV6', 'admin', '1997-05-13'), ('adam25', 'Adam', 'Girard', 'adam.girard@gmail.com', 'Hj5&L3qP9vT4', 'user', '1993-11-27'), ('ines53', 'Ines', 'Durand', 'ines.durand@hotmail.fr', 'F2m@K7pL8zT6', 'admin', '1994-06-02'), ('nathan44', 'Nathan', 'Martin', 'nathan.martin@laposte.net', 'J3q&F5kW9lT8', 'user', '1989-01-15')
