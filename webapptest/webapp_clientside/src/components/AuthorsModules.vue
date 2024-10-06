@@ -44,7 +44,7 @@
     <!-- FOR List /authors/list/all -->
     <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
       <tr>
-        <td>ID</td><td>alias</td><td>SHOW DATASHEET</td><td>EDIT CAR</td><td>DELETE CAR</td>
+        <td>ID</td><td>alias</td><td>SHOW DATASHEET</td><td>EDIT AUTHOR</td><td>DELETE AUTHOR</td>
       </tr>
       <tr v-for="a of authors" v-bind:key="a.authors_id">
         <td>{{ a.authors_id }}</td>
