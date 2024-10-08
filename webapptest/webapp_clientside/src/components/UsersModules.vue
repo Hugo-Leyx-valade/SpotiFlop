@@ -90,6 +90,8 @@
        try  {
         this.users = [ { user_id:1, user_username:"Triks", user_first_name:'Hugo', user_last_name:'Leyx-Valade', user_email:"triks@gmail.com", user_password:'xskz!?', user_role:'user', user_date_of_birth:'2004/06/13'},
         { user_id:1, user_username:"Aohren", user_first_name:'Harone', user_last_name:'Chitam', user_email:"aohren@gmail.com", user_password:'ajcnlkn!?', user_role:'user', user_date_of_birth:'2004/10/07'},
+        {user_id:2, user_username:"Ninja12", user_first_name:'Mamadou', user_last_name:'Kante', user_email:"mamadou@gmail.com", user_password:'zakNNhkn!?', user_role:'user', user_date_of_birth:'2006/10/09'},
+
           ];
         }
         catch (ex) {console.log(ex);}
