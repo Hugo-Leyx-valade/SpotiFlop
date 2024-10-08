@@ -85,11 +85,7 @@ export default {
       this.song = reponseSong.data;
        */
      try  {
-      this.song = [ { song_id:1, song_name:"Let's Groove", song_time:5.39, song_stream:597458154, song_release:"2013-09-01", song_lirycs:null},
-        { song_id:2, song_name:"Smooth Criminal", song_time:9.25, song_stream:988804859, song_release:"2010-11-19", song_lirycs:null},
-        { song_id:3, song_name:"Enemy", song_time:2.53, song_stream:1588206980, song_release:"2021-10-28", song_lirycs:null},
-        { song_id:4, song_name:"Heartless", song_time:3.18, song_stream:1018698991, song_release:"2013-09-01", song_lirycs:null}];
-
+     
       this.authors = [ { authors_id:1, authors_alias:"Earth, Wind & Fire", authors_first_name:null, authors_last_name:null, authors_biography:null, authors_verification:1},
         { authors_id:1, authors_alias:"Michael Jackson", authors_first_name:"Michael", authors_last_name:"Jackson", authors_biography:null, authors_verification:1},
         { authors_id:1, authors_alias:"Imagine Dragons", authors_first_name:null, authors_last_name:null, authors_biography:null, authors_verification:1},
