@@ -11,6 +11,16 @@
           Authors list
         </a>
       </li>
+
+      <li>
+        <a
+          href="/#/users/list/all"
+          target="_blank"
+        >
+          Users List
+        </a>
+      </li>
+
     </ul>
   </div>
 </template>
@@ -20,7 +30,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to SpotiFlop'
     }
   }
 }
