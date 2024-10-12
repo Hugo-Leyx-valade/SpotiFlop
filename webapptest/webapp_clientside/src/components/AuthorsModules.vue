@@ -8,7 +8,7 @@
     </p>
 
     <!-- FOR DATA SHEET /authors/show/42 -->
-    <table v-if="action === 'show'" class="table table-striped table-hover table-bordered ">
+    <table v-if="action === 'show'" class="table table-dark table-striped table-hover table-bordered ">
       <tr><td>ID</td><td>{{oneAuthors.author_id}}</td></tr>
       <tr><td>ALIAS</td><td>{{oneAuthors.author_alias}}</td></tr>
       <tr><td> FIRST NAME </td><td>{{oneAuthors.author_first_name}}</td></tr>
@@ -42,7 +42,7 @@
     </table>
 
     <!-- FOR List /authors/list/all -->
-    <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
+    <table v-if="action === 'list'" class="table table-hover">
       <tr>
         <td>ID</td><td>alias</td><td>SHOW DATASHEET</td><td>EDIT AUTHOR</td><td>DELETE AUTHOR</td>
       </tr>

@@ -3,6 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import $ from 'jquery';
+
+$(document).ready(function(){
+    $("h1").click(function(){
+        alert("Hello, jQuery!");
+    });
+});
 
 Vue.config.productionTip = false
 
