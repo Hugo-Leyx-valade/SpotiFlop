@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
+
     <h1>{{ msg }}</h1>
+    <img id="logo-green" src="../assets/spotyflop.png">
     <h2>Essential Links</h2>
     <ul>
       <li>
@@ -30,7 +32,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to SpotiFlop'
+      msg: 'Welcome to SpotiFlop',
     }
   }
 }
@@ -52,4 +54,13 @@ li {
 a {
   color: #42b983;
 }
+
+#logo-green{
+  position: fixed;
+  top: 0;
+  left: 0;
+  scale: 40%;
+  transition: all 0.3s;
+}
+
 </style>
