@@ -1,10 +1,16 @@
 <template>
   <div class="hello">
-  <a href="/#/authors/list/all"><img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)"></a>
+  
   <div class="content" id="txt">
+    <a href="/#/authors/list/all"><img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)"></a>
     <p id="txt1" >{{ msg }}</p>
     <p id="txt2" >{{ msg }}</p>
   </div>
+
+  <video autoplay muted loop id="myVideo">
+    <source src="../assets/1013.mp4" type="video/mp4">
+  </video>
+
   </div>
 </template>
 
@@ -59,19 +65,25 @@ export default {
 
 body {
   display: flex;
-  background: #000;
+  background-color: transparent;
   min-height: 100vh;
   align-items: center;
   justify-content: center;
 }
 
+.hello{
+  color: transparent;
+}
+
+
 .content {
+  z-index: 1;
   position: relative;
 }
 
 
 .content p {
-  color: #fff;
+  color: #1bc156;
   font-size: 8em;
   position: absolute;
   transform:translateX(149%);
@@ -118,4 +130,15 @@ body {
     );
   }
 }
+
+#myVideo {
+  z-index: -1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+
 </style>
