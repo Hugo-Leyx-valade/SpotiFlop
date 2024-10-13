@@ -1,10 +1,15 @@
 <template>
   <div class="hello">
-  <a href="/#/authors/list/all"><img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)"></a>
-  <div class="content" id="txt">
-    <p id="txt1" >{{ msg }}</p>
-    <p id="txt2" >{{ msg }}</p>
-  </div>
+    
+    <video autoplay muted loop id="myVideo">
+      <source src="../assets/1013.mp4" type="video/mp4">
+    </video>
+
+    <a href="/#/authors/list/all"><img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)"></a>
+    <div class="content" id="txt">
+      <p id="txt1" >{{ msg }}</p>
+      <p id="txt2" >{{ msg }}</p>
+    </div>
   </div>
 </template>
 
@@ -67,6 +72,7 @@ body {
 
 .content {
   position: relative;
+  z-index: -1;
 }
 
 
@@ -118,4 +124,15 @@ body {
     );
   }
 }
+
+
+#myVideo {
+  z-index: -1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
 </style>
