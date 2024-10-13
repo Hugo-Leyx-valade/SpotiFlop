@@ -17,7 +17,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   margin-top: 60px;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgb(0,0,0);
 }
 
 body{
