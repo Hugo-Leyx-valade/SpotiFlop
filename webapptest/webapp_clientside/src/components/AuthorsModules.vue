@@ -1,11 +1,9 @@
 <template>
   <div class="hello">
     <home></home>
-    <p>
-      ACTION = {{ action }} <br />
-      ID = {{ id }} <br/>
-      <a href="/#/authors/list/all">Back to the list of authors</a>
-      <a href="/#/authors/list/top50">The current TOP 50 authors</a>
+    <p id="nav_link">
+      <a href="/#/authors/list/all" class="link-offset-2 link-underline link-underline-opacity-0 ">Back to the list of authors</a>
+      <a href="/#/authors/list/top50" class="link-offset-2 link-underline link-underline-opacity-0">The current TOP 50 authors</a>
     </p>
 
     <!-- FOR DATA SHEET /authors/show/42 -->
@@ -19,15 +17,19 @@
       <tr><td><a :href="'/#/authors/edit/' + oneAuthors.author_id" class="btn btn-primary mb-2">[EDIT]</a></td></tr>
     </table>
 
-    <!-- FOR FORMS /authors/edit/42 -->
-    <table  v-if="action === 'edit'" class="table table-primary table-striped table-hover table-bordered border-primary ">
-      <tr><td>ALIAS</td><td><input type="text" name="authors_alias" v-model="oneAuthors.author_alias"/></td></tr>
-      <tr><td> FIRST NAME </td><td><input type="text" name="authors_first_name" v-model="oneAuthors.author_first_name" /></td></tr>
-      <tr><td>last_name</td><td><input type="text" name="authors_last_name" v-model="oneAuthors.author_last_name" /></td></tr>
-      <tr><td>biography</td><td><input type="text" name="authors_biography" v-model="oneAuthors.author_biography" /></td></tr>
-      <tr><td>verified</td>
-        <td>
-          <select name="authors_verified" v-model="oneAuthors.author_verified">
+    
+    <div v-if="action === 'edit'" class="grid gap-3 ">
+      <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
+        <span class="input-group-text">Alias</span>
+        <input type="text" name="authors_alias" class="form-control" value="Alias" v-model="oneAuthors.author_alias"/>
+      </div>
+      <div class=" input-group" style="padding-left: 30%; padding-right: 30%;">
+        <span class="input-group-text">First and last name</span>
+        <input type="text" aria-label="First name" class="form-control" v-model="oneAuthors.author_first_name" >
+        <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthors.author_last_name">
+      </div>
+      <div class="p-2 g-col-6"><input type="text" name="authors_biography" value="Biography" v-model="oneAuthors.author_biography" /></div>
+      <div class="p-2 g-col-6"><select name="authors_verified" v-model="oneAuthors.author_verified">
             <option>
               0
             </option>
@@ -35,13 +37,12 @@
               1
             </option>
           </select>
-        </td>
-      </tr>
-
-      <tr><td colspan="2">
-        <input type="button" value="SEND" @click="sendEditRequest()" />
-      </td></tr>
-    </table>
+        </div>
+      <div id="buttons_container" class="g-col-6 mt-5" >
+          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(a.authors_id)">DELETE</button>
+          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest()" />
+      </div>  
+    </div>
 
     <!-- FOR List /authors/list/all -->
     <div v-if="action === 'list'" class="container">
@@ -49,10 +50,11 @@
         <div class="col-md-4" v-for="a of authors" v-bind:key="a.authors_id">
           <div class="card mb-4">
             <div class="card-body">
-              <h5 class="card-title">ID: {{ a.authors_id }}</h5>
-              <p class="card-text">Alias: {{ a.authors_alias }}</p>
-              <a :href="'/#/authors/show/' + a.authors_id" class="btn btn-success mb-2">[SHOW]</a>
-              <button class="btn btn-danger" @click="sendDeleteRequest(a.authors_id)">DELETE</button>
+              <h5 class="card-title">Alias: {{ a.authors_alias }}</h5>
+              <p class="card-text">ID: {{ a.authors_id }}</p>
+              <div id="buttons">
+                <a :href="'/#/authors/show/' + a.authors_id" class="btn btn-success mb-2">SHOW</a>
+              </div>
             </div>
           </div>
         </div>
@@ -158,6 +160,20 @@ td{
 
 #app td{
   text-align: left;
+}
+
+#buttons{
+  display: flex;
+  justify-content:center;
+}
+
+#nav_link{
+  display: flex;
+  justify-content:center;
+}
+
+#nav_link a{
+  margin: 10px;
 }
 
 </style>

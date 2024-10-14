@@ -30,7 +30,7 @@ export default {
     width: 50px;
     height: 65px;
     top: 10px;
-    left: 1x0px;
+    left: 10px;
 }
 
 </style>
