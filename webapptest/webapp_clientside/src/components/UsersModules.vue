@@ -88,7 +88,6 @@
         this.song = reponseSong.data;
          */
        try  {
-
         this.users = [
           { user_id: 1, user_username: 'kallan93', user_first_name: 'Kallan', user_last_name: 'Giraud', user_email: 'kallan.giraud@gmail.com', user_password: 'aZ4@pQr7nDgR', user_role: 'user', user_date_of_birth: '1992-11-15' },
           { user_id: 2, user_username: 'mila86', user_first_name: 'Mila', user_last_name: 'Rochefort', user_email: 'mila.rochefort@yahoo.fr', user_password: '8Fg&kH%JxE12', user_role: 'admin', user_date_of_birth: '1995-06-21' },
@@ -112,14 +111,6 @@
           { user_id: 20, user_username: 'nathan44', user_first_name: 'Nathan', user_last_name: 'Martin', user_email: 'nathan.martin@laposte.net', user_password: 'J3q&F5kW9lT8', user_role: 'user', user_date_of_birth: '1989-01-15' },
         ];
       }
-
-        this.users = [ { user_id:1, user_username:"Triks", user_first_name:'Hugo', user_last_name:'Leyx-Valade', user_email:"triks@gmail.com", user_password:'xskz!?', user_role:'user', user_date_of_birth:'2004/06/13'},
-        { user_id:1, user_username:"Aohren", user_first_name:'Harone', user_last_name:'Chitam', user_email:"aohren@gmail.com", user_password:'ajcnlkn!?', user_role:'user', user_date_of_birth:'2004/10/07'},
-        {user_id:2, user_username:"Ninja12", user_first_name:'Mamadou', user_last_name:'Kante', user_email:"mamadou@gmail.com", user_password:'zakNNhkn!?', user_role:'user', user_date_of_birth:'2006/10/09'},
-
-          ];
-        }
-
         catch (ex) {console.log(ex);}
       },
       async refreshOneUser(){
