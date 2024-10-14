@@ -1,11 +1,11 @@
 <template>
   <div class="hello">
-    
+    <home></home>
     <video autoplay muted loop id="myVideo">
       <source src="../assets/1013.mp4" type="video/mp4">
     </video>
 
-    <a href="/#/authors/list/all"><img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)"></a>
+    <a href="/#/home"><img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)"></a>
     <div class="content" id="txt">
       <p id="txt1" >{{ msg }}</p>
       <p id="txt2" >{{ msg }}</p>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'HelloWorld',
   data() {
