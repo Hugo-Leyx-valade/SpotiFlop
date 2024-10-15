@@ -2,7 +2,7 @@
   <div class="hello">
     <home></home>
     <p id="nav_link">
-      <h1 style="font-size: 50px;">Authors</h1>
+      <h1 style="font-size: 50px; color: white;">Authors</h1>
       <a href="/#/authors/list/all" class="link-offset-2 link-underline link-underline-opacity-0 ">Back to the list of authors</a>
       <a href="/#/authors/list/top50" class="link-offset-2 link-underline link-underline-opacity-0">The current TOP 50 authors</a>
     </p>
@@ -49,14 +49,13 @@
     <div v-if="action === 'list'" class="container">
       <div class="row">
         <div class="col-md-4" v-for="a of authors" v-bind:key="a.authors_id">
-          <div class="card mb-4">
-            <div class="card-body">
-              <h5 class="card-title">{{ a.authors_alias }}</h5>
-              <div id="buttons">
-                <a :href="'/#/authors/show/' + a.authors_id" class="btn btn-success mb-2">SHOW</a>
+          <a :href="'/#/authors/show/' + a.authors_id" class="link-offset-2 link-underline link-underline-opacity-0">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">{{ a.authors_alias }}</h5>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -135,6 +134,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+body{
+  background: rgb(59,228,119);
+  background: linear-gradient(180deg, rgba(59,228,119,1) 0%, rgba(59,228,119,1) 0%, rgba(0,0,0,1) 74%);
+}
+
 h1, h2 {
   font-weight: normal;
 }
