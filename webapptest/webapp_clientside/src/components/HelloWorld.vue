@@ -6,7 +6,7 @@
     </video>
 
     <a href="/#/home"><img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)"></a>
-    <div class="content" id="txt">
+    <div class="content d-flex justify-content-center" id="txt">
       <p id="txt1" >{{ msg }}</p>
       <p id="txt2" >{{ msg }}</p>
     </div>
@@ -81,7 +81,7 @@ body {
   color: #fff;
   font-size: 8em;
   position: absolute;
-  transform:translateX(112%);
+  justify-content: center;
 }
 
 .content p:nth-child(1) {
