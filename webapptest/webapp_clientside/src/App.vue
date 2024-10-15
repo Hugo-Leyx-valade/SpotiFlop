@@ -17,11 +17,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   margin-top: 60px;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: rgba(245, 244, 244, 0);
 }
 
 body{
-  background-color: rgb(0,0,0);
+  background-color: rgb(78, 77, 77);
 }
 
 @font-face {
@@ -33,5 +33,7 @@ body{
   font-family: 'LilGrotesk-bold'; /* Name your font family */
   src: url('./assets/Fonts/LilGrotesk-Bold.otf'); /* Locate the .ttf file within your directory*/
 }
+
+
 
 </style>
