@@ -2,6 +2,7 @@
   <div class="hello">
     <home></home>
     <p id="nav_link">
+      <h1 style="font-size: 50px;">Authors</h1>
       <a href="/#/authors/list/all" class="link-offset-2 link-underline link-underline-opacity-0 ">Back to the list of authors</a>
       <a href="/#/authors/list/top50" class="link-offset-2 link-underline link-underline-opacity-0">The current TOP 50 authors</a>
     </p>
@@ -20,8 +21,8 @@
     
     <div v-if="action === 'edit'" class="grid gap-3 ">
       <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
-        <span class="input-group-text">Alias</span>
-        <input type="text" name="authors_alias" class="form-control" value="Alias" v-model="oneAuthors.author_alias"/>
+        <span class="input-group-text" style="margin-bottom: 5%;" >Alias</span>
+        <input type="text" name="authors_alias" class="form-control" value="Alias" v-model="oneAuthors.author_alias" style="margin-bottom: 5% ;"/>
       </div>
       <div class=" input-group" style="padding-left: 30%; padding-right: 30%;">
         <span class="input-group-text">First and last name</span>
@@ -50,8 +51,7 @@
         <div class="col-md-4" v-for="a of authors" v-bind:key="a.authors_id">
           <div class="card mb-4">
             <div class="card-body">
-              <h5 class="card-title">Alias: {{ a.authors_alias }}</h5>
-              <p class="card-text">ID: {{ a.authors_id }}</p>
+              <h5 class="card-title">{{ a.authors_alias }}</h5>
               <div id="buttons">
                 <a :href="'/#/authors/show/' + a.authors_id" class="btn btn-success mb-2">SHOW</a>
               </div>

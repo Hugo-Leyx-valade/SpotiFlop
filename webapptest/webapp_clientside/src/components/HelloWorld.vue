@@ -81,7 +81,7 @@ body {
   color: #fff;
   font-size: 8em;
   position: absolute;
-  transform:translateX(149%);
+  transform:translateX(112%);
 }
 
 .content p:nth-child(1) {
