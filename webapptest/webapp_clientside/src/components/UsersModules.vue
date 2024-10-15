@@ -1,5 +1,6 @@
 <template>
     <div class="hello">
+      <home></home>
       <p>
         ACTION = {{ action }} <br />
         ID = {{ id }} <br/>
@@ -61,6 +62,8 @@
   </template>
   
   <script>
+  import home from './homeModules.vue';
+
   export default {
     name: 'Users',
     props:['action','id'],
@@ -111,7 +114,7 @@
           { user_id: 20, user_username: 'nathan44', user_first_name: 'Nathan', user_last_name: 'Martin', user_email: 'nathan.martin@laposte.net', user_password: 'J3q&F5kW9lT8', user_role: 'user', user_date_of_birth: '1989-01-15' },
         ];
       }
-        catch (ex) {console.log(ex);}
+      catch (ex) {console.log(ex);}
       },
       async refreshOneUser(){
         if(this.$props.id ==="all" || this.$props.id=="0") return;
@@ -129,7 +132,11 @@
   
     created(){
       this.getALLData();
-    }
+    },
+    
+    components: {
+      home,
+    },
   
   }
   </script>

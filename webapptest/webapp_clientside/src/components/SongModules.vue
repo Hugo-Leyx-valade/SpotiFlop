@@ -1,5 +1,6 @@
 <template>
     <div class="hello">
+      <home></home>
       <p>
         ACTION = {{ action }} <br />
         ID = {{ id }} <br/>
@@ -51,8 +52,13 @@
   </template>
   
   <script>
+  import Home from './homeModules.vue';
+
   export default {
     name: 'Users',
+    components: {
+      Home
+    },
     props:['action','id'],
     data () {
       return {
