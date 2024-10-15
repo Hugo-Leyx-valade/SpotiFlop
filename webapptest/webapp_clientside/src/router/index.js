@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import AuthorsModules from '@/components/AuthorsModules'
 import UsersModules from '@/components/UsersModules'
+import SongModules from '@/components/SongModules'
+import home from '@/components/homeModules'
 
 Vue.use(Router)
 
@@ -32,6 +34,20 @@ export default new Router({
       name: 'users',
       component: UsersModules,
       props:  true,
-    }
+    },
+    {
+      path: '/songs',
+      redirect: '/songs/list/all'
+    },
+    {
+      path: '/songs/:action/:id',
+      name: 'songs',
+      component: SongModules,
+      props:  true,
+    },
+    {
+      path :'/home',
+      component: home
+    },
   ]
 })
