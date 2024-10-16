@@ -156,7 +156,7 @@ a {
 }
 
 #app table {
-  width: 95%; margin: 20px;
+  width: 60%; margin: 20px;
 }
 
 td{
