@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import home from './homeModules.vue';
+import home from './homeModulesAdmin.vue';
 
 export default {
   name: 'Authors',

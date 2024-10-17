@@ -4,7 +4,8 @@ import HelloWorld from '@/components/HelloWorld'
 import AuthorsModules from '@/components/AuthorsModules'
 import UsersModules from '@/components/UsersModules'
 import SongModules from '@/components/SongModules'
-import home from '@/components/homeModules'
+import home from '@/components/homeModulesAdmin'
+import HomeModulesAdmin from '../components/homeModulesAdmin.vue'
 
 Vue.use(Router)
 
@@ -47,7 +48,7 @@ export default new Router({
     },
     {
       path :'/home',
-      component: home
+      component: HomeModulesAdmin
     },
   ]
 })

@@ -52,7 +52,7 @@
   </template>
   
   <script>
-  import Home from './homeModules.vue';
+  import Home from './homeModulesAdmin.vue';
 
   export default {
     name: 'Users',
