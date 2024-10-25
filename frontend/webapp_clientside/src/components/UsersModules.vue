@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">
+    <div class="hello" onload="changeBodyBackgroundColor()">
       <home></home>
       <p>
         ACTION = {{ action }} <br />
@@ -82,6 +82,11 @@
         }
       }
     },
+
+    mounted() {
+    this.changeBodyBackgroundColor();
+    },
+
     methods:{
       async getALLData(){
         /*
@@ -122,7 +127,15 @@
         try{
           this.oneUser = this.users.find(user=>users.user.id==this.$props.id);
         }catch (ex){console.log(ex);}
-      }
+      },
+
+      changeBodyBackgroundColor() {
+        document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.height = '100%';
+        document.body.style.backgroundColor = 'rgb(0,0,0)';
+    }
+
     },
   
     watch:{

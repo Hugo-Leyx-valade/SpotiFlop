@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="hello" onload="changeBodyBackgroundColor()">
     <BackgroundModule></BackgroundModule>
     <BacktohomeModule></BacktohomeModule>
     <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 39.5%;" >SpotiFlop</span>
@@ -61,16 +61,18 @@
 </template>
 
 <script>
-import BackgroundModule from './BackgroundModule.vue';
 import BacktohomeModule from './BacktohomeModule.vue';
 
 export default {
   name: 'Authors',
   props:['action','id'],
   components: {
-    BackgroundModule,
     BacktohomeModule
   },
+
+  mounted() {
+    this.changeBodyBackgroundColor();
+    },
 
   authors: [
         // Example data, replace with your actual data
@@ -116,7 +118,15 @@ export default {
       try{
         this.oneAuthors = this.authors.find(author=>authors.author.id==this.$props.id);
       }catch (ex){console.log(ex);}
+    },
+
+    changeBodyBackgroundColor() {
+        document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 65%) no-repeat' ;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.height = '100%';
+        document.body.style.backgroundColor = 'rgb(0,0,0)';
     }
+
   },
 
   watch:{

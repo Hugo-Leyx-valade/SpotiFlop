@@ -1,7 +1,7 @@
 <template>
-    <div class="authentication">
-        <BackgroundModule></BackgroundModule>
-        <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%;" >Authentication</span>
+    <div class="authentication" onload="changeBodyBackgroundColor()">
+        <BacktohomeModule></BacktohomeModule>
+        <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%; color: white;" >Authentication</span>
         <form @submit.prevent="submitForm" style="margin-top: 20%;">
             <input v-model="username" placeholder="Username" />
             <input v-model="password" type="password" placeholder="Password" />
@@ -13,19 +13,24 @@
 
 <script>
 import json from "../components/users.json";
-import BackgroundModule from './BackgroundModule.vue';
+import BacktohomeModule from './BacktohomeModule.vue';
 
 export default {
-name: 'Authentication',
-components: {
-    BackgroundModule
-},
+    name: 'Authentication',
+    components: {
+    BacktohomeModule
+    },
+    
+    mounted() {
+    this.changeBodyBackgroundColor();
+    },
 
 data() {
     return {
     username: '',
     password: '',
     myJson: json,
+    greetingMessage: '',
     };
 },
 
@@ -45,7 +50,15 @@ methods: {
         } else {
             console.log("Login failed");
         }
+    },
+
+    changeBodyBackgroundColor() {
+        document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.height = '100%';
+        document.body.style.backgroundColor = 'rgb(0,0,0)';
     }
+
 }
 };
 </script>
@@ -55,7 +68,6 @@ methods: {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-
 }
 
 .authentication h1 {

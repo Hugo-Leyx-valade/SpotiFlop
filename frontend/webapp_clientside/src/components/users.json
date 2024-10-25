@@ -198,6 +198,17 @@
         "user_password": "J3q&F5kW9lT8",
         "user_role": "user",
         "user_date_of_birth": "1989-01-15"
+      },
+      {
+        "user_id": 21,
+        "user_username": "admin",
+        "user_first_name": "admin",
+        "user_last_name": "admin",
+        "user_email": "admin.example@model.com",
+        "user_password": "admin",
+        "user_role": "admin",
+        "user_date_of_birth": "1989-01-15"
       }
+
     ]
   

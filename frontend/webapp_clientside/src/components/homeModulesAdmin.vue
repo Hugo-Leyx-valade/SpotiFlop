@@ -1,6 +1,6 @@
 
 <template>
-    <div class="home">
+    <div class="home" onload="changeBodyBackgroundColor()">
         <BackgroundModule></BackgroundModule>
         <BacktohomeModule></BacktohomeModule>
         <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 39.5%;" >SpotiFlop</span>
@@ -39,15 +39,26 @@
 
 <script>
 
-import BackgroundModule from './BackgroundModule.vue';
 import BacktohomeModule from './BacktohomeModule.vue';
 
 
 export default {
     name: 'Home',
     components: {
-        BackgroundModule,
         BacktohomeModule
+    },
+
+    mounted() {
+    this.changeBodyBackgroundColor();
+    },
+
+    methods:{
+        changeBodyBackgroundColor() {
+            document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.height = '100%';
+            document.body.style.backgroundColor = 'rgb(0,0,0)';
+        }
     }
 };
 </script>

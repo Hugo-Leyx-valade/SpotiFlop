@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="hello" >
     <home></home>
     <video autoplay muted loop id="myVideo">
       <source src="../assets/1013.mp4" type="video/mp4">
