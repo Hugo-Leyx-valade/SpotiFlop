@@ -4,9 +4,9 @@ import HelloWorld from '@/components/HelloWorld'
 import AuthorsModules from '@/components/AuthorsModules'
 import UsersModules from '@/components/UsersModules'
 import SongModules from '@/components/SongModules'
-import HomeModulesAdmin from '../components/homeModulesAdmin.vue'
+import homeModules from '../components/homeModulesAdmin.vue'
 import Authentication from '../components/Authentication.vue'
-
+import users from '../components/users.json'
 Vue.use(Router)
 
 export default new Router({
@@ -47,9 +47,11 @@ export default new Router({
       props:  true,
     },
     {
-      path :'/homeAdmin',
-      component: HomeModulesAdmin,
-    },
+      path: '/home/:role',
+      name: 'home',
+      component: homeModules,
+      props:  true,
+    },     
     {
       path :'/Login',
       component: Authentication,
