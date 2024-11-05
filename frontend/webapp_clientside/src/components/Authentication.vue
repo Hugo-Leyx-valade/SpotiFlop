@@ -45,7 +45,7 @@ methods: {
                 this.$router.push('/homeAdmin');
             } else {
                 console.log("Login successful");
-                alert("connection succesfull but the page is under construction !")
+                this.$router.push('/homeUser');
             }
         } else {
             console.log("Login failed");

@@ -1,6 +1,6 @@
 
 <template>
-    <div class="home" onload="changeBodyBackgroundColor()">
+    <div class="homeUser" onload="changeBodyBackgroundColor()">
         <BackgroundModule></BackgroundModule>
         <BacktohomeModule></BacktohomeModule>
         <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 39.5%;" >SpotiFlop</span>
