@@ -4,8 +4,11 @@ import HelloWorld from '@/components/HelloWorld'
 import AuthorsModules from '@/components/AuthorsModules'
 import UsersModules from '@/components/UsersModules'
 import SongModules from '@/components/SongModules'
-import home from '@/components/homeModules'
-
+import homeModules from '../components/homeModulesAdmin.vue'
+import Authentication from '../components/Authentication.vue'
+import users from '../components/users.json'
+import HomeModulesAdmin from '../components/homeModulesAdmin.vue'
+import HomeModulesUser from '../components/homeModulesUser.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -46,8 +49,18 @@ export default new Router({
       props:  true,
     },
     {
-      path :'/home',
-      component: home
+      path: '/homeAdmin',
+      name: 'homeAdmin',
+      component: HomeModulesAdmin,
+    },     
+    {
+      path: '/homeUser',
+      name: 'homeUser',
+      component: HomeModulesUser,
+    },
+    {
+      path :'/Login',
+      component: Authentication,
     },
   ]
 })
