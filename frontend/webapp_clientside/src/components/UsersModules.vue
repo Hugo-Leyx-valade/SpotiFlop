@@ -21,7 +21,7 @@
   
       <!-- FOR FORMS /users/edit/42 -->
       <table  v-if="action === 'edit'" class="table table-striped table-hover table-bordered ">
-        <tr><td>Username</td><td><input type="text" name="user_username" v-model="oneUser.user_username"/></td></tr>
+        <tr><td>Username</td><td><input type="text" name="user_username" v-model="user_username"/></td></tr>
         <tr><td>First Name</td><td><input type="text" name="user_first_name" v-model="oneUser.user_first_name" /></td></tr>
         <tr><td>Last Name</td><td><input type="text" name="user_last_name" v-model="oneUser.user_last_name" /></td></tr>
         <tr><td>Email</td><td><input type="text" name="user_email" v-model="oneUser.user_email" /></td></tr>
@@ -96,10 +96,10 @@
         let reponseSong = await this.$http.get('wxxx');
         this.song = reponseSong.data;
          */
-       try  {
-        this.users = user;
-      }
-      catch (ex) {console.log(ex);}
+        try  {
+          this.users = user;
+        }
+        catch (ex) {console.log(ex);}
       },
       async refreshOneUser(){
         if(this.$props.id ==="all" || this.$props.id=="0") return;
@@ -113,10 +113,14 @@
         document.body.style.backgroundSize = 'cover';
         document.body.style.height = '100%';
         document.body.style.backgroundColor = 'rgb(0,0,0)';
-    }
+      },
 
+        async sendEditRequest(id){
+          console.log(user[user_id])
+        },
     },
-  
+    
+    
     watch:{
       id: function(newVal, oldVAl){
         this.refreshOneUser();

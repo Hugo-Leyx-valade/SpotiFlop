@@ -62,6 +62,7 @@
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
+import authors from "./authors.json";
 
 export default {
   name: 'Authors',
@@ -98,21 +99,19 @@ export default {
   },
   methods:{
     async getALLData(){
-      /*
-      let responesAuthors = await this.$http.get("backend/url");
-      this.cars = responesAuthors.data;
-      let reponseSong = await this.$http.get('wxxx');
-      this.song = reponseSong.data;
-       */
-     try  {
-     
-      this.authors = [ { authors_id:1, authors_alias:"Earth, Wind & Fire", authors_first_name:null, authors_last_name:null, authors_biography:null, authors_verification:1},
-        { authors_id:1, authors_alias:"Michael Jackson", authors_first_name:"Michael", authors_last_name:"Jackson", authors_biography:null, authors_verification:1},
-        { authors_id:1, authors_alias:"Imagine Dragons", authors_first_name:null, authors_last_name:null, authors_biography:null, authors_verification:1},
-        { authors_id:1, authors_alias:"The Weeknd", authors_first_name:null, authors_last_name:null, authors_biography:null, authors_verification:1}];
-      }
-      catch (ex) {console.log(ex);}
-    },
+        /*
+        let responesAuthors = await this.$http.get("backend/url");
+        this.cars = responesAuthors.data;
+        let reponseSong = await this.$http.get('wxxx');
+        this.song = reponseSong.data;
+         */
+        try  {
+          this.authors = authors;
+        }
+        catch (ex) {console.log(ex);}
+      },
+
+
     async refreshOneAuthor(){
       if(this.$props.id ==="all" || this.$props.id=="0") return;
       try{

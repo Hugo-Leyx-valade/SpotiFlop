@@ -208,6 +208,16 @@
         "user_password": "admin",
         "user_role": "admin",
         "user_date_of_birth": "1989-01-15"
+      },
+      {
+        "user_id": 22,
+        "user_username": "user",
+        "user_first_name": "user",
+        "user_last_name": "user",
+        "user_email": "user.example@model.com",
+        "user_password": "user",
+        "user_role": "user",
+        "user_date_of_birth": "1989-01-15"
       }
 
     ]
