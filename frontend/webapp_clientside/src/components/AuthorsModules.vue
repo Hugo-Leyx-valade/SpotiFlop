@@ -1,23 +1,21 @@
 <template>
-  <div class="hello">
-    <home></home>
-    <p id="nav_link">
-      <h1 style="font-size: 50px;">Authors</h1>
-      <a href="/#/authors/list/all" class="link-offset-2 link-underline link-underline-opacity-0 ">Back to the list of authors</a>
-      <a href="/#/authors/list/top50" class="link-offset-2 link-underline link-underline-opacity-0">The current TOP 50 authors</a>
-    </p>
+  <div class="hello" onload="changeBodyBackgroundColor()">
+    <BackgroundModule></BackgroundModule>
+    <BacktohomeModule></BacktohomeModule>
+    <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 39.5%;" >SpotiFlop</span>
 
+    <div id="tables" style="margin-top: 13%;">
     <!-- FOR DATA SHEET /authors/show/42 -->
-    <table v-if="action === 'show'" class="table table-primary table-striped table-hover table-bordered border-success ">
-      <tr><td>ID</td><td>{{oneAuthors.author_id}}</td></tr>
-      <tr><td>ALIAS</td><td>{{oneAuthors.author_alias}}</td></tr>
-      <tr><td> FIRST NAME </td><td>{{oneAuthors.author_first_name}}</td></tr>
-      <tr><td>last_name</td><td>{{oneAuthors.author_last_name}}</td></tr>
-      <tr><td>biography</td><td>{{oneAuthors.author_biography}}</td></tr>
-      <tr><td>verified</td><td>{{oneAuthors.author_verified}}</td></tr>
-      <tr><td><a :href="'/#/authors/edit/' + oneAuthors.author_id" class="btn btn-primary mb-2">[EDIT]</a></td></tr>
-    </table>
-
+      <table v-if="action === 'show'" class="table table-primary table-striped table-hover table-bordered border-success ">
+        <tr><td>ID</td><td>{{oneAuthors.author_id}}</td></tr>
+        <tr><td>ALIAS</td><td>{{oneAuthors.author_alias}}</td></tr>
+        <tr><td> FIRST NAME </td><td>{{oneAuthors.author_first_name}}</td></tr>
+        <tr><td>last_name</td><td>{{oneAuthors.author_last_name}}</td></tr>
+        <tr><td>biography</td><td>{{oneAuthors.author_biography}}</td></tr>
+        <tr><td>verified</td><td>{{oneAuthors.author_verified}}</td></tr>
+        <tr><td><a :href="'/#/authors/edit/' + oneAuthors.author_id" class="btn btn-primary mb-2">[EDIT]</a></td></tr>
+      </table>
+    </div>
     
     <div v-if="action === 'edit'" class="grid gap-3 ">
       <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
@@ -49,14 +47,13 @@
     <div v-if="action === 'list'" class="container">
       <div class="row">
         <div class="col-md-4" v-for="a of authors" v-bind:key="a.authors_id">
-          <div class="card mb-4">
-            <div class="card-body">
-              <h5 class="card-title">{{ a.authors_alias }}</h5>
-              <div id="buttons">
-                <a :href="'/#/authors/show/' + a.authors_id" class="btn btn-success mb-2">SHOW</a>
+          <a :href="'/#/authors/show/' + a.authors_id" class="link-offset-2 link-underline link-underline-opacity-0">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h5 class="card-title">{{ a.authors_alias }}</h5>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -64,14 +61,18 @@
 </template>
 
 <script>
-import home from './homeModules.vue';
+import BacktohomeModule from './BacktohomeModule.vue';
 
 export default {
   name: 'Authors',
   props:['action','id'],
   components: {
-    home
+    BacktohomeModule
   },
+
+  mounted() {
+    this.changeBodyBackgroundColor();
+    },
 
   authors: [
         // Example data, replace with your actual data
@@ -117,7 +118,15 @@ export default {
       try{
         this.oneAuthors = this.authors.find(author=>authors.author.id==this.$props.id);
       }catch (ex){console.log(ex);}
+    },
+
+    changeBodyBackgroundColor() {
+        document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 65%) no-repeat' ;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.height = '100%';
+        document.body.style.backgroundColor = 'rgb(0,0,0)';
     }
+
   },
 
   watch:{
@@ -135,6 +144,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+body{
+  background: rgb(59,228,119);
+  background: linear-gradient(180deg, rgba(59,228,119,1) 0%, rgba(59,228,119,1) 0%, rgba(0,0,0,1) 74%);
+}
+
 h1, h2 {
   font-weight: normal;
 }
@@ -151,7 +166,7 @@ a {
 }
 
 #app table {
-  width: 95%; margin: 20px;
+  width: 60%; margin: 20px;
 }
 
 td{

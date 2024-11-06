@@ -1,13 +1,15 @@
 <template>
   <div id="app">
-    <router-view/>
+      <router-view/>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'App'
+  name: 'App',
 }
+
 </script>
 
 <style>
@@ -17,12 +19,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   margin-top: 60px;
-  background-color: rgba(245, 244, 244, 0);
+  
 }
 
-body{
-  background-color: rgb(78, 77, 77);
-}
 
 @font-face {
   font-family: 'LilGrotesk-regular'; /* Name your font family */
