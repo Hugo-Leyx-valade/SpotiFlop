@@ -42,7 +42,7 @@ methods: {
         if (user) {
             if(user.user_role === "admin"){
                 console.log("Login successful");
-                this.$router.push('/homeAdmin');
+                this.$router.push('/adminPanel');
             } else {
                 console.log("Login successful");
                 this.$router.push('/homeUser');

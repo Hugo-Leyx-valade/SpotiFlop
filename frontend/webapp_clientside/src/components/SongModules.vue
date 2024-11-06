@@ -1,6 +1,5 @@
 <template>
     <div class="hello" onload="changeBodyBackgroundColor()">
-      <home></home>
       <p>
         ACTION = {{ action }} <br />
         ID = {{ id }} <br/>

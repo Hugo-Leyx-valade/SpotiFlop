@@ -9,6 +9,7 @@ import Authentication from '../components/Authentication.vue'
 import users from '../components/users.json'
 import HomeModulesAdmin from '../components/homeModulesAdmin.vue'
 import HomeModulesUser from '../components/homeModulesUser.vue'
+import AdminPanel from '../components/AdminPanel.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -61,6 +62,10 @@ export default new Router({
     {
       path :'/Login',
       component: Authentication,
+    },
+    {
+      path :'/adminPanel',
+      component: AdminPanel,
     },
   ]
 })
