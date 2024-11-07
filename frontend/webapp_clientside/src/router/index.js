@@ -10,6 +10,9 @@ import users from '../components/users.json'
 import HomeModulesAdmin from '../components/homeModulesAdmin.vue'
 import HomeModulesUser from '../components/homeModulesUser.vue'
 import AdminPanel from '../components/AdminPanel.vue'
+import PlaylistModules from '../components/PlaylistModules.vue'
+
+
 Vue.use(Router)
 
 export default new Router({
@@ -49,6 +52,17 @@ export default new Router({
       component: SongModules,
       props:  true,
     },
+    {
+      path: '/playlist',
+      redirect: '/playlist/list/all'
+    },
+    {
+      path: '/playlist/:action/:id',
+      name: 'playlist',
+      component: PlaylistModules,
+      props:  true,
+    },
+
     {
       path: '/homeAdmin',
       name: 'homeAdmin',
