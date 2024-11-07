@@ -5,6 +5,7 @@
             <img src="../assets/spotyflop.png" alt="logo" style="width: 65%; height: auto; display: block; margin: 0 auto;" />
             <div class="content d-flex justify-content-center" id="txt">
                 <p id="txt1" style="font-family: 'LilGrotesk-bold'; color: #22d05d ; font-size: 100px; position:fixed; top: 40%; left: 38.9%;">SpotiFlop</p>
+                <input type="button" value="Login" class="btn btn-success" style="margin-top: 10%; margin-left: 45%;" @click="$emit('action', 'login')" />
             </div>
         </div>
         

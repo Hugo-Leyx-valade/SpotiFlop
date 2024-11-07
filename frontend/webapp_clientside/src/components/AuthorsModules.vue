@@ -47,7 +47,7 @@
     <div v-if="action === 'list'" class="container">
       <div class="row">
         <div class="col-md-4" v-for="a of authors" v-bind:key="a.authors_id">
-          <a :href="'/#/authors/show/' + a.authors_id" class="link-offset-2 link-underline link-underline-opacity-0">
+          <a :href="'/#/authors/show/' + a.authors_id" class="link-offset-2 link-underline link-underline-opacity-0" @click="oneAuthorsLoad(a)">
             <div class="card mb-4">
               <div class="card-body">
                 <h5 class="card-title">{{ a.authors_alias }}</h5>
@@ -72,7 +72,9 @@ export default {
   },
 
   mounted() {
+
     this.changeBodyBackgroundColor();
+    this.printAuthors(element);
     },
 
   authors: [
@@ -98,6 +100,7 @@ export default {
     }
   },
   methods:{
+
     async getALLData(){
         /*
         let responesAuthors = await this.$http.get("backend/url");
@@ -124,7 +127,16 @@ export default {
         document.body.style.backgroundSize = 'cover';
         document.body.style.height = '100%';
         document.body.style.backgroundColor = 'rgb(0,0,0)';
-    }
+    },
+
+    oneAuthorsLoad(authors){
+      this.oneAuthors.author_alias = authors.authors_alias;
+      this.oneAuthors.author_id = authors.authors_id;
+      this.oneAuthors.author_first_name = authors.authors_first_name;
+      this.oneAuthors.author_last_name = authors.authors_last_name;
+      this.oneAuthors.author_biography = authors.authors_biography;
+      this.oneAuthors.author_verified = authors.authors_verified;
+    },
 
   },
 
