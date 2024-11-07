@@ -10,6 +10,8 @@ import users from '../components/users.json'
 import HomeModulesAdmin from '../components/homeModulesAdmin.vue'
 import HomeModulesUser from '../components/homeModulesUser.vue'
 import PlaylistModules from '../components/PlaylistModules.vue'
+import GenreModule from '../components/GenreModule.vue'
+
 
 Vue.use(Router)
 
@@ -60,6 +62,18 @@ export default new Router({
       component: PlaylistModules,
       props:  true,
     },
+
+    {
+      path: '/genres',
+      redirect: '/genres/list/all'
+    },
+    {
+      path: '/genres/:action/:id',
+      name: 'genres',
+      component: GenreModule,
+      props:  true,
+    },
+
 
     {
       path: '/homeAdmin',
