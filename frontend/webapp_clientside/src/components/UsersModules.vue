@@ -38,7 +38,7 @@
         </tr>
 
         <tr><td colspan="2">
-          <input type="button" value="SEND" @click="sendEditRequest()" />
+          <input type="button" value="SEND" @click="id === '0' ? addUser() : sendEditRequest()" />
         </td></tr>
       </table>
   
@@ -133,6 +133,23 @@
         document.body.style.backgroundSize = 'cover';
         document.body.style.height = '100%';
         document.body.style.backgroundColor = 'rgb(0,0,0)';
+    },
+
+    async addUser(){
+      console.log("AddUser function called");
+      try{
+        /*
+        let responesUsers = await this.$http.get("backend/url",newUser);
+        this.user.push(response.data);
+        */
+       const newUser = {...this.oneUser, user_id: this.users.length + 1};
+       this.users.push(newUser);
+       alert("A new user has been added");
+
+      }catch(error){
+        console.error("Error when adding a user :", error);
+      }
+      
     }
 
     },
@@ -145,6 +162,7 @@
   
     created(){
       this.getALLData();
+      console.log(this.users) //to display if the new user has been added correctly 
     },
     
     components: {
