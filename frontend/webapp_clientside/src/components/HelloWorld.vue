@@ -5,7 +5,7 @@
       <source src="../assets/1013.mp4" type="video/mp4">
     </video>
 
-    <a href="/#/Login"><img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)"></a>
+    <a href="/#/authentication/option"><img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)"></a>
     <div class="content d-flex justify-content-center" id="txt">
       <p id="txt1" >{{ msg }}</p>
       <p id="txt2" >{{ msg }}</p>

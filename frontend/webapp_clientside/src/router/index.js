@@ -74,8 +74,14 @@ export default new Router({
       component: HomeModulesUser,
     },
     {
-      path :'/Login',
+      path :'/authentication',
+      redirect: '/authentication/option',
       component: Authentication,
+    },
+    {
+      path:"/authentication/:action",
+      component: Authentication,
+      props: true,
     },
     {
       path :'/adminPanel',

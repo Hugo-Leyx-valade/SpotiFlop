@@ -1,13 +1,22 @@
 <template>
     <div class="authentication" onload="changeBodyBackgroundColor()">
-        <BacktohomeModule></BacktohomeModule>
-        <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%; color: white;" >Authentication</span>
-        <form @submit.prevent="submitForm" style="margin-top: 20%;">
-            <input v-model="username" placeholder="Username" />
-            <input v-model="password" type="password" placeholder="Password" />
-            <button type="submit">Login</button>
-        </form>
-        <div id='text'></div>
+
+        <div v-if="action === 'option'">
+            <img src="../assets/spotyflop.png" alt="logo" style="width: 65%; height: auto; display: block; margin: 0 auto;" />
+            <div class="content d-flex justify-content-center" id="txt">
+                <p id="txt1" style="font-family: 'LilGrotesk-bold'; color: #22d05d ; font-size: 100px; position:fixed; top: 40%; left: 38.9%;">SpotiFlop</p>
+            </div>
+        </div>
+        
+        <div v-if="action === 'login'" class="login">
+            <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%; color: white;" >Authentication</span>
+            <form @submit.prevent="submitForm" style="margin-top: 20%;">
+                <input v-model="username" placeholder="Username" />
+                <input v-model="password" type="password" placeholder="Password" />
+                <button type="submit">Login</button>
+            </form>
+            <div id='text'></div>
+        </div>
     </div>
 </template>
 
@@ -17,6 +26,7 @@ import BacktohomeModule from './BacktohomeModule.vue';
 
 export default {
     name: 'Authentication',
+    props:['action'],
     components: {
     BacktohomeModule
     },
@@ -53,7 +63,7 @@ methods: {
     },
 
     changeBodyBackgroundColor() {
-        document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
+        document.body.style.background ='linear-gradient(180deg, rgba(255,255,250,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
         document.body.style.backgroundSize = 'cover';
         document.body.style.height = '100%';
         document.body.style.backgroundColor = 'rgb(0,0,0)';
