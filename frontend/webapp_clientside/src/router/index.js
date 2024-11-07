@@ -9,6 +9,8 @@ import Authentication from '../components/Authentication.vue'
 import users from '../components/users.json'
 import HomeModulesAdmin from '../components/homeModulesAdmin.vue'
 import HomeModulesUser from '../components/homeModulesUser.vue'
+import PlaylistModules from '../components/PlaylistModules.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -49,6 +51,17 @@ export default new Router({
       props:  true,
     },
     {
+      path: '/playlist',
+      redirect: '/playlist/list/all'
+    },
+    {
+      path: '/playlist/:action/:id',
+      name: 'playlist',
+      component: PlaylistModules,
+      props:  true,
+    },
+
+    {
       path: '/homeAdmin',
       name: 'homeAdmin',
       component: HomeModulesAdmin,
@@ -62,5 +75,6 @@ export default new Router({
       path :'/Login',
       component: Authentication,
     },
+
   ]
 })
