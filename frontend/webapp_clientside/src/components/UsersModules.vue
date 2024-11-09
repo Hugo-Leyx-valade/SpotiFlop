@@ -54,7 +54,7 @@
           <td>{{ u.user_last_name }}</td>
           <td><a :href="'/#/users/show/' + u.user_id">[SHOW]</a></td>
           <td><a :href="`/#/users/edit/${u.user_id}`">[EDIT]</a></td>
-          <td><input type="button" value="DELETE" @click="sendDeleteRequest()" /></td>
+          <td><input type="button" value="DELETE" @click="sendDeleteRequest(u.user_id)" /></td>
         </tr>
       </table>
   
@@ -153,6 +153,33 @@
     }
 
     },
+
+    async sendDeleteRequest(user_id){
+      console.log("DeleteUser function called");
+      try{
+        this.users = this.users.filter(user=> user.user_id !== user_id);
+        alert("User has been deleted successfully");
+        /*
+        let responesUsers = await this.$http.get("backend/url",newUser);
+        this.user.push(response.data);
+        */
+
+        /*const ID = this.users.findIndex(user=> user.user_id === user_id);
+
+        if(ID !== this.users.length && ID !== -1){
+          this.users.splice(ID,1);
+          alert("User has been deleted successfully");
+        }else{
+          alert("The user cannot be found");
+        }
+        */
+
+      }catch(error){
+        console.error("Error when deleting a user :", error);
+      }
+
+
+    },
   
     watch:{
       id: function(newVal, oldVAl){
@@ -196,6 +223,7 @@
   #app td{
     text-align: left;
   }
+
   
   </style>
   
