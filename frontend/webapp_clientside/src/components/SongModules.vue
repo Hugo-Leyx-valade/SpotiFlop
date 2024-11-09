@@ -1,65 +1,72 @@
 <template>
     <div class="hello" onload="changeBodyBackgroundColor()">
-      <p>
-        ACTION = {{ action }} <br />
-        ID = {{ id }} <br/>
-        <a href="/#/songs/list/all">Back to the list of songs</a>
-        <a href="/#/songs/edit/0">Add a new song</a><br />
+      <BacktohomeModule></BacktohomeModule>
+      <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
+        Songs 
+        {{ action }}
+        ({{ id }}) <br/>
       </p>
   
       <!-- FOR DATA SHEET /songs/show/42 -->
-      <table v-if="action === 'show'" class="table table-striped table-hover table-bordered ">
-      <tr><td>ID</td><td>{{oneSong.song_id}}</td></tr>
-      <tr><td>Title</td><td>{{oneSong.song_title}}</td></tr>
-      <tr><td>Duration</td><td>{{oneSong.song_duration}}</td></tr>
-      <tr><td>Number of Streams</td><td>{{oneSong.song_number_of_stream}}</td></tr>
-      <tr><td>Date of Post</td><td>{{oneSong.song_date}}</td></tr>
-      <tr><td>Lyrics</td><td>{{oneSong.song_lyrics}}</td></tr>
-      <tr><td>Author ID</td><td>{{oneSong.song_author_id}}</td></tr>
-    </table>
+    <div v-if="action === 'show'" style="display: flex; justify-content: center;">
+      <img src="../assets/pink-cover.png" alt="logo_white" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%;"/>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: -23%; font-size: 200%;">Title</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; margin-left: -23%; font-size: 150%;">{{oneSong.song_title}}</p>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: 30%; font-size: 200%;">Duration</p>    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 30%; font-size: 200%;">{{oneSong.song_duration}}</p>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: -40%; font-size: 200%;">Number of Streams</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21.2%; margin-left: -32.5%; font-size: 200%;">{{oneSong.song_number_of_stream}}</p>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28%; margin-left: -3%; font-size: 180%;">Date of Post</p>    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 31%; margin-left: -3%; font-size: 200%;">{{oneSong.song_date}}</p>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: 75%; font-size: 200%;">Lyrics</p>    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8%; margin-left: 75%; font-size: 120%; width: 20%;">{{oneSong.song_lyrics}}</p>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 30%; font-size: 200%;">Author</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 30%; font-size: 200%;">{{oneSong.song_author_id}}</p>
+    </div>
+
+    <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
+      <img src="../assets/pink-cover.png" alt="logo_white" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%;"/>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: -23%; font-size: 200%;">Title</p>   <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; margin-left: -23%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;" v-model="oneSong.song_title"/>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: 30%; font-size: 200%;">Duration</p>    <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 30%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%" v-model="oneSong.song_duration"/>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: -40%; font-size: 200%;">Number of Streams</p>   <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21.2%; margin-left: -32.5%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%" v-model="oneSong.song_number_of_stream"/>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28%; margin-left: -3%; font-size: 180%;">Date of Post</p>    <input type="date" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 31%; margin-left: -3%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%" v-model="oneSong.song_date"/>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: 75%; font-size: 200%;">Lyrics</p>    <span class="textarea" role="textbox" contenteditable >{{ oneSong.song_lyrics }}</span>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 30%; font-size: 200%;">Author</p>   <input style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 30%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%" v-model="oneSong.song_author_id"/>
+    </div>
   
-      <!-- FOR FORMS /songs/edit/42 -->
-      <table v-if="action === 'edit'" class="table table-striped table-hover table-bordered ">
-      <tr><td>Title</td><td><input type="text" name="song_title" v-model="oneSong.song_title"/></td></tr>
-      <tr><td>Duration</td><td><input type="text" name="song_duration" v-model="oneSong.song_duration" /></td></tr>
-      <tr><td>Number of Streams</td><td><input type="number" name="song_number_of_stream" v-model="oneSong.song_number_of_stream" /></td></tr>
-      <tr><td>Date of Post</td><td><input type="date" name="song_date" v-model="oneSong.song_date" /></td></tr>
-      <tr><td>Lyrics</td><td><textarea name="song_lyrics" v-model="oneSong.song_lyrics"></textarea></td></tr>
-      <tr><td>Author ID</td><td><input type="text" name="song_author_id" v-model="oneSong.song_author_id" /></td></tr>
-      <tr><td colspan="2">
-        <input type="button" value="SEND" @click="sendEditRequest()" />
-      </td></tr>
-    </table>
-  
+
       <!-- FOR List /songs/list/all -->
       <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
-        <tr>
+        <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
           <td>ID</td><td>Title</td><td>Duration</td><td>Number Of Streams</td><td>SHOW DETAILS</td><td>EDIT SONG</td><td>DELETE SONG</td>
         </tr>
         <tr v-for="s of songs" v-bind:key="s.song_id">
-          <td>{{ s.song_id }}</td>
-          <td>{{ s.song_title }}</td>
-          <td>{{ s.song_duration }}</td>
-          <td>{{ s.song_number_of_stream }}</td>
-          <td><a :href="'/#/songs/show/' + s.song_id">[SHOW]</a></td>
-          <td><a :href="`/#/songs/edit/${s.song_id}`">[EDIT]</a></td>
-          <td><input type="button" value="DELETE" @click="sendDeleteRequest()" /></td>
+          <td style="color: aliceblue; font-weight: bold;">{{ s.song_id }}</td>
+          <td style="color: aliceblue; font-weight: bold;">{{ s.song_title }}</td>
+          <td style="color: aliceblue; font-weight: bold;">{{ s.song_duration }}</td>
+          <td style="color: aliceblue; font-weight: bold;">{{ s.song_number_of_stream }}</td>
+          <td><a :href="'/#/songs/show/' + s.song_id" @click="oneSongLoad(s)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
+          <td><a :href="'/#/songs/edit/' + s.song_id" @click="oneSongLoad(s)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
+          <td><input type="button" value="DELETE" @click="sendDeleteRequest()" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#fa8c8c'" onMouseLeave="this.style.background='white'"  /></td>
         </tr>
       </table>
-  
-    </div>
+    <div style="margin-top: 16%;"></div>
+    <footer>
+      <p style="color: white; font-weight: bold; font-size: 20px; position: absolute; top: 120%; left: 46%;">Spotiflop</p>
+    </footer>  
+  </div>
   </template>
   
   <script>
+  //import 
+  import BacktohomeModule from './BacktohomeModule.vue';
   import Home from './homeModulesAdmin.vue';
   import songs from './songs.json'
   
   export default {
     name: 'Users',
+
     components: {
-      Home
+      Home,
+      BacktohomeModule 
     },
+
     props:['action','id'],
+
     data () {
       return {
         songs : [],
@@ -77,6 +84,7 @@
 
     mounted() {
     this.changeBodyBackgroundColor();
+
     },
 
     methods:{
@@ -104,7 +112,17 @@
         document.body.style.backgroundSize = 'cover';
         document.body.style.height = '100%';
         document.body.style.backgroundColor = 'rgb(0,0,0)';
-    }
+    },
+
+    oneSongLoad(song){
+      this.oneSong.song_title = song.song_title;
+      this.oneSong.song_id = song.song_id;
+      this.oneSong.song_duration = song.song_duration;
+      this.oneSong.song_number_of_stream = song.song_number_of_stream;
+      this.oneSong.song_date = song.song_date;
+      this.oneSong.song_lyrics = song.song_lyrics;
+      this.oneSong.song_author_id = song.song_author_id;
+    },
 
     },
   
@@ -119,6 +137,10 @@
     }
   
   }
+
+
+
+
   </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -146,5 +168,25 @@
     text-align: left;
   }
   
+
+  .textarea {
+    display: inline-block;
+  position: absolute;
+  width: 20%;
+  overflow: hidden;
+  resize: both;
+  min-height: 10px;
+  line-height: 30px;
+  resize: none;
+  text-align: left;
+  color: aliceblue;
+  border-color: #ffffff;
+  border-style: solid;
+  border-radius: 20px;
+  margin-left: 75%;
+  margin-top: 6%;
+  font-size: 20px;
+}
+
   </style>
   

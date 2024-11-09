@@ -13,14 +13,14 @@
         <tr><td>last_name</td><td>{{oneAuthors.author_last_name}}</td></tr>
         <tr><td>biography</td><td>{{oneAuthors.author_biography}}</td></tr>
         <tr><td>verified</td><td>{{oneAuthors.author_verified}}</td></tr>
-        <tr><td><a :href="'/#/authors/edit/' + oneAuthors.author_id" class="btn btn-primary mb-2">[EDIT]</a></td></tr>
+        <tr><td><a :href="'/#/authors/edit/' + oneAuthors.author_id" class="btn btn-primary mb-2"   @click="oneAuthorsLoad(oneAuthors)"  >[EDIT]</a></td></tr>
       </table>
     </div>
     
     <div v-if="action === 'edit'" class="grid gap-3 ">
       <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
-        <span class="input-group-text" style="margin-bottom: 5%;" >Alias</span>
-        <input type="text" name="authors_alias" class="form-control" value="Alias" v-model="oneAuthors.author_alias" style="margin-bottom: 5% ;"/>
+        <span class="input-group-text" style="margin-bottom: 5%;">Alias</span>
+        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthors.author_alias" :placeholder="oneAuthors.author_alias" style="margin-bottom: 5%;">
       </div>
       <div class=" input-group" style="padding-left: 30%; padding-right: 30%;">
         <span class="input-group-text">First and last name</span>
@@ -39,7 +39,7 @@
         </div>
       <div id="buttons_container" class="g-col-6 mt-5" >
           <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(a.authors_id)">DELETE</button>
-          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest()" />
+          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest(a.authors_id)" />
       </div>  
     </div>
 
