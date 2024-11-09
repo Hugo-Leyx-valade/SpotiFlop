@@ -1,46 +1,65 @@
 <template>
     <div class="hello" onload="changeBodyBackgroundColor()">
-      <p>
-        ACTION = {{ action }} <br />
-        ID = {{ id }} <br/>
-        <a href="/#/users/list/all">Back to the list of users</a>
-        <a href="/#/users/edit/0">Add a new user</a><br />
+      <BacktohomeModule></BacktohomeModule>
+      <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
+        User 
+        {{ action }}
+        ({{ id -1 }}) <br/>
       </p>
   
       <!-- FOR DATA SHEET /users/show/42 -->
-      <table v-if="action === 'show'" class="table table-striped table-hover table-bordered ">
-        <tr><td>ID</td><td>{{oneUser.user_id}}</td></tr>
-        <tr><td>Username</td><td>{{oneUser.user_username}}</td></tr>
-        <tr><td>First Name </td><td>{{oneUser.user_first_name}}</td></tr>
-        <tr><td>Last Name</td><td>{{oneUser.user_last_name}}</td></tr>
-        <tr><td>Email</td><td>{{oneUser.user_email}}</td></tr>
-        <tr><td>Password</td><td>{{oneUser.user_password}}</td></tr>
-        <tr><td>Role</td><td>{{oneUser.user_role}}</td></tr>
-        <tr><td>Date Of Birth</td><td>{{oneUser.user_date_of_birth}}</td></tr>
-      </table>
+      <div v-if="action === 'show'" style="display: flex; justify-content: center;">
+        <img v-if="oneUser.user_genre === 1" src='../assets/boy2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
+        <img v-if="oneUser.user_genre === 0" src='../assets/girl2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
+        
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.9%; margin-left: 0%; font-size: 150%;">ID</p>   
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.3%; margin-left: 0%; font-size: 120%;">{{oneUser.user_id}}</p> 
+
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 6.4%; margin-left: -32%; font-size: 150%;">UserName</p>   
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 9%; margin-left: -32%; font-size: 120%;">{{oneUser.user_username}}</p>
+
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8.4%; margin-left: 32%; font-size: 150%;">First Name</p>    
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 11%; margin-left: 32%; font-size: 120%;">{{oneUser.user_first_name}}</p>
+
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 20.3%; margin-left: 32%; font-size: 150%;">Last Name</p>   
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 22.7%; margin-left: 32%; font-size: 120%;">{{oneUser.user_last_name}}</p>
+
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 26%; margin-left: -25%; font-size: 150%;">Email</p>    
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: -25%; font-size: 120%;">{{oneUser.user_email}}</p>
+
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 26%; margin-left: 25%; font-size: 150%;">Date of birth</p>    
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: 25%; font-size: 120%; width: 20%;">{{oneUser.user_date_of_birth}}</p>
+
+      </div>
   
       <!-- FOR FORMS /users/edit/42 -->
-      <table  v-if="action === 'edit'" class="table table-striped table-hover table-bordered ">
-        <tr><td>Username</td><td><input type="text" name="user_username" v-model="user_username"/></td></tr>
-        <tr><td>First Name</td><td><input type="text" name="user_first_name" v-model="oneUser.user_first_name" /></td></tr>
-        <tr><td>Last Name</td><td><input type="text" name="user_last_name" v-model="oneUser.user_last_name" /></td></tr>
-        <tr><td>Email</td><td><input type="text" name="user_email" v-model="oneUser.user_email" /></td></tr>
-        <tr><td>Password</td><td><input type="text" name="user_password" v-model="oneUser.user_password" /></td></tr>
-        <tr><td>Date Of Birth</td><td><input type="date" name="user_date_of_birth" v-model="oneUser.user_date_of_birth" /></td></tr>
-        <tr><td>Role</td>
-            <td>
-                <select name="role" v-model="oneUser.user_role">
-                    <option value="user">User</option>
-                    <option value="creator">Creator</option>
-                </select>
-            </td>
-        </tr>
+      <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
+        <img v-if="oneUser.user_genre === 1" src='../assets/boy2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
+        <img v-if="oneUser.user_genre === 0" src='../assets/girl2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
+        
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.9%; margin-left: 0%; font-size: 150%;">ID</p>   
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.3%; margin-left: 0%; font-size: 120%;">{{oneUser.user_id}}</p> 
 
-        <tr><td colspan="2">
-          <input type="button" value="SEND" @click="id === '0' ? addUser() : sendEditRequest()" />
-        </td></tr>
-      </table>
-  
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 6.4%; margin-left: -32%; font-size: 150%;" >UserName</p>   
+        <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 9%; margin-left: -32%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;text-align: center; border-color: white;"  v-model="oneUser.user_username"/>
+
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8.4%; margin-left: 32%; font-size: 150%;">First Name</p>    
+        <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 11%; margin-left: 32%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;text-align: center;border-color: white;" v-model="oneUser.user_first_name"/>
+
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 20.3%; margin-left: 32%; font-size: 150%;">Last Name</p>   
+        <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 22.7%; margin-left: 32%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;text-align: center;border-color: white;" v-model="oneUser.user_last_name"/>
+
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 26%; margin-left: -25%; font-size: 150%;">Email</p>    
+        <input type="email" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: -25%; font-size: 120%;background-color: transparent; border-radius: 20px;width:20%;text-align: center;border-color: white;" v-model="oneUser.user_email"/>
+
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 26%; margin-left: 25%; font-size: 150%;">Date of birth</p>    
+        <input type="date" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: 25%; font-size: 120%; width: 20%;background-color: transparent; border-radius: 20px;width:10%;text-align: center;border-color: white;" v-model="oneUser.user_date_of_birt"/>
+
+        <input type="button" value="CONFIRM CHANGES" @click="id === '0' ? addUser() : sendEditRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%; margin-left: 15%;" />
+        <input type="button" value="RESET PASSWORD " @click="id === '0' ? addUser() : sendResetPasswordRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%;  margin-left: -15%;"/>
+      </div>
+
+      
       <!-- FOR List /authors/list/all -->
       <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
         <tr>
@@ -51,9 +70,9 @@
           <td>{{ u.user_username }}</td>
           <td>{{ u.user_first_name }}</td>
           <td>{{ u.user_last_name }}</td>
-          <td><a :href="'/#/users/show/' + u.user_id">[SHOW]</a></td>
-          <td><a :href="`/#/users/edit/${u.user_id}`">[EDIT]</a></td>
-          <td><input type="button" value="DELETE" @click="sendDeleteRequest(u.user_id)" /></td>
+          <td><a :href="'/#/users/show/' + u.user_id" @click="oneUserLoad(u)">SHOW</a></td>
+          <td><a :href="`/#/users/edit/${u.user_id}`" @click="oneUserLoad(u)">EDIT</a></td>
+          <td><input type="button" value="DELETE" @click="sendDeleteRequest()" /></td>
         </tr>
       </table>
     </div>
@@ -62,6 +81,8 @@
   <script>
   import home from './homeModulesAdmin.vue';
   import user from "./users.json";
+  import BacktohomeModule from './BacktohomeModule.vue';
+
 
   console.log(user)
 
@@ -79,14 +100,16 @@
           user_email:'you@something.com',
           user_password: '********',
           user_role: 'user',
-          user_date_of_birth: '',
+          user_date_of_birth: 'K',
+          user_genre:0,
+          user_picture: '../assets/boy2.png',
         }
       }
     },
 
     mounted() {
     this.changeBodyBackgroundColor();
-    },
+  },
 
     methods:{
       async getALLData(){
@@ -114,6 +137,22 @@
         document.body.style.height = '100%';
         document.body.style.backgroundColor = 'rgb(0,0,0)';
     },
+
+
+
+    oneUserLoad(user){
+      this.oneUser.user_id = user.user_id;
+      this.oneUser.user_username = user.user_username;
+      this.oneUser.user_first_name = user.user_first_name;
+      this.oneUser.user_last_name = user.user_last_name;
+      this.oneUser.user_email = user.user_email;
+      this.oneUser.user_password = user.user_password;
+      this.oneUser.user_role = user.user_role;
+      this.oneUser.user_date_of_birth = user.user_date_of_birth;
+      this.oneUser.user_genre = user.genre;
+      this.changeGenderImage();
+    },
+
 
     async addUser(){
       console.log("AddUser function called");
@@ -178,6 +217,7 @@
     
     components: {
       home,
+      BacktohomeModule,
     },
   
   }
