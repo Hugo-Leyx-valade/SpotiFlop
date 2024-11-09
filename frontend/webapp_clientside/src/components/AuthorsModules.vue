@@ -13,14 +13,14 @@
         <tr><td>last_name</td><td>{{oneAuthors.author_last_name}}</td></tr>
         <tr><td>biography</td><td>{{oneAuthors.author_biography}}</td></tr>
         <tr><td>verified</td><td>{{oneAuthors.author_verified}}</td></tr>
-        <tr><td><a :href="'/#/authors/edit/' + oneAuthors.author_id" class="btn btn-primary mb-2">[EDIT]</a></td></tr>
+        <tr><td><a :href="'/#/authors/edit/' + oneAuthors.author_id" class="btn btn-primary mb-2"   @click="oneAuthorsLoad(oneAuthors)"  >[EDIT]</a></td></tr>
       </table>
     </div>
     
     <div v-if="action === 'edit'" class="grid gap-3 ">
       <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
-        <span class="input-group-text" style="margin-bottom: 5%;" >Alias</span>
-        <input type="text" name="authors_alias" class="form-control" value="Alias" v-model="oneAuthors.author_alias" style="margin-bottom: 5% ;"/>
+        <span class="input-group-text" style="margin-bottom: 5%;">Alias</span>
+        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthors.author_alias" :placeholder="oneAuthors.author_alias" style="margin-bottom: 5%;">
       </div>
       <div class=" input-group" style="padding-left: 30%; padding-right: 30%;">
         <span class="input-group-text">First and last name</span>
@@ -39,7 +39,7 @@
         </div>
       <div id="buttons_container" class="g-col-6 mt-5" >
           <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(a.authors_id)">DELETE</button>
-          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest()" />
+          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest(a.authors_id)" />
       </div>  
     </div>
 
@@ -47,7 +47,7 @@
     <div v-if="action === 'list'" class="container">
       <div class="row">
         <div class="col-md-4" v-for="a of authors" v-bind:key="a.authors_id">
-          <a :href="'/#/authors/show/' + a.authors_id" class="link-offset-2 link-underline link-underline-opacity-0">
+          <a :href="'/#/authors/show/' + a.authors_id" class="link-offset-2 link-underline link-underline-opacity-0" @click="oneAuthorsLoad(a)">
             <div class="card mb-4">
               <div class="card-body">
                 <h5 class="card-title">{{ a.authors_alias }}</h5>
@@ -62,6 +62,7 @@
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
+import authors from "./authors.json";
 
 export default {
   name: 'Authors',
@@ -71,7 +72,9 @@ export default {
   },
 
   mounted() {
+
     this.changeBodyBackgroundColor();
+    this.printAuthors(element);
     },
 
   authors: [
@@ -97,22 +100,21 @@ export default {
     }
   },
   methods:{
+
     async getALLData(){
-      /*
-      let responesAuthors = await this.$http.get("backend/url");
-      this.cars = responesAuthors.data;
-      let reponseSong = await this.$http.get('wxxx');
-      this.song = reponseSong.data;
-       */
-     try  {
-     
-      this.authors = [ { authors_id:1, authors_alias:"Earth, Wind & Fire", authors_first_name:null, authors_last_name:null, authors_biography:null, authors_verification:1},
-        { authors_id:1, authors_alias:"Michael Jackson", authors_first_name:"Michael", authors_last_name:"Jackson", authors_biography:null, authors_verification:1},
-        { authors_id:1, authors_alias:"Imagine Dragons", authors_first_name:null, authors_last_name:null, authors_biography:null, authors_verification:1},
-        { authors_id:1, authors_alias:"The Weeknd", authors_first_name:null, authors_last_name:null, authors_biography:null, authors_verification:1}];
-      }
-      catch (ex) {console.log(ex);}
-    },
+        /*
+        let responesAuthors = await this.$http.get("backend/url");
+        this.cars = responesAuthors.data;
+        let reponseSong = await this.$http.get('wxxx');
+        this.song = reponseSong.data;
+         */
+        try  {
+          this.authors = authors;
+        }
+        catch (ex) {console.log(ex);}
+      },
+
+
     async refreshOneAuthor(){
       if(this.$props.id ==="all" || this.$props.id=="0") return;
       try{
@@ -125,7 +127,16 @@ export default {
         document.body.style.backgroundSize = 'cover';
         document.body.style.height = '100%';
         document.body.style.backgroundColor = 'rgb(0,0,0)';
-    }
+    },
+
+    oneAuthorsLoad(authors){
+      this.oneAuthors.author_alias = authors.authors_alias;
+      this.oneAuthors.author_id = authors.authors_id;
+      this.oneAuthors.author_first_name = authors.authors_first_name;
+      this.oneAuthors.author_last_name = authors.authors_last_name;
+      this.oneAuthors.author_biography = authors.authors_biography;
+      this.oneAuthors.author_verified = authors.authors_verified;
+    },
 
   },
 

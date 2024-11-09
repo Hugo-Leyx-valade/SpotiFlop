@@ -9,8 +9,10 @@ import Authentication from '../components/Authentication.vue'
 import users from '../components/users.json'
 import HomeModulesAdmin from '../components/homeModulesAdmin.vue'
 import HomeModulesUser from '../components/homeModulesUser.vue'
+import AdminPanel from '../components/AdminPanel.vue'
 import PlaylistModules from '../components/PlaylistModules.vue'
 import GenreModule from '../components/GenreModule.vue'
+
 
 
 Vue.use(Router)
@@ -86,9 +88,18 @@ export default new Router({
       component: HomeModulesUser,
     },
     {
-      path :'/Login',
+      path :'/authentication',
+      redirect: '/authentication/option',
       component: Authentication,
     },
-
+    {
+      path:"/authentication/:action",
+      component: Authentication,
+      props: true,
+    },
+    {
+      path :'/adminPanel',
+      component: AdminPanel,
+    },
   ]
 })
