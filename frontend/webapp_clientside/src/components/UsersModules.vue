@@ -4,7 +4,7 @@
       <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
         User 
         {{ action }}
-        ({{ id -1 }}) <br/>
+        ({{ id }}) <br/>
       </p>
   
       <!-- FOR DATA SHEET /users/show/42 -->
@@ -63,14 +63,11 @@
       <!-- FOR List /authors/list/all -->
       <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
         <tr>
-          <td>ID</td><td>Username</td><td>First Name</td><td>Last Name</td><td>Email</td><td>SHOW DATASHEET</td><td>EDIT USER</td><td>DELETE USER</td>
+          <td>ID</td><td>Username</td><td>SHOW INFORMATIONS</td><td>EDIT USER</td><td>DELETE USER</td>
         </tr>
         <tr v-for="u of users" v-bind:key="u.user_id">
           <td>{{ u.user_id }}</td>
           <td>{{ u.user_username }}</td>
-          <td>{{ u.user_first_name }}</td>
-          <td>{{ u.user_last_name }}</td>
-          <td>{{ u.user_email }}</td>
           <td><a :href="'/#/users/show/' + u.user_id" @click="oneUserLoad(u)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
           <td><a :href="`/#/users/edit/${u.user_id}`" @click="oneUserLoad(u)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
           <td><input type="button" value="DELETE" @click="sendDeleteRequest()" /></td>
