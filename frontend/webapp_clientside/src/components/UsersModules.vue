@@ -63,15 +63,16 @@
       <!-- FOR List /authors/list/all -->
       <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
         <tr>
-          <td>ID</td><td>Username</td><td>First Name</td><td>Last Name</td><td>SHOW DATASHEET</td><td>EDIT USER</td><td>DELETE USER</td>
+          <td>ID</td><td>Username</td><td>First Name</td><td>Last Name</td><td>Email</td><td>SHOW DATASHEET</td><td>EDIT USER</td><td>DELETE USER</td>
         </tr>
         <tr v-for="u of users" v-bind:key="u.user_id">
           <td>{{ u.user_id }}</td>
           <td>{{ u.user_username }}</td>
           <td>{{ u.user_first_name }}</td>
           <td>{{ u.user_last_name }}</td>
-          <td><a :href="'/#/users/show/' + u.user_id" @click="oneUserLoad(u)">SHOW</a></td>
-          <td><a :href="`/#/users/edit/${u.user_id}`" @click="oneUserLoad(u)">EDIT</a></td>
+          <td>{{ u.user_email }}</td>
+          <td><a :href="'/#/users/show/' + u.user_id" @click="oneUserLoad(u)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
+          <td><a :href="`/#/users/edit/${u.user_id}`" @click="oneUserLoad(u)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
           <td><input type="button" value="DELETE" @click="sendDeleteRequest()" /></td>
         </tr>
       </table>
@@ -241,12 +242,42 @@
   }
   
   #app table {
-    width: 95%; margin: 20px;
+    width: 95%; 
+    margin: 20px;
+    color: white;
+    background-color: #333;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'LilGrotesk', sans-serif;
   }
   
-  #app td{
-    text-align: left;
+  #app table tr{
+    background-color: #444;
   }
+
+  #app td, #app th{
+    padding: 10px;
+    border: 1px solid #555;
+    text-align: center;
+    font-weight: bold;
+
+  }
+
+  input[type="button"]{
+    background-color: #42b983;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  input[type="button"]:hover {
+    background-color: #37a875;
+  }
+
+
 
   
   </style>
