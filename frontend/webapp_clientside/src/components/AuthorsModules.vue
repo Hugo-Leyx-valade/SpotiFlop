@@ -46,11 +46,12 @@
     <!-- FOR List /authors/list/all -->
     <div v-if="action === 'list'" class="container">
       <div class="row">
-        <div class="col-md-4" v-for="a of authors" v-bind:key="a.authors_id">
+        <div class="author-card" v-for="a of authors" v-bind:key="a.authors_id">
           <a :href="'/#/authors/show/' + a.authors_id" class="link-offset-2 link-underline link-underline-opacity-0" @click="oneAuthorsLoad(a)">
-            <div class="card mb-4">
-              <div class="card-body">
-                <h5 class="card-title">{{ a.authors_alias }}</h5>
+            <div class="image-container">
+              <img :src="require(`@/assets/${a.authors_image}`)" :alt="a.authors_alias" class="author-image">
+              <div class="overlay">
+                <span class="author-name">{{ a.authors_alias }}</span>
               </div>
             </div>
           </a>
@@ -96,6 +97,7 @@ export default {
         author_last_name:'z',
         author_biography:'something in the world',
         author_verified:1,
+        author_image: "",
       }
     }
   },
@@ -136,6 +138,7 @@ export default {
       this.oneAuthors.author_last_name = authors.authors_last_name;
       this.oneAuthors.author_biography = authors.authors_biography;
       this.oneAuthors.author_verified = authors.authors_verified;
+      this.oneAuthors.author_image = authors.authors_image;
     },
 
   },
@@ -161,9 +164,7 @@ body{
   background: linear-gradient(180deg, rgba(59,228,119,1) 0%, rgba(59,228,119,1) 0%, rgba(0,0,0,1) 74%);
 }
 
-h1, h2 {
-  font-weight: normal;
-}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -202,4 +203,66 @@ td{
   margin: 10px;
 }
 
+.container{
+  margin: 100px 0 0 200px;
+  width: 70%;
+  height: 450px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.author-card{
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.image-container{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.author-image{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.6%);
+  transition: transform 0.7s ease; /* ajout de la transi sur transform*/
+}
+
+.author-card:hover .author-image{
+  transform: scale(1.2); /* agrandit de 20%*/
+
+}
+
+.overlay{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6%);
+  color: white;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: 10px;
+
+}
+
+.author-card:hover .overlay{
+  opacity: 1;
+}
+
+.author-name{
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
 </style>
