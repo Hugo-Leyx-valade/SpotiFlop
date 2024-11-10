@@ -4,7 +4,6 @@
       <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
         User 
         {{ action }}
-        ({{ id }}) <br/>
       </p>
   
       <!-- FOR DATA SHEET /users/show/42 -->

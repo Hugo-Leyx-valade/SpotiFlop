@@ -4,7 +4,6 @@
       <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
         Songs 
         {{ action }}
-        ({{ id }}) <br/>
       </p>
   
       <!-- FOR DATA SHEET /songs/show/42 -->

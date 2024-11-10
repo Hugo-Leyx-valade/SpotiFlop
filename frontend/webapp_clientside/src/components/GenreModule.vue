@@ -2,9 +2,8 @@
     <div class="hello" onload="changeBodyBackgroundColor()">
       <BacktohomeModule></BacktohomeModule>
       <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
-        Songs 
+        Genres 
         {{ action }}
-        ({{ id -1}}) <br/>
       </p>
   
       <!-- FOR DATA SHEET /songs/show/42 -->
