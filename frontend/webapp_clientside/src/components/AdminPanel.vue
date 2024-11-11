@@ -117,6 +117,20 @@ export default {
 }
 */
 
+#slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
 #slider label {
     transition: transform 0.6s ease, opacity 0.4s ease; /* transition fluide */
     opacity: 0.6; /* transparence initiale pour les sliders non actifs */
