@@ -8,19 +8,51 @@
             <input type="radio" name="slider" id="s1">
             <input type="radio" name="slider" id="s2">
             <input type="radio" name="slider" id="s3" checked>
+            <input type="radio" name="slider" id="s4">
             <label for="s1" id="slide1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-save-fill" viewBox="0 0 16 16" style="margin-top:30% ;" onclick="window.location.href = '/#/authors/list/all'">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="300px" height="300px" viewBox="0 0 24 24" fill="none" style="margin-top: 25%;" onclick="window.location.href = '/#/genres/list/all'">
+
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <g id="SVGRepo_iconCarrier"> <path d="M2.38351 13.793C1.93748 10.6294 1.71447 9.04765 2.66232 8.02383C3.61017 7 5.29758 7 8.67239 7H15.3276C18.7024 7 20.3898 7 21.3377 8.02383C22.2855 9.04765 22.0625 10.6294 21.6165 13.793L21.1935 16.793C20.8437 19.2739 20.6689 20.5143 19.7717 21.2572C18.8745 22 17.5512 22 14.9046 22H9.09536C6.44881 22 5.12553 22 4.22834 21.2572C3.33115 20.5143 3.15626 19.2739 2.80648 16.793L2.38351 13.793Z" stroke="#ffffff" stroke-width="1.5"/> <path d="M12 17C12 17.8284 11.3284 18.5 10.5 18.5C9.67157 18.5 9 17.8284 9 17C9 16.1716 9.67157 15.5 10.5 15.5C11.3284 15.5 12 16.1716 12 17ZM12 17V10.5C12 12.1569 13.8954 13.5 15 13.5" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path d="M19.5617 7C19.7904 5.69523 18.7863 4.5 17.4617 4.5H6.53788C5.21323 4.5 4.20922 5.69523 4.43784 7" stroke="#ffffff" stroke-width="1.5"/> <path d="M17.4999 4.5C17.5283 4.24092 17.5425 4.11135 17.5427 4.00435C17.545 2.98072 16.7739 2.12064 15.7561 2.01142C15.6497 2 15.5194 2 15.2588 2H8.74099C8.48035 2 8.35002 2 8.24362 2.01142C7.22584 2.12064 6.45481 2.98072 6.45704 4.00434C6.45727 4.11135 6.47146 4.2409 6.49983 4.5" stroke="#ffffff" stroke-width="1.5"/> </g>
+
                 </svg>
             </label>
+
             <label for="s2" id="slide2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-save-fill" viewBox="0 0 16 16" style="margin-top:25% ;" onclick="window.location.href = '/#/genres/list/all'">
-                    <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.312 2.5m2.802-3.5a7 7 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="300px" height="300px" viewBox="0 0 24 24" fill="none" style="margin-top: 25%;" onclick="window.location.href = '/#/songs/list/all'">
+
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <g id="SVGRepo_iconCarrier"> <path d="M13.75 2C13.75 1.58579 13.4142 1.25 13 1.25C12.5858 1.25 12.25 1.58579 12.25 2V14.5359C11.4003 13.7384 10.2572 13.25 9 13.25C6.37665 13.25 4.25 15.3766 4.25 18C4.25 20.6234 6.37665 22.75 9 22.75C11.6234 22.75 13.75 20.6234 13.75 18V6.243C14.9875 7.77225 16.8795 8.75 19 8.75C19.4142 8.75 19.75 8.41421 19.75 8C19.75 7.58579 19.4142 7.25 19 7.25C16.1005 7.25 13.75 4.8995 13.75 2Z" fill="#ffffff"/> </g>
+
                 </svg>
             </label>
             <label for="s3" id="slide3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-save-fill" viewBox="0 0 16 16" style="margin-top:25% ;" onclick="window.location.href = '/#/playlist/list/all'">
-                    <path fill-rule="evenodd" d="M2.854 15.854A.5.5 0 0 1 2 15.5V14H.5a.5.5 0 0 1-.354-.854l1.5-1.5A.5.5 0 0 1 2 11.5h1.793l.53-.53c-.771-.802-1.328-1.58-1.704-2.32-.798-1.575-.775-2.996-.213-4.092C3.426 2.565 6.18 1.809 8 3.233c1.25-.98 2.944-.928 4.212-.152L13.292 2 12.147.854A.5.5 0 0 1 12.5 0h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.854.354L14 2.707l-1.006 1.006c.236.248.44.531.6.845.562 1.096.585 2.517-.213 4.092-.793 1.563-2.395 3.288-5.105 5.08L8 13.912l-.276-.182a22 22 0 0 1-2.685-2.062l-.539.54V14a.5.5 0 0 1-.146.354zm2.893-4.894A20.4 20.4 0 0 0 8 12.71c2.456-1.666 3.827-3.207 4.489-4.512.679-1.34.607-2.42.215-3.185-.817-1.595-3.087-2.054-4.346-.761L8 4.62l-.358-.368c-1.259-1.293-3.53-.834-4.346.761-.392.766-.464 1.845.215 3.185.323.636.815 1.33 1.519 2.065l1.866-1.867a.5.5 0 1 1 .708.708z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="300px" width="300px" version="1.1" id="_x32_" viewBox="0 0 512 512" xml:space="preserve" fill="#ffffff" style="margin-top: 25%;" onclick="window.location.href = '/#/authors/list/all'">
+
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+
+                    <g id="SVGRepo_iconCarrier"><g> <path class="st0" d="M270.16,128.905c20.016,8.398,43.083-1.019,51.489-21.067c8.406-20.04-1.035-43.082-21.059-51.48 c-20.048-8.414-43.09,1.028-51.497,21.051C240.688,97.441,250.121,120.507,270.16,128.905z"/> <path class="st0" d="M352.496,122.739c8.526,1.911,16.981-3.468,18.876-11.995c1.902-8.518-3.469-16.972-11.987-18.884 c-8.518-1.894-16.989,3.485-18.884,12.012C338.59,112.382,343.962,120.844,352.496,122.739z"/> <path class="st0" d="M507.467,428.7l-52.741-13.296l-57.639-289.429l26.84,4.761l3.091-13.842l-51.657-13.931l-4.111,18.426 l13.159,2.337l0.081,0.394c-5.5-0.161-10.799,2.962-13.095,8.326l-33.328,53.286l-35.366-20.987L108.486,49.14 c-7.065-4.657-16.556-2.706-21.212,4.359c-4.648,7.058-2.698,16.556,4.368,21.204l99.749,76.9 c2.842,1.999,3.452,6.255,0.883,11.104C188.412,169.98,5.003,417.122,5.003,417.122c-7.298,8.254-6.52,20.86,1.734,28.165 c8.262,7.298,20.883,6.52,28.182-1.742l139.66-130.757c3.998-3.998,6.222-6.222,16.884,0.876l61.917,35.551l6.52,90.757 c0.056,9.924,8.157,17.913,18.072,17.84c9.924-0.064,17.913-8.149,17.856-18.065l5.716-100.143 c0.538-10.268-2.128-16.612-9.94-23.925l-58.377-55.311c0,0,38.024-39.276,44.616-44.961c3.019-2.625,5.813-7.33,10.735-5.684 l46.824,18.643c12.324,6.013,18.908-1.325,25.298-7.17l30.14-65.17l52.187,262.116l-40.577,36.803 c-2.449,2.232-2.633,6.03-0.409,8.471c1.18,1.309,2.81,1.975,4.456,1.975c1.429,0,2.874-0.514,4.014-1.557l40.714-36.932 l53.303,13.424c0.498,0.128,0.988,0.185,1.478,0.185c2.674,0,5.13-1.814,5.812-4.528 C512.622,432.762,510.678,429.502,507.467,428.7z"/> </g> </g>
+
+                </svg>
+            </label>
+            <label for="s4" id="slide4">
+                <svg fill="#000000" width="300px" height="300px" viewBox="0 0 24 24" id="music-folder-9" data-name="Line Color" xmlns="http://www.w3.org/2000/svg" class="icon line-color" style="margin-top:25%" onclick="window.location.href = '/#/playlist/list/all'">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                    <g id="SVGRepo_iconCarrier">
+                    <path id="secondary" d="M21,13H18v6" style="fill: none; stroke: #f2f2f2; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                    <circle id="secondary-2" data-name="secondary" cx="16" cy="19" r="2" style="fill: none; stroke: #f2f2f2; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                    <path id="primary" d="M10,19H4a1,1,0,0,1-1-1.29l2.4-8A1,1,0,0,1,6.4,9H20" style="fill: none; stroke: #f2f2f2; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                    <path id="primary-2" data-name="primary" d="M3,17.71l2.4-8A1,1,0,0,1,6.4,9H18V6a1,1,0,0,0-1-1H9L7,3H4A1,1,0,0,0,3,4V18s0,0,0,0A.89.89,0,0,1,3,17.71Z" style="fill: none; stroke: #f2f2f2; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"/>
+                    </g>
                 </svg>
             </label>
         </section>
@@ -86,8 +118,8 @@ export default {
     transition: transform 0.4s ease;
 }
 
-#s1:checked ~ #slide3, #s2:checked ~ #slide1,
-#s3:checked ~ #slide2
+#s1:checked ~ #slide4, #s2:checked ~ #slide1,
+#s3:checked ~ #slide2, #s4:checked ~ #slide3
 {
     box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
     transform: translate3d(-30%,13%,-150px);
@@ -95,22 +127,28 @@ export default {
 
 
 #s1:checked ~ #slide1, #s2:checked ~ #slide2,
-#s3:checked ~ #slide3
+#s3:checked ~ #slide3, #s4:checked ~ #slide4
 {
     box-shadow: 0 13px 25px 0 rgba(0,0,0,.3), 0 11px 7px 0 rgba(0,0,0,.19);
     transform: translate3d(0,10%,0);
 }
 
 #s1:checked ~ #slide2, #s2:checked ~ #slide3,
-#s3:checked ~ #slide1
+#s3:checked ~ #slide4, #s4:checked ~ #slide1
  {
     box-shadow: 0 6px 10px 0 rgba(0,0,0,.3), 0 2px 2px 0 rgba(0,0,0,.2);
     transform: translate3d(30%,13%,-150px);
 }
 
+#s1:checked ~ #slide3, #s2:checked ~ #slide4,
+#s3:checked ~ #slide1, #s4:checked ~ #slide2
+{
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
+    transform: translate3d(0%,10%,-450px);
+    }
 
 #slide1 {background: rgb(60,43,117);
-        background: linear-gradient(180deg, rgb(57, 221, 57) 0%, rgb(5, 66, 41) 64%); 
+        background: linear-gradient(138deg, rgba(60,43,117,1) 0%, rgba(237,212,193,1) 83%); 
     }
 #slide2 { background: rgb(63,94,251);
         background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
@@ -118,7 +156,7 @@ export default {
 #slide3 { background: rgb(0,255,128);
     background: linear-gradient(135deg, rgba(0,255,128,1) 0%, rgba(255,255,255,1) 100%);
 }
-
-
-
+#slide4 { background: rgb(34,193,195);
+        background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(192,120,213,1) 50%, rgba(253,233,45,1) 100%);
+}
 </style>
