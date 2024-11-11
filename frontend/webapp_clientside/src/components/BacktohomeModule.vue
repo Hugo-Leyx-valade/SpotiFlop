@@ -1,7 +1,7 @@
 <template>
     <div>
         <header>
-            <a id="icon_link" href="/#/homeAdmin"><img id="icon" src="../assets/spotify-playlist_white.png" alt="logo_white" ></a>
+            <a id="icon_link" href="/#/adminPanel"><img id="icon" src="../assets/spotify-playlist_white.png" alt="logo_white" ></a>
         </header>
     </div>
 </template>

@@ -1,6 +1,7 @@
 <!--create a panel where admin can choose to go on the different table to edit ...
 May be add graph on the frequency of the site and on the number of music added -->
 
+
 <template>
     <div class="admin-panel" onload="changeBodyBackgroundColor()">
         <h1>Admin Panel</h1>
@@ -8,26 +9,47 @@ May be add graph on the frequency of the site and on the number of music added -
             <input type="radio" name="slider" id="s1">
             <input type="radio" name="slider" id="s2">
             <input type="radio" name="slider" id="s3" checked>
+            <input type="radio" name="slider" id="s4">
+            <input type="radio" name="slider" id="s5">
             <label for="s1" id="slide1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-save-fill" viewBox="0 0 16 16" style="margin-top:30% ;"  onclick="window.location.href = '/#/genres/list/all'">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-music-note-list" viewBox="0 0 16 16" style="margin-top:25% ;" onclick="window.location.href = '/#/genres/list/all'">
+                    <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2"/>
+                    <path fill-rule="evenodd" d="M12 3v10h-1V3z"/>
+                    <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1z"/>
+                    <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5"/>
                 </svg>
             </label>
             <label for="s2" id="slide2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-save-fill" viewBox="0 0 16 16" style="margin-top:25% ;"  onclick="window.location.href = '/#/songs/list/all'">
-                    <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m7.5-6.923c-.67.204-1.335.82-1.887 1.855A8 8 0 0 0 5.145 4H7.5zM4.09 4a9.3 9.3 0 0 1 .64-1.539 7 7 0 0 1 .597-.933A7.03 7.03 0 0 0 2.255 4zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a7 7 0 0 0-.656 2.5zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5zM8.5 5v2.5h2.99a12.5 12.5 0 0 0-.337-2.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5zM5.145 12q.208.58.468 1.068c.552 1.035 1.218 1.65 1.887 1.855V12zm.182 2.472a7 7 0 0 1-.597-.933A9.3 9.3 0 0 1 4.09 12H2.255a7 7 0 0 0 3.072 2.472M3.82 11a13.7 13.7 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5zm6.853 3.472A7 7 0 0 0 13.745 12H11.91a9.3 9.3 0 0 1-.64 1.539 7 7 0 0 1-.597.933M8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855q.26-.487.468-1.068zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.7 13.7 0 0 1-.312 2.5m2.802-3.5a7 7 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7 7 0 0 0-3.072-2.472c.218.284.418.598.597.933M10.855 4a8 8 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-file-earmark-music-fill" viewBox="0 0 16 16" style="margin-top:25% ;" onclick="window.location.href = '/#/songs/list/all'">
+                  <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M11 6.64v1.75l-2 .5v3.61c0 .495-.301.883-.662 1.123C7.974 13.866 7.499 14 7 14s-.974-.134-1.338-.377C5.302 13.383 5 12.995 5 12.5s.301-.883.662-1.123C6.026 11.134 6.501 11 7 11c.356 0 .7.068 1 .196V6.89a1 1 0 0 1 .757-.97l1-.25A1 1 0 0 1 11 6.64"/>
                 </svg>
             </label>
             <label for="s3" id="slide3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-save-fill" viewBox="0 0 16 16" style="margin-top:25% ;"  onclick="window.location.href = '/#/users/list/all'">
-                    <path fill-rule="evenodd" d="M2.854 15.854A.5.5 0 0 1 2 15.5V14H.5a.5.5 0 0 1-.354-.854l1.5-1.5A.5.5 0 0 1 2 11.5h1.793l.53-.53c-.771-.802-1.328-1.58-1.704-2.32-.798-1.575-.775-2.996-.213-4.092C3.426 2.565 6.18 1.809 8 3.233c1.25-.98 2.944-.928 4.212-.152L13.292 2 12.147.854A.5.5 0 0 1 12.5 0h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.854.354L14 2.707l-1.006 1.006c.236.248.44.531.6.845.562 1.096.585 2.517-.213 4.092-.793 1.563-2.395 3.288-5.105 5.08L8 13.912l-.276-.182a22 22 0 0 1-2.685-2.062l-.539.54V14a.5.5 0 0 1-.146.354zm2.893-4.894A20.4 20.4 0 0 0 8 12.71c2.456-1.666 3.827-3.207 4.489-4.512.679-1.34.607-2.42.215-3.185-.817-1.595-3.087-2.054-4.346-.761L8 4.62l-.358-.368c-1.259-1.293-3.53-.834-4.346.761-.392.766-.464 1.845.215 3.185.323.636.815 1.33 1.519 2.065l1.866-1.867a.5.5 0 1 1 .708.708z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-people-fill" viewBox="0 0 16 16" style="margin-top:25% ;"  onclick="window.location.href = '/#/users/list/all'">
+                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                 </svg>
             </label>
+            <label for="s4" id="slide4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-music-player-fill" viewBox="0 0 16 16" style="margin-top:25% ;"  onclick="window.location.href = '/#/authors/list/all'">
+                    <path d="M8 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                    <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm1 2h6a1 1 0 0 1 1 1v2.5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1m3 12a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                </svg>
+            </label>
+            <label for="s5" id="slide5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-vinyl" viewBox="0 0 16 16" style="margin-top:25% ;"  onclick="window.location.href = '/#/playlist/list/all'">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                    <path d="M8 6a2 2 0 1 0 0 4 2 2 0 0 0 0-4M4 8a4 4 0 1 1 8 0 4 4 0 0 1-8 0"/>
+                    <path d="M9 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                </svg>
+            </label>
+            
         </section>
     </div>
 </template>
 
 <script>
+
+
 export default {
     name: 'AdminPanel',
     data() {
@@ -61,7 +83,7 @@ export default {
     display: none;
 }
 
-#slider {
+/*#slider {
     height: 35vw;
     position: relative;
     perspective: 1000px;
@@ -70,7 +92,7 @@ export default {
 
 #slider label {
     margin: auto;
-    width: 30%;
+    width: 25%;
     height: 90%;
     border-radius: 30px;
     position: absolute;
@@ -79,8 +101,8 @@ export default {
     transition: transform 0.4s ease;
 }
 
-#s1:checked ~ #slide3, #s2:checked ~ #slide1,
-#s3:checked ~ #slide2
+
+#s1:checked ~ #slide1, #s2:checked ~ #slide2, #s3:checked ~ #slide3, #s4:checked ~ #slide4
 {
     box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
     transform: translate3d(-30%,13%,-150px);
@@ -88,17 +110,45 @@ export default {
 
 
 #s1:checked ~ #slide1, #s2:checked ~ #slide2,
-#s3:checked ~ #slide3
+#s3:checked ~ #slide3, #s4:checked ~ #slide4
 {
     box-shadow: 0 13px 25px 0 rgba(0,0,0,.3), 0 11px 7px 0 rgba(0,0,0,.19);
     transform: translate3d(0,10%,0);
 }
+*/
+
+#slider label {
+    transition: transform 0.6s ease, opacity 0.4s ease; /* transition fluide */
+    opacity: 0.6; /* transparence initiale pour les sliders non actifs */
+}
+
+#s1:checked ~ #slide1, #s2:checked ~ #slide2,
+#s3:checked ~ #slide3, #s4:checked ~ #slide4,
+#s5:checked ~ #slide5
+{
+    opacity: 1; /* slider actif pleinement opaque */
+    transform: translate3d(0, 0%, 0) scale(1.1); /* slider actif mis en avant */
+}
 
 #s1:checked ~ #slide2, #s2:checked ~ #slide3,
-#s3:checked ~ #slide1
+#s3:checked ~ #slide4, #s4:checked ~ #slide5, #s5:checked ~ #slide1 {
+    opacity: 0.8; /* slider adjacent légèrement transparent */
+    transform: translate3d(20%, 0, -50px) scale(0.9); /* slider adjacent plus petit */
+}
+
+#s1:checked ~ #slide2, #s2:checked ~ #slide3,
+#s3:checked ~ #slide4, #s4:checked ~ #slide5, #s5:checked ~ #slide1
  {
     box-shadow: 0 6px 10px 0 rgba(0,0,0,.3), 0 2px 2px 0 rgba(0,0,0,.2);
     transform: translate3d(30%,13%,-150px);
+}
+
+#slider svg {
+    display: flex;
+    margin: auto; /* pour centrer le SVG */
+    margin-top: 10%; /* ajustez selon les besoins */
+    width: 90%; /* ajuste la taille si nécessaire */
+    height: auto;
 }
 
 
@@ -112,4 +162,14 @@ export default {
     background: linear-gradient(135deg, rgba(0,255,128,1) 0%, rgba(255,255,255,1) 100%);
 }
 
+#slide4 { 
+    background: linear-gradient(135deg, rgba(255,105,180,1) 0%, rgba(0,204,255,1) 100%); 
+}
+
+#slide5 { 
+    background: linear-gradient(135deg, rgb(107, 60, 83) 0%, rgb(3, 119, 148) 100%); 
+}
+
 </style>
+
+
