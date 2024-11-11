@@ -68,8 +68,8 @@
           <td>{{ u.user_id }}</td>
           <td>{{ u.user_username }}</td>
           <td><a :href="'/#/users/show/' + u.user_id" @click="oneUserLoad(u)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
-          <td><a :href="`/#/users/edit/${u.user_id}`" @click="oneUserLoad(u)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
-          <td><input type="button" value="DELETE" @click="sendDeleteRequest()" /></td>
+          <td><a :href="`/#/users/edit/${u.user_id}`" @click="oneUserLoad(u)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
+          <td><input type="button" value="DELETE" @click="sendDeleteRequest()" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#ff6600'" onMouseLeave="this.style.background='white'" /></td>
         </tr>
       </table>
     </div>
@@ -241,40 +241,23 @@
     width: 95%; 
     margin: 20px;
     color: white;
-    background-color: #333;
-    border-radius: 8px;
+    background-color: transparent;
+    border-radius: 1px;
     overflow: hidden;
     font-family: 'LilGrotesk', sans-serif;
   }
   
   #app table tr{
-    background-color: #444;
+    background-color: #44444400;
   }
 
   #app td, #app th{
     padding: 10px;
-    border: 1px solid #555;
+    border: 1px solid #ffffff;
     text-align: center;
     font-weight: bold;
 
   }
-
-  input[type="button"]{
-    background-color: #42b983;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  input[type="button"]:hover {
-    background-color: #37a875;
-  }
-
-
-
   
   </style>
   
