@@ -30,9 +30,9 @@
       </tr>
       <tr v-for="g in genres" :key="g.genre_id">
         <td>{{ g.genre_name }}</td>
-        <td><a :href="'/#/genres/show/' + g.genre_id" @click="oneGenreLoad(g)" style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">SHOW</a></td>
-        <td><a :href="'/#/genres/edit/' + g.genre_id" @click="oneGenreLoad(g)" style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">EDIT</a></td>
-        <td><input type="button" value="DELETE" @click="sendDeleteRequest(g.genre_id)" style="background-color: #f56363; color: white; border: none; border-radius: 8px; padding: 5px 10px; cursor: pointer; font-weight: bold;" /></td>
+        <td><a :href="'/#/genres/show/' + g.genre_id" @click="oneGenreLoad(g)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">SHOW</a></td>
+        <td><a :href="'/#/genres/edit/' + g.genre_id" @click="oneGenreLoad(g)" style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'">EDIT</a></td>
+        <td><input type="button" value="DELETE" @click="sendDeleteRequest(g.genre_id)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#ff6600'" onMouseLeave="this.style.background='white'"/></td>
       </tr>
     </table>
   
@@ -133,36 +133,22 @@
     width: 95%; 
     margin: 20px;
     color: white;
-    background-color: #333;
+    background-color: #33333300;
     border-radius: 8px;
     overflow: hidden;
     font-family: 'LilGrotesk', sans-serif;
   }
   
   #app table tr{
-    background-color: #c29999;
+    background-color: #f1eeee00;
   }
 
   #app td, #app th{
     padding: 10px;
-    border: 1px solid #555;
+    border: 2px solid #cfcfcf;
     text-align: center;
     font-weight: bold;
 
-  }
-
-  input[type="button"]{
-    background-color: #42b983;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  input[type="button"]:hover {
-    background-color: #37a875;
   }
   
   </style>
