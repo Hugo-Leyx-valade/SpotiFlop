@@ -8,16 +8,16 @@
     <!-- FOR DATA SHEET /authors/show/42 -->
       <table v-if="action === 'show'" class="table table-primary table-striped table-hover table-bordered border-success ">
         <tr><td>ID</td><td>{{oneAuthors.author_id}}</td></tr>
-        <tr><td>ALIAS</td><td>{{oneAuthors.author_alias}}</td></tr>
-        <tr><td> FIRST NAME </td><td>{{oneAuthors.author_first_name}}</td></tr>
-        <tr><td>last_name</td><td>{{oneAuthors.author_last_name}}</td></tr>
-        <tr><td>biography</td><td>{{oneAuthors.author_biography}}</td></tr>
-        <tr><td>verified</td><td>{{oneAuthors.author_verified}}</td></tr>
+        <tr><td>Alias</td><td>{{oneAuthors.author_alias}}</td></tr>
+        <tr><td>First Name</td><td>{{oneAuthors.author_first_name}}</td></tr>
+        <tr><td>Last Name</td><td>{{oneAuthors.author_last_name}}</td></tr>
+        <tr><td>Biography</td><td>{{oneAuthors.author_biography}}</td></tr>
+        <tr><td>Verified</td><td>{{oneAuthors.author_verified}}</td></tr>
         <tr><td><a :href="'/#/authors/edit/' + oneAuthors.author_id" class="btn btn-primary mb-2"   @click="oneAuthorsLoad(oneAuthors)"  >[EDIT]</a></td></tr>
       </table>
     </div>
     
-    <div v-if="action === 'edit'" class="grid gap-3 ">
+    <div v-if="action === 'edit'" class="container ">
       <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
         <span class="input-group-text" style="margin-bottom: 5%;">Alias</span>
         <input type="text" name="authors_alias" class="form-control" v-model="oneAuthors.author_alias" :placeholder="oneAuthors.author_alias" style="margin-bottom: 5%;">
