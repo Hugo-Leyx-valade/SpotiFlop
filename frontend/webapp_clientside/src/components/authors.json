@@ -1,0 +1,42 @@
+[
+    { 
+        "authors_id": 1, 
+        "authors_alias": "Earth, Wind & Fire", 
+        "authors_first_name": null, 
+        "authors_last_name": null, 
+        "authors_biography": null, 
+        "authors_verification": 1,
+        "authors_image": "EarthWindAndFire.jpg"
+
+    },
+        
+    { 
+    "authors_id": 2, 
+    "authors_alias": "Michael Jackson", 
+    "authors_first_name": "Michael", 
+    "authors_last_name": "Jackson", 
+    "authors_biography": null, 
+    "authors_verification": 1,
+    "authors_image": "MichaelJackson.jpg"},
+    
+
+    { 
+    "authors_id": 3, 
+    "authors_alias": "Imagine Dragons", 
+    "authors_first_name": null, 
+    "authors_last_name": null, 
+    "authors_biography": null, 
+    "authors_verification": 1,
+    "authors_image": "ImagineDragons.jpeg"},
+        
+    { 
+    "authors_id": 4, 
+    "authors_alias": "The Weeknd", 
+    "authors_first_name": null, 
+    "authors_last_name": null, 
+    "authors_biography": null, 
+    "authors_verification": 1,
+    "authors_image": "TheWeeknd.jpg"
+    
+}
+    ]
