@@ -4,7 +4,10 @@ May be add graph on the frequency of the site and on the number of music added -
 
 <template>
     <div class="admin-panel" onload="changeBodyBackgroundColor()">
-        <h1>Admin Panel</h1>
+        <BacktohomeModule></BacktohomeModule>
+        <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 35%;" >Admin Panel</span>
+
+
         <section class="content d-flex justify-content-center" id="slider">
             <input type="radio" name="slider" id="s1">
             <input type="radio" name="slider" id="s2">
@@ -42,35 +45,31 @@ May be add graph on the frequency of the site and on the number of music added -
                     <path d="M9 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
                 </svg>
             </label>
-            
         </section>
+
     </div>
 </template>
 
 <script>
-
+import BacktohomeModule from './BacktohomeModule.vue';
 
 export default {
     name: 'AdminPanel',
-    data() {
-        return {
-            // Add your component data here
-        };
+    components:{
+        BacktohomeModule
     },
+
     methods: {
-        // Add your component methods here
         changeBodyBackgroundColor() {
-            document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
+            document.body.style.background ='linear-gradient(180deg, rgba(51, 204, 51,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
             document.body.style.backgroundSize = 'cover';
             document.body.style.height = '100%';
             document.body.style.backgroundColor = 'rgb(0,0,0)';
         }
     },
-    computed: {
-        // Add your computed properties here
-    },
+
     mounted() {
-        // Add your mounted lifecycle hook here
+        this.changeBodyBackgroundColor();
     }
 };
 </script>
@@ -85,20 +84,17 @@ h1 {
     
 }
 
-@keyframes glow {
-    from {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff0000, 0 0 40px #000000, 0 0 50px #000000, 0 0 60px rgb(255, 0, 128), 0 0 70px #ff0000;
-    }
-    to {
-    text-shadow: 0 0 20px #fff, 0 0 30px #000000, 0 0 40px #000000, 0 0 50px #ff0000, 0 0 60px #ff0000, 0 0 70px #000000, 0 0 80px #000000;
-    }
+.home {
+    text-align: center;
+    margin-top: 50px;
 }
+
 
 [type=radio] {
     display: none;
 }
 
-/*#slider {
+#slider {
     height: 35vw;
     position: relative;
     perspective: 1000px;
@@ -107,7 +103,7 @@ h1 {
 
 #slider label {
     margin: auto;
-    width: 25%;
+    width: 30%;
     height: 90%;
     border-radius: 30px;
     position: absolute;
@@ -116,8 +112,9 @@ h1 {
     transition: transform 0.4s ease;
 }
 
-
-#s1:checked ~ #slide1, #s2:checked ~ #slide2, #s3:checked ~ #slide3, #s4:checked ~ #slide4
+#s1:checked ~ #slide5, #s2:checked ~ #slide1,
+#s3:checked ~ #slide2, #s4:checked ~ #slide3, 
+#s5:checked ~ #slide4
 {
     box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
     transform: translate3d(-30%,13%,-150px);
@@ -125,65 +122,39 @@ h1 {
 
 
 #s1:checked ~ #slide1, #s2:checked ~ #slide2,
-#s3:checked ~ #slide3, #s4:checked ~ #slide4
+#s3:checked ~ #slide3, #s4:checked ~ #slide4,
+#s5:checked ~ #slide5
 {
     box-shadow: 0 13px 25px 0 rgba(0,0,0,.3), 0 11px 7px 0 rgba(0,0,0,.19);
     transform: translate3d(0,10%,0);
 }
-*/
-
-#slider {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-}
-
-.slider-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-#slider label {
-    transition: transform 0.6s ease, opacity 0.4s ease; /* transition fluide */
-    opacity: 0.6; /* transparence initiale pour les sliders non actifs */
-}
-
-#s1:checked ~ #slide1, #s2:checked ~ #slide2,
-#s3:checked ~ #slide3, #s4:checked ~ #slide4,
-#s5:checked ~ #slide5
-{
-    opacity: 1; /* slider actif pleinement opaque */
-    transform: translate3d(0, 0%, 0) scale(1.1); /* slider actif mis en avant */
-}
 
 #s1:checked ~ #slide2, #s2:checked ~ #slide3,
-#s3:checked ~ #slide4, #s4:checked ~ #slide5, #s5:checked ~ #slide1 {
-    opacity: 0.8; /* slider adjacent légèrement transparent */
-    transform: translate3d(20%, 0, -50px) scale(0.9); /* slider adjacent plus petit */
-}
-
-#s1:checked ~ #slide2, #s2:checked ~ #slide3,
-#s3:checked ~ #slide4, #s4:checked ~ #slide5, #s5:checked ~ #slide1
+#s3:checked ~ #slide4, #s4:checked ~ #slide5,
+#s5:checked ~ #slide1
  {
     box-shadow: 0 6px 10px 0 rgba(0,0,0,.3), 0 2px 2px 0 rgba(0,0,0,.2);
     transform: translate3d(30%,13%,-150px);
 }
 
-#slider svg {
-    display: flex;
-    margin: auto; /* pour centrer le SVG */
-    margin-top: 10%; /* ajustez selon les besoins */
-    width: 90%; /* ajuste la taille si nécessaire */
-    height: auto;
+#s1:checked ~ #slide3, #s2:checked ~ #slide4,
+#s3:checked ~ #slide5, #s4:checked ~ #slide1,
+#s5:checked ~ #slide2
+{
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
+    transform: translate3d(-25%,10%,-450px);
+    }
+
+#s1:checked ~ #slide4, #s2:checked ~ #slide5,
+#s3:checked ~ #slide1, #s4:checked ~ #slide2,
+#s5:checked ~ #slide3
+{
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
+    transform: translate3d(25%,10%,-450px); 
 }
 
-
 #slide1 {background: rgb(60,43,117);
-        background: linear-gradient(180deg, rgb(57, 221, 57) 0%, rgb(5, 66, 41) 64%); 
+        background: linear-gradient(138deg, rgba(60,43,117,1) 0%, rgba(237,212,193,1) 83%); 
     }
 #slide2 { background: rgb(63,94,251);
         background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
@@ -191,14 +162,12 @@ h1 {
 #slide3 { background: rgb(0,255,128);
     background: linear-gradient(135deg, rgba(0,255,128,1) 0%, rgba(255,255,255,1) 100%);
 }
-
-#slide4 { 
-    background: linear-gradient(135deg, rgba(255,105,180,1) 0%, rgba(0,204,255,1) 100%); 
+#slide4 { background: rgb(34,193,195);
+        background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(192,120,213,1) 50%, rgba(253,233,45,1) 100%);
 }
+#slide5 { background: rgb(28,54,200);
+    background: linear-gradient(135deg, rgba(28,54,200,1) 0%, rgba(195,44,44,1) 39%, rgba(186,133,40,1) 63%, rgba(171,34,191,1) 98%); }
 
-#slide5 { 
-    background: linear-gradient(135deg, rgb(107, 60, 83) 0%, rgb(3, 119, 148) 100%); 
-}
 
 </style>
 
