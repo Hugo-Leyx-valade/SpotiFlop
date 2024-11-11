@@ -148,7 +148,7 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-INSERT INTO author (`alias`,`first name`,`last name`,`biography`,`e`)  VALUES
+INSERT INTO author (`alias`,`first name`,`last name`,`biography`,`verified`)  VALUES
 ("Earth, Wind & Fire", NULL , NULL,NULL,1),
 ("MJ", "Michael", "Jackson", NULL,1),
 ("Imagine Dragons", NULL, NULL, NULL,1),
