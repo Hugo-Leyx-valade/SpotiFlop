@@ -5,6 +5,10 @@ May be add graph on the frequency of the site and on the number of music added -
 <template>
     <div class="admin-panel" onload="changeBodyBackgroundColor()">
         <BacktohomeModule></BacktohomeModule>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <i class="fa fa-search"></i>
+        </div>
         <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 35%;" >Admin Panel</span>
 
 
@@ -105,6 +109,41 @@ h1 {
     text-align: center;
     animation: glow 2s ease-in-out infinite alternate;
     
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.search-container{
+    margin-top: 150px;
+    position: relative;
+}
+
+.search-container input{
+    width: 350px;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.search-container input:focus{
+    width: 500px;
+}
+
+.search-container i {
+
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translate(-50%);
+    color: #555;
+
 }
 
 .home {
