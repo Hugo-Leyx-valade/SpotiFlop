@@ -28,7 +28,7 @@ module.exports = {
     },
     async getAllSongs(){ 
         try {
-            let sql = "SELECT * FROM song";
+            let sql = "SELECT * FROM song inner join genre on song.id_genre=genre.id_genre inner join author on song.id_author=author.id_author";
             const [rows, fields] = await pool.execute(sql);
             console.log("SONGS FETCHED: "+rows.length);
             return rows;
@@ -56,10 +56,11 @@ module.exports = {
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
             
-            let sql = "SELECT * FROM song WHERE id_song = ?";
+            let sql = "SELECT * FROM song inner join genre on song.id_genre=genre.id_genre inner join author on song.id_author=author.id_author WHERE id_song = ?";
             const [rows, fields] = await pool.execute(sql, [ songId ]);
-            console.log("song car: "+rows.length);
+            console.log("SINGLE CAR FETCHED: "+rows.length);
             if (rows.length == 1) {
+                console.log("song car: "+rows[0]);
                 return rows[0];
             } else {
                 return false;
@@ -72,7 +73,7 @@ module.exports = {
     },
     async delOneSong(songId){ 
         try {
-            let sql = "DELETE FROM songs WHERE song_id = ?";
+            let sql = "DELETE FROM song WHERE id_song = ?";
             const [okPacket, fields] = await pool.execute(sql, [ songId ]); 
             console.log("DELETE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
@@ -82,10 +83,10 @@ module.exports = {
             throw err; 
         }
     },
-    async addOneSong(genreId){ 
+    async addOneSong(songId, songTitle, songDuration, songNumberOfPrice, songDate_OfPost, songLyrics, songIdAuthors){ 
         try {
-            let sql = "INSERT INTO songs (song_id, song_genre) VALUES (NULL, ?) ";
-            const [okPacket, fields] = await pool.execute(sql, [ genreId ]); 
+            let sql = "INSERT INTO song (title, duration, number_of_streams, date_of_post, lyrics, id_author, id_genre) VALUES (?) ";
+            const [okPacket, fields] = await pool.execute(sql, [ songId, songTitle, songDuration, songNumberOfPrice, songDate_OfPost, songLyrics, songIdAuthors ]); 
             console.log("INSERT " + JSON.stringify(okPacket));
             return okPacket.insertId;
         }
@@ -94,17 +95,27 @@ module.exports = {
             throw err; 
         }
     },
-    async editOneSong(songId, songGenre, songName, songBaseprice, songIsfancy, songRealprice){ 
+
+
+    async editOneSong(songId, songTitle, songDuration, songNumberOfStreams, songLyrics, songIdAuthors,songDateOfPost) {
+        const sql = `
+            select * from song;
+        `;
         try {
-            let sql = "UPDATE songs SET song_genre=?, song_name=?, song_baseprice=?, song_isfancy=?, song_realprice=? WHERE song_id=? "; // positional parameters
-            const [okPacket, fields] = await pool.execute(sql, 
-                  [songGenre, songName, songBaseprice, songIsfancy, songRealprice, songId]); // positional parameters
-            console.log("UPDATE " + JSON.stringify(okPacket));
-            return okPacket.affectedRows;
+            const [okPacket, fields] = await pool.execute(sql, [
+                songTitle, 
+                songDuration, 
+                songNumberOfStreams, 
+                songDateOfPost,
+                songLyrics, 
+                songIdAuthors, 
+                songId
+            ]);
+            console.log('Update Successful!', okPacket);
+            return okPacket.affectedRows; // Return affected rows
+        } catch (error) {
+            console.error('Error updating song:', error.message);
+            throw error;
         }
-        catch (err) {
-            console.log(err);
-            throw err; 
-        }
-    }
-};
+    }}
+
