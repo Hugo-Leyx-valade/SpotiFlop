@@ -53,11 +53,18 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.song (
   date_of_post DATE NOT NULL,
   lyrics VARCHAR(1000),
   id_author INT NOT NULL,
+  id_genre INT NOT NULL, -- Add the new column here
   PRIMARY KEY (id_song, id_author),
   INDEX fk_song_author1_idx (id_author ASC) VISIBLE,
+  INDEX fk_song_genre1_idx (id_genre ASC) VISIBLE, -- Add an index for the genre
   CONSTRAINT fk_song_author1
-    FOREIGN KEY (userid_author)
+    FOREIGN KEY (id_author)
     REFERENCES projet_harone_hugo.author (id_author)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_song_genre1
+    FOREIGN KEY (id_genre)
+    REFERENCES projet_harone_hugo.genre (id_genre) -- Reference the genre table
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
@@ -113,26 +120,6 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.playlist_has_song (
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
--- -----------------------------------------------------
--- Table projet_harone_hugo.genre_has_song
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS projet_harone_hugo.genre_has_song (
-  genre_id_genre INT NOT NULL,
-  song_id_song INT NOT NULL,
-  PRIMARY KEY (genre_id_genre, song_id_song),
-  INDEX fk_genre_has_song_song1_idx (song_id_song ASC) VISIBLE,
-  INDEX fk_genre_has_song_genre1_idx (genre_id_genre ASC) VISIBLE,
-  CONSTRAINT fk_genre_has_song_genre1
-    FOREIGN KEY (genre_id_genre)
-    REFERENCES genre (id_genre)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT fk_genre_has_song_song1
-    FOREIGN KEY (song_id_song)
-    REFERENCES projet_harone_hugo.song (id_song)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-) ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

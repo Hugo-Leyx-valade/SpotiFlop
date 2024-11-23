@@ -48,10 +48,9 @@
       <div class="row">
         <div class="author-card" v-for="a of authors" v-bind:key="a.authors_id">
           <a :href="'/#/authors/show/' + a.authors_id" class="link-offset-2 link-underline link-underline-opacity-0" @click="oneAuthorsLoad(a)">
-            <div class="image-container">
-              <img :src="require(`@/assets/${a.authors_image}`)" :alt="a.authors_alias" class="author-image">
+            <div class="image-container" style="background-color: white;">
               <div class="overlay">
-                <span class="author-name">{{ a.authors_alias }}</span>
+                <span class="author-name">{{ a.alias }}</span>
               </div>
             </div>
           </a>
@@ -63,27 +62,20 @@
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
-import authors from "./authors.json";
 
 export default {
   name: 'Authors',
-  props:['action','id'],
   components: {
     BacktohomeModule
   },
-
+  props:['action','id'],
   mounted() {
 
     this.changeBodyBackgroundColor();
     this.printAuthors(element);
     },
 
-  authors: [
-        // Example data, replace with your actual data
-        { authors_id: 1, authors_alias: 'Author1' },
-        { authors_id: 2, authors_alias: 'Author2' },
-        { authors_id: 3, authors_alias: 'Author3' }
-      ],
+  
 
 
   data () {
@@ -103,55 +95,94 @@ export default {
   },
   methods:{
 
-    async getALLData(){
-        /*
-        let responesAuthors = await this.$http.get("backend/url");
-        this.cars = responesAuthors.data;
-        let reponseSong = await this.$http.get('wxxx');
-        this.song = reponseSong.data;
-         */
-        try  {
-          this.authors = authors;
-        }
-        catch (ex) {console.log(ex);}
-      },
+async getAllData() {
+try {
+  let responseAuthor = await fetch("http://localhost:9000/authorsapi/list");
+  console.log(responseAuthor)
+  this.authors = await responseAuthor.json();
+  console.log(" songs" + this.song[1].song_title );
+  /*
+  this.brands = [ { brand_id: 1, brand_name: "BMW" }, { brand_id: 2, brand_name: "Audi" }, { brand_id: 3, brand_name: "Citroen" } ];
+  this.cars = [ { car_id: 1, car_brand: 2, car_name: "Audi S4", car_baseprice: 40000, car_isfancy: 0, car_realprice: 45000 }, { car_id: 2, car_brand: 1, car_name: "BMW i8", car_baseprice: 80000, car_isfancy: 1, car_realprice: 90000 } ];
+  */
+  this.refreshOneAuthor();
+}
+catch (ex) {"hugp" + console.log(ex); }
+}, 
+
+formatDate(incomingDate) {
+const date = new Date(incomingDate);
+// Format the date (e.g., as 'YYYY-MM-DD')
+const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+return formattedDate;
+},
+
+async refreshOneAuthor() {
+if (this.$props.id === "all" || this.$props.id === "0") {
+  this.oneAuthor = {
+    song_id: 0,
+    song_title: '',
+    song_duration: '0:0',
+    song_number_of_stream: 0,
+    song_date: '0000-00-00',
+    song_lyrics: "",
+  };
+  return;
+}
+try {
+  let responseAuthor = await this.$http.get("http://localhost:9000/authorsapi/show/" + this.$props.id);
+  this.oneAuthor = responseAuthor.data;
+  console.log("oneAuthor: " + this.oneAuthor.title);
+  // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
+}
+catch (ex) { console.log(ex); }
+},
 
 
-    async refreshOneAuthor(){
-      if(this.$props.id ==="all" || this.$props.id=="0") return;
-      try{
-        this.oneAuthors = this.authors.find(author=>authors.author.id==this.$props.id);
-      }catch (ex){console.log(ex);}
-    },
 
-    changeBodyBackgroundColor() {
-        document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 65%) no-repeat' ;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.height = '100%';
-        document.body.style.backgroundColor = 'rgb(0,0,0)';
-    },
+async sendDeleteRequest(authorsId) {
+try {
+  alert("DELETING... " + authorsId);
+  let response = await this.$http.get("http://localhost:9000/authorsapi/del/" + authorsId);
+  alert("DELETED: " + response.data.rowsDeleted);
+  this.getAllData();
+}
+catch (ex) { console.log(ex); }
+},
 
-    oneAuthorsLoad(authors){
-      this.oneAuthors.author_alias = authors.authors_alias;
-      this.oneAuthors.author_id = authors.authors_id;
-      this.oneAuthors.author_first_name = authors.authors_first_name;
-      this.oneAuthors.author_last_name = authors.authors_last_name;
-      this.oneAuthors.author_biography = authors.authors_biography;
-      this.oneAuthors.author_verified = authors.authors_verified;
-      this.oneAuthors.author_image = authors.authors_image;
-    },
 
-  },
 
-  watch:{
-    id: function(newVal, oldVAl){
-      this.refreshOneAuthor();
-    }
-  },
+async sendEditRequest() {
+try {
+  alert("EDITING... " + this.oneAuthor.id_author);
+  let response = await this.$http.post(
+        "http://localhost:9000/authorsapi/update/" + this.oneAuthor.id_author, this.onrAuthor);
+  alert("EDITED: " + response.data.rowsUpdated);
+  this.$router.push({ path: '/song' });
+  this.getAllData();
+}
+catch (ex) { console.log(ex); }
+},
 
-  created(){
-    this.getALLData();
-  }
+
+
+changeBodyBackgroundColor() {
+  document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.height = '100%';
+  document.body.style.backgroundColor = 'rgb(0,0,0)';
+},
+},
+
+watch:{
+id: function(newVal, oldVAl){
+  this.refreshOneSong();
+}
+},
+
+created(){
+this.getAllData();
+}
 
 }
 </script>
@@ -204,11 +235,13 @@ td{
 }
 
 .container{
+  display: flex;
   margin: 100px 0 0 200px;
   width: 70%;
   height: 450px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-content: center;
   gap: 10px;
 }
 
@@ -217,7 +250,6 @@ td{
   width: 150px;
   height: 150px;
   border-radius: 10px;
-  overflow: hidden;
 }
 
 .image-container{
@@ -231,7 +263,7 @@ td{
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.6%);
+  border: 2px solid rgba(236, 68, 68, 0.685);
   transition: transform 0.7s ease; /* ajout de la transi sur transform*/
 }
 
@@ -241,12 +273,13 @@ td{
 }
 
 .overlay{
-  position: absolute;
+  align-content: center;
+  position: relative;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.6%);
+  background-color: rgba(255, 0, 0, 0.466);
   color: white;
   display: flex;
   align-items: center;
@@ -264,5 +297,6 @@ td{
   text-align: center;
   font-weight: bold;
   font-size: 1.2rem;
+  counter-reset: black;
 }
 </style>

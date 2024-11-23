@@ -70,8 +70,17 @@ module.exports = {
             throw err; 
         }
     },
+
+
+async deleteInPlaylist(songId){
+    let sql = " DELETE FROM playlist_has_song WHERE song_id_song = ?";
+    await pool.execute(sql,[songId]);
+},
+
+
     async delOneSong(songId){ 
         try {
+            deleteInPlaylist(songId)
             let sql = "DELETE FROM songs WHERE song_id = ?";
             const [okPacket, fields] = await pool.execute(sql, [ songId ]); 
             console.log("DELETE " + JSON.stringify(okPacket));
@@ -82,6 +91,14 @@ module.exports = {
             throw err; 
         }
     },
+
+
+
+
+
+
+
+
     async addOneSong(genreId){ 
         try {
             let sql = "INSERT INTO songs (song_id, song_genre) VALUES (NULL, ?) ";
