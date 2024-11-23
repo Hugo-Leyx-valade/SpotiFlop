@@ -99,7 +99,14 @@ module.exports = {
 
     async editOneSong(songId, songTitle, songDuration, songNumberOfStreams, songLyrics, songIdAuthors,songDateOfPost) {
         const sql = `
-            select * from song;
+            UPDATE song 
+            SET title = ?, 
+                duration = ?, 
+                number_of_streams = ?, 
+                date_of_post = ?,
+                lyrics = ?, 
+                id_author = ? 
+            WHERE id_song = ?
         `;
         try {
             const [okPacket, fields] = await pool.execute(sql, [
