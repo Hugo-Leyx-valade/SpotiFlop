@@ -2,11 +2,7 @@
   <div class="hello" onload="changeBodyBackgroundColor()">
     <BackgroundModule></BackgroundModule>
     <BacktohomeModule></BacktohomeModule>
-    <div class="search-container">
-      <input type="text" placeholder="Search...">
-      <i class="fa fa-search"></i>
-    </div>
-    <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 39.5%;" >SpotiFlop</span>
+    <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%;" >Authors {{ action }} {{ id }}</span>
 
     <div id="tables" style="margin-top: 13%;">
     <!-- FOR DATA SHEET /authors/show/42 -->

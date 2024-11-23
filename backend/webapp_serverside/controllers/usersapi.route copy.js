@@ -1,14 +1,9 @@
-/*
-1. always (backend, frontend): car_realprice, car_isfancy === all LOWERCASE
-2. install axios (into frontend): npm install axios@0.25.0
-*/
-
 // controllers/carsapi.route.js
 const express = require('express');
 const router = express.Router();
-const carRepo = require('../utils/cars.repository');
+const carRepo = require('../utils/songs.repository');
 
-router.get('/brands', brandListAction);
+router.get('/genre', brandListAction);
 router.get('/list', carListAction);
 router.get('/show/:carId', carShowAction);
 router.get('/del/:carId', carDelAction);
@@ -20,12 +15,10 @@ async function brandListAction(request, response) {
     response.send(JSON.stringify(brands));
 }
 
-// http://localhost:9000/carsapi/list
 async function carListAction(request, response) {
     var cars = await carRepo.getAllCars();
     response.send(JSON.stringify(cars));
 }
-// http://localhost:9000/carsapi/show/42
 async function carShowAction(request, response) {
     var oneCar = await carRepo.getOneCar(request.params.carId);
     response.send(JSON.stringify(oneCar));
@@ -42,13 +35,13 @@ async function carUpdateAction(request, response) {
     // TODO: !!! INPUT VALIDATION !!!
     var carId = request.params.carId;
     if (carId==="0") carId = await carRepo.addOneCar(request.body.car_brand);
-    var isFancy = (request.body.car_isfancy === undefined || request.body.car_isfancy === false) ? 0 : 1; 
+    var isFancy = (request.body.car_isFancy === undefined || request.body.car_isFancy === false) ? 0 : 1; 
     var numRows = await carRepo.editOneCar(carId, 
         request.body.car_brand, 
         request.body.car_name, 
         request.body.car_baseprice, 
         isFancy, 
-        request.body.car_realprice);
+        request.body.car_realPrice);
     let result = { rowsUpdated: numRows };
     response.send(JSON.stringify(result));
 }

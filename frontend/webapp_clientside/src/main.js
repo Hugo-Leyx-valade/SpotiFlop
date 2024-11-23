@@ -4,6 +4,9 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import $ from 'jquery';
+// npm install axios@0.25.0
+import axios from 'axios'
+Vue.prototype.$http = axios
 
 $(document).ready(function(){
     $("h1").click(function(){
