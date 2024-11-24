@@ -7,28 +7,28 @@
     <div id="tables" style="margin-top: 13%;">
     <!-- FOR DATA SHEET /authors/show/42 -->
       <table v-if="action === 'show'" class="table table-primary table-striped table-hover table-bordered border-success ">
-        <tr><td>ID</td><td>{{oneAuthors.author_id}}</td></tr>
-        <tr><td>Alias</td><td>{{oneAuthors.author_alias}}</td></tr>
-        <tr><td>First Name</td><td>{{oneAuthors.author_first_name}}</td></tr>
-        <tr><td>Last Name</td><td>{{oneAuthors.author_last_name}}</td></tr>
-        <tr><td>Biography</td><td>{{oneAuthors.author_biography}}</td></tr>
-        <tr><td>Verified</td><td>{{oneAuthors.author_verified}}</td></tr>
-        <tr><td><a :href="'/#/authors/edit/' + oneAuthors.author_id" class="btn btn-primary mb-2"   @click="oneAuthorsLoad(oneAuthors)"  >[EDIT]</a></td></tr>
+        <tr><td>ID</td><td>{{oneAuthor.id_author}}</td></tr>
+        <tr><td>Alias</td><td>{{oneAuthor.alias}}</td></tr>
+        <tr><td>First Name</td><td>{{oneAuthor.first_name}}</td></tr>
+        <tr><td>Last Name</td><td>{{oneAuthor.last_name}}</td></tr>
+        <tr><td>Biography</td><td>{{oneAuthor.biography}}</td></tr>
+        <tr><td>Verified</td><td>{{oneAuthor.verified}}</td></tr>
+        <tr><td><a :href="'/#/authors/edit/' + oneAuthor.id_author" class="btn btn-primary mb-2"   @click="oneAuthorLoad(oneAuthor)"  >[EDIT]</a></td></tr>
       </table>
     </div>
     
-    <div v-if="action === 'edit'" class="container ">
+    <div v-if="action === 'edit'" class="container2 ">
       <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
         <span class="input-group-text" style="margin-bottom: 5%;">Alias</span>
-        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthors.author_alias" :placeholder="oneAuthors.author_alias" style="margin-bottom: 5%;">
+        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthor.alias" :placeholder="oneAuthor.alias" style="margin-bottom: 5%;">
       </div>
       <div class=" input-group" style="padding-left: 30%; padding-right: 30%;">
         <span class="input-group-text">First and last name</span>
-        <input type="text" aria-label="First name" class="form-control" v-model="oneAuthors.author_first_name" >
-        <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthors.author_last_name">
+        <input type="text" aria-label="First name" class="form-control" v-model="oneAuthor.first_name" >
+        <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthor.ast_name">
       </div>
-      <div class="p-2 g-col-6"><input type="text" name="authors_biography" value="Biography" v-model="oneAuthors.author_biography" /></div>
-      <div class="p-2 g-col-6"><select name="authors_verified" v-model="oneAuthors.author_verified">
+      <textarea id="bio" role="textbox" contenteditable v-model="oneAuthor.biography">{{ oneAuthor.biography }}</textarea>
+      <div class="p-2 g-col-6"><select name="authors_verified" v-model="oneAuthor.verified" style="padding:0.7% ; border-radius: 1000px;">
             <option>
               0
             </option>
@@ -38,8 +38,8 @@
           </select>
         </div>
       <div id="buttons_container" class="g-col-6 mt-5" >
-          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(a.authors_id)">DELETE</button>
-          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest(a.authors_id)" />
+          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(a.id_author)">DELETE</button>
+          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest(a.id_author)" />
       </div>  
     </div>
 
@@ -47,7 +47,7 @@
     <div v-if="action === 'list'" class="container">
       <div class="row">
         <div class="author-card" v-for="a of authors" v-bind:key="a.authors_id">
-          <a :href="'/#/authors/show/' + a.authors_id" class="link-offset-2 link-underline link-underline-opacity-0" @click="oneAuthorsLoad(a)">
+          <a :href="'/#/authors/show/' + a.id_author" class="link-offset-2 link-underline link-underline-opacity-0">
             <div class="image-container" style="background-color: white;">
               <div class="overlay">
                 <span class="author-name">{{ a.alias }}</span>
@@ -82,17 +82,18 @@ export default {
     return {
       authors : [],
       song : [],
-      oneAuthors : {
+      oneAuthor : {
         author_id: 0,
         author_alias:'X',
         author_first_name: 'Y',
         author_last_name:'z',
-        author_biography:'something in the world',
+        author_biography:'caca',
         author_verified:1,
         author_image: "",
       }
     }
   },
+
   methods:{
 
 async getAllData() {
@@ -100,7 +101,7 @@ try {
   let responseAuthor = await fetch("http://localhost:9000/authorsapi/list");
   console.log(responseAuthor)
   this.authors = await responseAuthor.json();
-  console.log(" songs" + this.song[1].song_title );
+  console.log(" songs" + this.authors[1] );
   /*
   this.brands = [ { brand_id: 1, brand_name: "BMW" }, { brand_id: 2, brand_name: "Audi" }, { brand_id: 3, brand_name: "Citroen" } ];
   this.cars = [ { car_id: 1, car_brand: 2, car_name: "Audi S4", car_baseprice: 40000, car_isfancy: 0, car_realprice: 45000 }, { car_id: 2, car_brand: 1, car_name: "BMW i8", car_baseprice: 80000, car_isfancy: 1, car_realprice: 90000 } ];
@@ -110,29 +111,23 @@ try {
 catch (ex) {"hugp" + console.log(ex); }
 }, 
 
-formatDate(incomingDate) {
-const date = new Date(incomingDate);
-// Format the date (e.g., as 'YYYY-MM-DD')
-const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-return formattedDate;
-},
-
 async refreshOneAuthor() {
 if (this.$props.id === "all" || this.$props.id === "0") {
   this.oneAuthor = {
-    song_id: 0,
-    song_title: '',
-    song_duration: '0:0',
-    song_number_of_stream: 0,
-    song_date: '0000-00-00',
-    song_lyrics: "",
-  };
+        author_id: 0,
+        author_alias:'X',
+        author_first_name: 'Y',
+        author_last_name:'z',
+        author_biography:'triks',
+        author_verified:1,
+        author_image: "",
+      };
   return;
 }
 try {
   let responseAuthor = await this.$http.get("http://localhost:9000/authorsapi/show/" + this.$props.id);
   this.oneAuthor = responseAuthor.data;
-  console.log("oneAuthor: " + this.oneAuthor.title);
+  console.log("oneAuthor: " + this.oneAuthor.alias);
   // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
 }
 catch (ex) { console.log(ex); }
@@ -176,7 +171,7 @@ changeBodyBackgroundColor() {
 
 watch:{
 id: function(newVal, oldVAl){
-  this.refreshOneSong();
+  this.refreshOneAuthor();
 }
 },
 
@@ -298,5 +293,26 @@ td{
   font-weight: bold;
   font-size: 1.2rem;
   counter-reset: black;
+}
+
+#bio {
+  display: inline-block;
+  position:inherit;
+  padding-bottom: 5%;
+  width: 35%;
+  height: 50%;
+  overflow: auto;
+  resize: both;
+  min-height: 10px;
+  line-height: 30px;
+  resize: none;
+  text-align: left;
+  color: rgb(0, 136, 255);
+  border-color: #ffffff;
+  border-style: solid;
+  border-radius: 20px;
+  margin-left: 0%;
+  margin-top: 1%;
+  font-size: 20px;
 }
 </style>
