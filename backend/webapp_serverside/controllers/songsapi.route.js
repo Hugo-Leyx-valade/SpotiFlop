@@ -35,13 +35,15 @@ async function songUpdateAction(request, response) {
     // TODO: !!! INPUT VALIDATION !!!
     var songID = request.params.songID;
     if (songID==="0") songID = await songRepo.addOneSong(request.body.song_genre);
-    var isFancy = (request.body.song_isFancy === undefined || request.body.song_isFancy === false) ? 0 : 1; 
-    var numRows = await songRepo.editOneSong(songID, 
-        request.body.song_genre, 
-        request.body.song_name, 
-        request.body.song_baseprice, 
-        isFancy, 
-        request.body.song_realPrice);
+    var numRows = await songRepo.editOneSong(
+        request.body.id_genre, 
+        request.body.title, 
+        request.body.duration, 
+        request.body.number_of_streams, 
+        request.body.date_of_post,
+        request.body.lyrics,
+        request.body.id_author,
+        songID);
     let result = { rowsUpdated: numRows };
     response.send(JSON.stringify(result));
 }

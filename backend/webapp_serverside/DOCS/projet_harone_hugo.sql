@@ -159,17 +159,40 @@ INSERT INTO user (username, first_name, last_name, email, password, role, date_o
 ('adam25', 'Adam', 'Girard', 'adam.girard@gmail.com', 'Hj5&L3qP9vT4', 'user', '1993-11-27'),
 ('ines53', 'Ines', 'Durand', 'ines.durand@hotmail.fr', 'F2m@K7pL8zT6', 'admin', '1994-06-02'),
 ('nathan44', 'Nathan', 'Martin', 'nathan.martin@laposte.net', 'J3q&F5kW9lT8', 'user', '1989-01-15');
+
+INSERT INTO genre (name) VALUES
+    ('Rock'),
+    ('Jazz'),
+    ('Hip Hop'),
+    ('Classical'),
+    ('Pop'),
+    ('Electronic'),
+    ('Reggae'),
+    ('Blues'),
+    ('R&B'),
+    ('Country'),
+    ('Folk'),
+    ('Metal'),
+    ('Indie'),
+    ('Techno'),
+    ('Soul'),
+    ('Funk'),
+    ('Psytrance'),
+    ('Afrobeat'),
+    ('Salsa'),
+    ('Dubstep');
+
 -- Insert data into the song table
-INSERT INTO song (title, duration, number_of_streams, date_of_post, lyrics, id_author) VALUES
-('Let\'s Groove', 5.36, 597458154, '2013-09-01', NULL, 1),
-('Smooth Criminal', 9.25, 988804859, '2010-11-19', NULL, 2),
-('Enemy', 2.53, 1588206980, '2021-10-28', NULL, 3),
-('Heartless', 3.18, 1018698991, '2020-12-03', NULL, 4),
-('Poker Face', 3.57, 1398566907, '2009-12-20', NULL, 5),
-('Without Me', 4.50, 1398566907, '2009-06-17', NULL, 6),
-('SCOPOLAMINE', 2.29, 1876483, '2023-11-27', NULL, 7),
-('One More Time', 5.20, 638173590, '2001-03-12', NULL, 8),
-('Veridis Quo', 5.20, 638173590, '2001-03-12', NULL, 8);
+INSERT INTO song (title, duration, number_of_streams, date_of_post, lyrics, id_author,id_genre) VALUES
+('Let\'s Groove', 5.36, 597458154, '2013-09-01', NULL, 1,5),
+('Smooth Criminal', 9.25, 988804859, '2010-11-19', NULL, 2,5),
+('Enemy', 2.53, 1588206980, '2021-10-28', NULL, 3,5),
+('Heartless', 3.18, 1018698991, '2020-12-03', NULL, 4,3),
+('Poker Face', 3.57, 1398566907, '2009-12-20', NULL, 5,3),
+('Without Me', 4.50, 1398566907, '2009-06-17', NULL, 6,1),
+('SCOPOLAMINE', 2.29, 1876483, '2023-11-27', NULL, 7,2),
+('One More Time', 5.20, 638173590, '2001-03-12', NULL, 8,6),
+('Veridis Quo', 5.20, 638173590, '2001-03-12', NULL, 8,6);
 
 
 INSERT INTO playlist (title, date_of_post, number_of_save, _description, state, user_id) VALUES
@@ -219,33 +242,9 @@ INSERT INTO playlist (title, date_of_post, number_of_save, _description, state, 
     ('Moments inoubliables', '2019-10-17', 921, 'Les chansons qui accompagnent les moments inoubliables de ma vie.', 'private', 4),
     ('Ambiance travail', '2022-06-20', 510, 'Les sons qui m\'aident à me concentrer et à travailler efficacement.', 'private', 5);
 
-INSERT INTO genre (name) VALUES
-    ('Rock'),
-    ('Jazz'),
-    ('Hip Hop'),
-    ('Classical'),
-    ('Pop'),
-    ('Electronic'),
-    ('Reggae'),
-    ('Blues'),
-    ('R&B'),
-    ('Country'),
-    ('Folk'),
-    ('Metal'),
-    ('Indie'),
-    ('Techno'),
-    ('Soul'),
-    ('Funk'),
-    ('Psytrance'),
-    ('Afrobeat'),
-    ('Salsa'),
-    ('Dubstep');
+
 
 INSERT INTO playlist_has_song VALUES 
-    (1, 1),
-    (2, 2);
-
-INSERT INTO genre_has_song VALUES
     (1, 1),
     (2, 2);
 

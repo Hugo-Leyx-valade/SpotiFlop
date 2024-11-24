@@ -63,7 +63,7 @@ module.exports = {
     },
 
 
-    async delOneSong(authorId){ 
+    async delOneAuthor(authorId){ 
         try {
             deleteInPlaylist(authorId)
             let sql = "DELETE FROM author WHERE author_id = ?";
@@ -84,7 +84,7 @@ module.exports = {
 
 
 
-    async addOneSong(authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified){ 
+    async addOneAuthor(authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified){ 
         try {
 
             let sql = "INSERT INTO author (author_alias,author_first_name,author_last_name,author_biography,author_veified) VALUES (?,?,?,?,?) ";
@@ -97,11 +97,14 @@ module.exports = {
             throw err; 
         }
     },
-    async editOneSong(authorsId,authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified){ 
+
+
+
+    async editOneAuthor(authorsId,authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified){ 
         try {
-            let sql = "UPDATE songs SET author_alias=?, author_first_name=?, author_last_name=?, author_biography=?, author_veified=? WHERE author_id=? "; // positional parameters
+            let sql = "UPDATE author SET alias=?, first_name=?, last_name=?, biography=?, verified=? WHERE id_author=? "; // positional parameters
             const [okPacket, fields] = await pool.execute(sql, 
-                  [authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified,authorsId]); // positional parameters
+                  [authorAlias ?? " ",authorFirstName ?? " ",authorLastName ?? " ",authorBiography ?? " ",authorVeified ?? 0 ,authorsId]); // positional parameters
             console.log("UPDATE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
         }

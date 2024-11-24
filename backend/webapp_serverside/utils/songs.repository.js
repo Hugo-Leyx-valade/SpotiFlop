@@ -111,11 +111,14 @@ async deleteInPlaylist(songId){
             throw err; 
         }
     },
-    async editOneSong(songId, songGenre, songName, songBaseprice, songIsfancy, songRealprice){ 
+
+
+    
+    async editOneSong(songGenre, songTitle, songDuration, songNumberOfStream, songDateOfPost,songLyrics, songAuthor, songId){ 
         try {
-            let sql = "UPDATE songs SET song_genre=?, song_name=?, song_baseprice=?, song_isfancy=?, song_realprice=? WHERE song_id=? "; // positional parameters
+            let sql = "UPDATE song SET id_genre=?, title=?, duration=?, number_of_streams=?, date_of_post=?, lyrics = ?, id_author = ? WHERE id_song=? "; // positional parameters
             const [okPacket, fields] = await pool.execute(sql, 
-                  [songGenre, songName, songBaseprice, songIsfancy, songRealprice, songId]); // positional parameters
+                  [songGenre ?? 1, songTitle ?? " ", songDuration ?? 0, songNumberOfStream ?? 0, songDateOfPost ?? "00-13-2013",songLyrics ?? " ", songAuthor ?? 1, songId]); // positional parameters
             console.log("UPDATE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
         }

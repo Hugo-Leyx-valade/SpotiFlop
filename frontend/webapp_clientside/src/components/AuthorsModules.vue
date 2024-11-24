@@ -39,7 +39,7 @@
         </div>
       <div id="buttons_container" class="g-col-6 mt-5" >
           <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(a.id_author)">DELETE</button>
-          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest(a.id_author)" />
+          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest()" />
       </div>  
     </div>
 
@@ -151,9 +151,9 @@ async sendEditRequest() {
 try {
   alert("EDITING... " + this.oneAuthor.id_author);
   let response = await this.$http.post(
-        "http://localhost:9000/authorsapi/update/" + this.oneAuthor.id_author, this.onrAuthor);
+        "http://localhost:9000/authorsapi/update/" + this.oneAuthor.id_author, this.oneAuthor);
   alert("EDITED: " + response.data.rowsUpdated);
-  this.$router.push({ path: '/song' });
+  this.$router.push({ path: '/song/list/all' });
   this.getAllData();
 }
 catch (ex) { console.log(ex); }

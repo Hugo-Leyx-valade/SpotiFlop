@@ -36,22 +36,18 @@ async function authorDelAction(request, response) {
 }
 
 async function authorUpdateAction(request, response) {
-    try {
         // Validate input data if necessary
         var authorId = request.params.authorId;
         if (authorId === "0") authorId = await authorRepo.addOneAuthor(request.body.author_name);
         var numRows = await authorRepo.editOneAuthor(
             authorId,
-            request.body.author_name,
-            request.body.author_bio,
-            request.body.author_birthDate,
-            request.body.author_books // Assuming authors have a list of books as a property
-        );
+            request.body.alias,
+            request.body.first_name,
+            request.body.last_name,
+            request.body.biography,
+            request.body.verified);
         let result = { rowsUpdated: numRows };
         response.send(JSON.stringify(result));
-    } catch (error) {
-        response.status(500).send({ error: 'Failed to update the author.' });
-    }
 }
 
 module.exports = router;

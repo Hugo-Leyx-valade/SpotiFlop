@@ -145,11 +145,11 @@
 
     async sendEditRequest() {
       try {
-        alert("EDITING... " + this.oneSong.id_song);
+        alert("EDITING... " + this.oneSong.id_song +" "+ this.oneSong.title + " "+ this.oneSong.duration +" " + this.oneSong.number_of_streams +" " + this.oneSong.date_of_post +" " + this.oneSong.lyrics +" " + this.oneSong.id_author);
         let response = await this.$http.post(
-              "http://localhost:9000/songsapi/update/" + this.oneSong.id_song, this.onrSong);
+              "http://localhost:9000/songsapi/update/" + this.oneSong.id_song, this.oneSong);
         alert("EDITED: " + response.data.rowsUpdated);
-        this.$router.push({ path: '/song' });
+        this.$router.push({ path: '/author/list/all' });
         this.getAllData();
       }
       catch (ex) { console.log(ex); }
