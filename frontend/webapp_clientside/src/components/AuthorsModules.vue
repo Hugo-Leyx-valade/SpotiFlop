@@ -6,29 +6,84 @@
 
     <div id="tables" style="margin-top: 13%;">
     <!-- FOR DATA SHEET /authors/show/42 -->
-      <table v-if="action === 'show'" class="table table-primary table-striped table-hover table-bordered border-success ">
-        <tr><td>ID</td><td>{{oneAuthors.author_id}}</td></tr>
-        <tr><td>Alias</td><td>{{oneAuthors.author_alias}}</td></tr>
-        <tr><td>First Name</td><td>{{oneAuthors.author_first_name}}</td></tr>
-        <tr><td>Last Name</td><td>{{oneAuthors.author_last_name}}</td></tr>
-        <tr><td>Biography</td><td>{{oneAuthors.author_biography}}</td></tr>
-        <tr><td>Verified</td><td>{{oneAuthors.author_verified}}</td></tr>
-        <tr><td><a :href="'/#/authors/edit/' + oneAuthors.author_id" class="btn btn-primary mb-2"   @click="oneAuthorsLoad(oneAuthors)"  >[EDIT]</a></td></tr>
-      </table>
+    <div v-if="action === 'show'" style="width: 50%; margin-left: 5%; margin-top: -3%; background-color: none; border-radius: 8px; padding: 10px;">
+    <!-- Alias - Large Text, Aligned to the Left -->
+      <div style="font-size: 400%; color: white; font-weight: 900; text-align: left;">
+          <span style="color: #4CAF50;"></span> {{oneAuthor.alias}}
+      </div>
+      <!-- First Name and Last Name - Slightly Smaller, Aligned to the Left -->
+      <div style="text-align: left; margin-top: 0%; display: flex;">
+        <div style="font-size: 200%; color: white; text-align: left; margin-top: 0%;">{{oneAuthor.first_name}} {{oneAuthor.last_name}}</div>
+        <div v-if="oneAuthor.verified === 1" style="color: green; font-size: 130%;">Verified</div>
+        <div v-if="oneAuthor.verified === 0" style="color: green; font-size: 130%;">Not Verified</div>
+      </div>
+      <!-- Biography - Aligned to the Left -->
+      <div style="margin-bottom: 15px; font-size: 16px; color: white; text-align: left;">
+          <span style="color: #4CAF50;"></span> {{oneAuthor.biography}}
+      </div>
+      <!-- Edit Button - Centered -->
+      <div style="text-align: center; margin-left: -91%; margin-top: 5%;">
+          <a :href="'/#/authors/edit/' + oneAuthor.id_author" 
+              style="color: white; background-color: #007BFF; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;"
+              @click="oneAuthorLoad(oneAuthor)">[EDIT]</a>
+      </div>
+      <table style="width: 100%; margin-top: 5%; border-collapse: collapse;">
+    <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
+        <td>ID</td>
+        <td>Title</td>
+        <td>Duration</td>
+        <td>Number Of Streams</td>
+        <td>Date Of Post</td>
+        <td>Author</td>
+        <td>Genre</td>
+        <td>SHOW DETAILS</td>
+        <td>EDIT SONG</td>
+        <td>DELETE SONG</td>
+    </tr>
+    <tr id="song-body" v-for="song in songAuthor" :key="song.id_song">
+        <td style="color: aliceblue; font-weight: bold;">{{ song.id_song }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ song.title }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ song.duration }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ song.number_of_streams }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ formatDate(song.date_of_post) }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ song.alias }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ song.name }}</td>
+        <td>
+            <a :href="'/#/songs/show/' + song.id_song" 
+              style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"
+              @mouseover="this.style.background='#7efca4'" 
+              @mouseleave="this.style.background='white'">SHOW</a>
+        </td>
+        <td>
+            <a :href="'/#/songs/edit/' + song.id_song" 
+              style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"
+              @mouseover="this.style.background='#6efff3'" 
+              @mouseleave="this.style.background='white'">EDIT</a>
+        </td>
+        <td>
+            <input type="button" value="DELETE" 
+                  @click="sendDeleteRequest(song.id_song)" 
+                  style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"
+                  @mouseover="this.style.background='#fa8c8c'" 
+                  @mouseleave="this.style.background='white'" />
+        </td>
+    </tr>
+</table>
     </div>
+</div>
     
-    <div v-if="action === 'edit'" class="container ">
+    <div v-if="action === 'edit'" class="container2 ">
       <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
         <span class="input-group-text" style="margin-bottom: 5%;">Alias</span>
-        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthors.author_alias" :placeholder="oneAuthors.author_alias" style="margin-bottom: 5%;">
+        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthor.alias" :placeholder="oneAuthor.alias" style="margin-bottom: 5%;">
       </div>
       <div class=" input-group" style="padding-left: 30%; padding-right: 30%;">
         <span class="input-group-text">First and last name</span>
-        <input type="text" aria-label="First name" class="form-control" v-model="oneAuthors.author_first_name" >
-        <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthors.author_last_name">
+        <input type="text" aria-label="First name" class="form-control" v-model="oneAuthor.first_name" >
+        <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthor.last_name">
       </div>
-      <div class="p-2 g-col-6"><input type="text" name="authors_biography" value="Biography" v-model="oneAuthors.author_biography" /></div>
-      <div class="p-2 g-col-6"><select name="authors_verified" v-model="oneAuthors.author_verified">
+      <textarea id="bio" role="textbox" contenteditable v-model="oneAuthor.biography">{{ oneAuthor.biography }}</textarea>
+      <div class="p-2 g-col-6"><select name="authors_verified" v-model="oneAuthor.verified" style="padding:0.7% ; border-radius: 1000px;">
             <option>
               0
             </option>
@@ -38,23 +93,21 @@
           </select>
         </div>
       <div id="buttons_container" class="g-col-6 mt-5" >
-          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(a.authors_id)">DELETE</button>
-          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest(a.authors_id)" />
+          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(oneAuthor.id_author)">DELETE</button>
+          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest()" />
       </div>  
     </div>
 
     <!-- FOR List /authors/list/all -->
+    <a v-if="action === 'list'" :href="'/#/authors/edit/0'" style="padding:0.7% 1% ;margin-left: 90%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
     <div v-if="action === 'list'" class="container">
       <div class="row">
         <div class="author-card" v-for="a of authors" v-bind:key="a.authors_id">
-          <a :href="'/#/authors/show/' + a.authors_id" class="link-offset-2 link-underline link-underline-opacity-0" @click="oneAuthorsLoad(a)">
-            <div class="image-container">
-              <img :src="require(`@/assets/${a.authors_image}`)" :alt="a.authors_alias" class="author-image">
+            <div class="image-container" style="background-color: white;">
               <div class="overlay">
-                <span class="author-name">{{ a.authors_alias }}</span>
+                <span class="author-name">{{ a.alias }}</span>
               </div>
             </div>
-          </a>
         </div>
       </div>
     </div>
@@ -63,97 +116,175 @@
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
-import authors from "./authors.json";
 
 export default {
   name: 'Authors',
-  props:['action','id'],
   components: {
     BacktohomeModule
   },
-
+  props:['action','id'],
   mounted() {
-
+    this.getSongsFromAuthor(this.$props.id);
     this.changeBodyBackgroundColor();
     this.printAuthors(element);
     },
 
-  authors: [
-        // Example data, replace with your actual data
-        { authors_id: 1, authors_alias: 'Author1' },
-        { authors_id: 2, authors_alias: 'Author2' },
-        { authors_id: 3, authors_alias: 'Author3' }
-      ],
+  
 
 
   data () {
     return {
       authors : [],
+      songAuthor : [],
       song : [],
-      oneAuthors : {
+      oneAuthor : {
         author_id: 0,
         author_alias:'X',
         author_first_name: 'Y',
         author_last_name:'z',
-        author_biography:'something in the world',
+        author_biography:'',
         author_verified:1,
         author_image: "",
       }
     }
   },
+
   methods:{
 
-    async getALLData(){
-        /*
-        let responesAuthors = await this.$http.get("backend/url");
-        this.cars = responesAuthors.data;
-        let reponseSong = await this.$http.get('wxxx');
-        this.song = reponseSong.data;
-         */
-        try  {
-          this.authors = authors;
+    async getSongsFromAuthor(authorId) {
+            if (!authorId) {
+                console.warn("Author ID is not set.");
+                return; // Exit if authorId is not provided
+            }
+
+            try {
+                // Fetch songs by author from the API
+                let response = await fetch(`http://localhost:9000/authorsapi/songAuthor/4`);
+                
+                // Check if response is OK (status 200-299)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // Parse JSON response
+                const songAuthor = await response.json();
+                console.log("Fetched songs:", songAuthor); // Log to check the data
+                
+            } catch (error) {
+                console.error("Error fetching songs:", error);
+            }
+        },
+
+async getAllData() {
+try {
+  let responseAuthor = await fetch("http://localhost:9000/authorsapi/list");
+  this.authors = await responseAuthor.json();
+  /*
+  this.brands = [ { brand_id: 1, brand_name: "BMW" }, { brand_id: 2, brand_name: "Audi" }, { brand_id: 3, brand_name: "Citroen" } ];
+  this.cars = [ { car_id: 1, car_brand: 2, car_name: "Audi S4", car_baseprice: 40000, car_isfancy: 0, car_realprice: 45000 }, { car_id: 2, car_brand: 1, car_name: "BMW i8", car_baseprice: 80000, car_isfancy: 1, car_realprice: 90000 } ];
+  */
+  this.refreshOneAuthor();
+}
+catch (ex) {"hugp" + console.log(ex); }
+}, 
+
+async refreshOneAuthor() {
+if (this.$props.id === "all" || this.$props.id === "0") {
+  this.oneAuthor = {
+        author_id: 0,
+        alais:'X',
+        first_name: 'Y',
+        last_name:'z',
+        biography:'triks',
+        verified:1,
+        image: "",
+      };
+  return;
+}
+try {
+  let responseAuthor = await this.$http.get("http://localhost:9000/authorsapi/show/" + this.$props.id);
+  this.oneAuthor = responseAuthor.data;
+  console.log(this.oneAuthor[0].title)
+  console.log("oneAuthor: " + this.oneAuthor.alias);
+  // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
+}
+catch (ex) { console.log(ex); }
+},
+
+
+
+async sendDeleteRequest(authorsId) {
+try {
+  alert("DELETING... " + authorsId);
+  let response = await this.$http.get("http://localhost:9000/authorsapi/del/" + authorsId);
+  alert("DELETED: " + response.data.rowsDeleted);
+  this.$router.push({ path: '/authors/list/all' });
+  this.getAllData();
+}
+catch (ex) { console.log(ex); }
+},
+
+
+async sendAddRequest() {
+        try {
+          alert("ADDING... " + this.oneAuthor.alias);
+          let response = await this.$http.post("http://localhost:9000/songsapi/add", this.oneAuthor);
+          alert("ADDED: " + response.data.rowsAdded);
+          this.$router.push({ path: '/authors/list/all' });
+          this.getAllData();
         }
-        catch (ex) {console.log(ex);}
+        catch (ex) { console.log(ex); }
       },
 
 
-    async refreshOneAuthor(){
-      if(this.$props.id ==="all" || this.$props.id=="0") return;
-      try{
-        this.oneAuthors = this.authors.find(author=>authors.author.id==this.$props.id);
-      }catch (ex){console.log(ex);}
-    },
-
-    changeBodyBackgroundColor() {
-        document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 65%) no-repeat' ;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.height = '100%';
-        document.body.style.backgroundColor = 'rgb(0,0,0)';
-    },
-
-    oneAuthorsLoad(authors){
-      this.oneAuthors.author_alias = authors.authors_alias;
-      this.oneAuthors.author_id = authors.authors_id;
-      this.oneAuthors.author_first_name = authors.authors_first_name;
-      this.oneAuthors.author_last_name = authors.authors_last_name;
-      this.oneAuthors.author_biography = authors.authors_biography;
-      this.oneAuthors.author_verified = authors.authors_verified;
-      this.oneAuthors.author_image = authors.authors_image;
-    },
-
-  },
-
-  watch:{
-    id: function(newVal, oldVAl){
-      this.refreshOneAuthor();
-    }
-  },
-
-  created(){
-    this.getALLData();
+async sendEditRequest() {
+try {
+  if(this.$props.id === "0"){
+    let response = await this.$http.post(
+              "http://localhost:9000/authorsapi/add/",this.oneAuthor);
+          alert("Added: " + response.data.rowsUpdated);
+          this.$router.push({ path: '/authors/list/all' });
+          this.getAllData();
   }
+  else{
+      let response = await this.$http.post(
+            "http://localhost:9000/authorsapi/update/" + this.oneAuthor.id_author, this.oneAuthor);
+      alert("EDITED: " + response.data.rowsUpdated);
+      this.$router.push({ path: '/authors/list/all' });
+      this.getAllData();
+    }
+  }
+catch (ex) { console.log(ex); }
+},
+
+
+
+changeBodyBackgroundColor() {
+  document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.height = '100%';
+  document.body.style.backgroundColor = 'rgb(0,0,0)';
+},
+},
+
+watch:{
+id: function(newVal, oldVAl){
+  this.refreshOneAuthor();},
+
+authorId(newVal) {
+    this.getSongsFromAuthor(newVal);
+}
+},
+
+created(){
+this.getAllData();
+this.getSongsFromAuthor();
+},
+
+
 
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -239,11 +370,13 @@ td{
 }
 
 .container{
-  margin: 100px 0 0 200px;
+  display: flex;
+  margin: 100px 0 0 350px;
   width: 70%;
   height: 450px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-content: center;
   gap: 10px;
 }
 
@@ -252,7 +385,6 @@ td{
   width: 150px;
   height: 150px;
   border-radius: 10px;
-  overflow: hidden;
 }
 
 .image-container{
@@ -266,7 +398,7 @@ td{
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.6%);
+  border: 2px solid rgba(236, 68, 68, 0.685);
   transition: transform 0.7s ease; /* ajout de la transi sur transform*/
 }
 
@@ -276,12 +408,13 @@ td{
 }
 
 .overlay{
-  position: absolute;
+  align-content: center;
+  position: relative;
   bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.6%);
+  background-color: rgba(255, 0, 0, 0.466);
   color: white;
   display: flex;
   align-items: center;
@@ -299,5 +432,27 @@ td{
   text-align: center;
   font-weight: bold;
   font-size: 1.2rem;
+  counter-reset: black;
+}
+
+#bio {
+  display: inline-block;
+  position:inherit;
+  padding-bottom: 5%;
+  width: 35%;
+  height: 50%;
+  overflow: auto;
+  resize: both;
+  min-height: 10px;
+  line-height: 30px;
+  resize: none;
+  text-align: left;
+  color: rgb(0, 136, 255);
+  border-color: #ffffff;
+  border-style: solid;
+  border-radius: 20px;
+  margin-left: 0%;
+  margin-top: 1%;
+  font-size: 20px;
 }
 </style>
