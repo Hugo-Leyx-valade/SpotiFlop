@@ -108,10 +108,6 @@ import BacktohomeModule from './BacktohomeModule.vue';
           song_number_of_stream: 0,
           song_date:'',
           song_lyrics: 'lyrics',
-
-          song_author: "",
-          song_genre: ""
-
           song_author_id: 0,
           song_genre_id: 0,
 
@@ -153,15 +149,6 @@ import BacktohomeModule from './BacktohomeModule.vue';
       if (this.$props.id === "all" || this.$props.id === "0") {
         this.oneSong = {
           song_id: 0,
-
-          title: '',
-          duration: 0,
-          number_os_streams: 0,
-          date_of_post: '0000-00-00',
-          lyrics: "Lyrics",
-          author: "",
-          genre: ""
-
           song_title: '',
           song_duration: '0:0',
           song_number_of_stream: 0,

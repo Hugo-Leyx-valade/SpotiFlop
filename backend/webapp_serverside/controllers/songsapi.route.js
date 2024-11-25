@@ -44,30 +44,6 @@ function formatDate(dateString) {
 
 
 
-async function songUpdateAction(request, response) {
-    var songID = request.params.songId;
-    console.log(request.body);
-
-    /*if (songID === "0") {
-        songID = await songRepo.addOneSong(
-            request.body.song_genre
-        );
-    }*/
-
-    var numRows = await songRepo.editOneSong(songID, 
-            request.body.title, 
-            request.body.duration, 
-            request.body.number_of_streams, 
-            request.body.lyrics,
-            request.body.id_author, 
-            formatDate(request.body.date_of_post),);
-
-    let result = { rowsUpdated: numRows };
-    response.send(JSON.stringify(result));
-}
-
-
-
 async function songAddAction(request, response) {
     // var json = JSON.stringify(request.body); // bodyParser can process json in body + regular POST form input too
     // console.log(json);    var songId = request.params.songId; 
