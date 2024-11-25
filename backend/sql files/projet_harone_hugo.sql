@@ -135,7 +135,17 @@ INSERT INTO author (alias, first_name, last_name, biography, verified) VALUES
 ('FEMTOGO', NULL, NULL, NULL, 0),
 ('Daft Punk', NULL, NULL, NULL, 1),
 ('Kenrick Lamar', 'Kendrick', 'Lamar', NULL, 1),
-('David Guetta', 'David', 'Guetta', NULL, 1);
+('David Guetta', 'David', 'Guetta', NULL, 1),
+('Adele', 'Adele', 'Adkins', NULL, 1),
+('Beyoncé', 'Beyoncé', 'Knowles', NULL, 1),
+('Ed Sheeran', 'Ed', 'Sheeran', NULL, 1),
+('Justin Bieber', 'Justin', 'Bieber', NULL, 1),
+('Bruno Mars', 'Bruno', 'Mars', NULL, 1),
+('Coldplay', NULL, NULL, NULL, 1),
+('Post Malone', 'Austin', 'Post', NULL, 1),
+('Rihanna', 'Robyn', 'Fenty', NULL, 1),
+('Drake', 'Aubrey', 'Graham', NULL, 1),
+('Billie Eilish', 'Billie', 'Connell', NULL, 1);
 
 -- Insert data into the user table
 INSERT INTO user (username, first_name, last_name, email, password, role, date_of_birth) VALUES
@@ -184,15 +194,158 @@ INSERT INTO genre (name) VALUES
 
 -- Insert data into the song table
 INSERT INTO song (title, duration, number_of_streams, date_of_post, lyrics, id_author,id_genre) VALUES
-('Let\'s Groove', 5.36, 597458154, '2013-09-01', NULL, 1,5),
+-- Earth, Wind & Fire
+('Boogie Wonderland', 4.45, 702345678, '2013-09-01', NULL, 1, 5),
+('September', 3.35, 912345678, '2013-09-01', NULL, 1, 5),
+('Fantasy', 4.38, 812345678, '2013-09-01', NULL, 1, 5),
+('Shining Star', 3.15, 562345678, '2013-09-01', NULL, 1, 5),
+('After the Love Has Gone', 4.25, 482345678, '2013-09-01', NULL, 1, 5),
+('Lets Groove',5.36, 597458154, '2013-09-01', NULL, 1,5),
+
+-- Michael Jackson (MJ)
+('Billie Jean', 4.54, 1582345678, '1982-11-30', NULL, 2, 5),
+('Thriller', 5.57, 1738345678, '1982-11-30', NULL, 2, 5),
+('Beat It', 4.18, 1337345678, '1982-11-30', NULL, 2, 5),
+('Black or White', 4.16, 1245345678, '1991-11-11', NULL, 2, 5),
+('Bad', 4.07, 1456345678, '1987-08-31', NULL, 2, 5),
 ('Smooth Criminal', 9.25, 988804859, '2010-11-19', NULL, 2,5),
+
+-- Imagine Dragons
+('Radioactive', 3.06, 1897345678, '2012-09-18', NULL, 3, 5),
+('Demons', 2.57, 1736345678, '2013-01-28', NULL, 3, 5),
+('Believer', 3.37, 1632345678, '2017-02-01', NULL, 3, 5),
+('Thunder', 3.07, 1526345678, '2017-04-27', NULL, 3, 5),
+('Bones', 2.45, 1016345678, '2022-03-11', NULL, 3, 5),
 ('Enemy', 2.53, 1588206980, '2021-10-28', NULL, 3,5),
+
+-- The Weeknd
+('Blinding Lights', 3.20, 2827345678, '2019-11-29', NULL, 4, 3),
+('Save Your Tears', 3.36, 2327345678, '2020-03-20', NULL, 4, 3),
+('Starboy', 3.50, 2027345678, '2016-09-21', NULL, 4, 3),
+('Can’t Feel My Face', 3.35, 1827345678, '2015-06-08', NULL, 4, 3),
+('In Your Eyes', 3.58, 1727345678, '2020-03-20', NULL, 4, 3),
 ('Heartless', 3.18, 1018698991, '2020-12-03', NULL, 4,3),
+
+-- Lady Gaga
+('Just Dance', 4.01, 1927345678, '2008-04-08', NULL, 5, 3),
+('Bad Romance', 4.55, 2127345678, '2009-10-26', NULL, 5, 3),
+('Shallow', 3.36, 1427345678, '2018-09-27', NULL, 5, 3),
+('Born This Way', 4.20, 1827345678, '2011-02-11', NULL, 5, 3),
+('The Edge of Glory', 5.21, 1327345678, '2011-05-09', NULL, 5, 3),
 ('Poker Face', 3.57, 1398566907, '2009-12-20', NULL, 5,3),
+
+-- Eminem
+('Lose Yourself', 5.20, 2037345678, '2002-10-28', NULL, 6, 1),
+('Stan', 6.44, 1337345678, '2000-11-21', NULL, 6, 1),
+('Love The Way You Lie', 4.23, 1837345678, '2010-06-21', NULL, 6, 1),
+('Rap God', 6.09, 1627345678, '2013-10-14', NULL, 6, 1),
+('Not Afraid', 4.10, 1527345678, '2010-04-29', NULL, 6, 1),
 ('Without Me', 4.50, 1398566907, '2009-06-17', NULL, 6,1),
+
+-- FEMTOGO
+('Parallel Worlds', 3.33, 478590, '2023-01-01', NULL, 7, 2),
+('Quantum Leap', 4.12, 567890, '2023-01-10', NULL, 7, 2),
+('Echoes of Time', 3.59, 387590, '2023-02-15', NULL, 7, 2),
+('Neural Networks', 4.22, 257890, '2023-03-01', NULL, 7, 2),
+('Binary Dance', 2.58, 147890, '2023-04-01', NULL, 7, 2),
 ('SCOPOLAMINE', 2.29, 1876483, '2023-11-27', NULL, 7,2),
+
+-- Daft Punk
+('Get Lucky', 6.09, 2037345678, '2013-04-19', NULL, 8, 6),
+('Around the World', 7.10, 1277345678, '1997-03-17', NULL, 8, 6),
+('Harder, Better, Faster, Stronger', 3.43, 1137345678, '2001-10-13', NULL, 8, 6),
+('Instant Crush', 5.38, 1037345678, '2013-11-22', NULL, 8, 6),
+('Digital Love', 5.00, 937345678, '2001-02-19', NULL, 8, 6),
 ('One More Time', 5.20, 638173590, '2001-03-12', NULL, 8,6),
-('Veridis Quo', 5.20, 638173590, '2001-03-12', NULL, 8,6);
+('Veridis Quo', 5.20, 638173590, '2001-03-12', NULL, 8,6),
+
+-- Kendrick Lamar
+('HUMBLE.', 2.57, 2037345678, '2017-03-30', NULL, 9, 5),
+('DNA.', 3.05, 1827345678, '2017-04-14', NULL, 9, 5),
+('Alright', 3.39, 1527345678, '2015-06-30', NULL, 9, 5),
+('King Kunta', 3.55, 1277345678, '2015-03-15', NULL, 9, 5),
+('Swimming Pools Drank', 4.07, 1077345678, '2012-07-31', NULL, 9, 5),
+
+-- David Guetta
+('Titanium', 4.05, 1827345678, '2011-08-08', NULL, 10, 6),
+('When Love Takes Over', 3.24, 1427345678, '2009-05-21', NULL, 10, 6),
+('Memories', 3.31, 1137345678, '2010-02-15', NULL, 10, 6),
+('Sexy Chick', 3.15, 932734567, '2009-06-24', NULL, 10, 6),
+('Play Hard', 3.28, 872734567, '2013-03-22', NULL, 10, 6);
+
+-- Adele
+('Hello', 4.55, 2738945678, '2015-10-23', NULL, 11, 4),
+('Rolling in the Deep', 3.48, 2138945678, '2010-11-29', NULL, 11, 4),
+('Someone Like You', 4.45, 1938945678, '2011-01-24', NULL, 11, 4),
+('Skyfall', 4.46, 1838945678, '2012-10-05', NULL, 11, 4),
+('Set Fire to the Rain', 4.02, 1738945678, '2011-07-04', NULL, 11, 4),
+
+-- Beyoncé
+('Halo', 3.44, 2638945678, '2008-01-20', NULL, 12, 3),
+('Single Ladies', 3.13, 2438945678, '2008-10-13', NULL, 12, 3),
+('Crazy in Love', 3.56, 2838945678, '2003-05-14', NULL, 12, 3),
+('Irreplaceable', 3.47, 1938945678, '2006-10-23', NULL, 12, 3),
+('Run the World (Girls)', 3.55, 1538945678, '2011-04-21', NULL, 12, 3),
+
+-- Ed Sheeran
+('Shape of You', 4.24, 3338945678, '2017-01-06', NULL, 13, 4),
+('Perfect', 4.40, 2838945678, '2017-03-03', NULL, 13, 4),
+('Thinking Out Loud', 4.41, 2538945678, '2014-09-24', NULL, 13, 4),
+('Bad Habits', 3.51, 1938945678, '2021-06-25', NULL, 13, 4),
+('Photograph', 4.19, 1738945678, '2014-05-20', NULL, 13, 4),
+
+-- Justin Bieber
+('Peaches', 3.18, 2538945678, '2021-03-19', NULL, 14, 4),
+('Sorry', 3.20, 3038945678, '2015-10-22', NULL, 14, 4),
+('Love Yourself', 3.53, 2938945678, '2015-11-09', NULL, 14, 4),
+('What Do You Mean?', 3.25, 2838945678, '2015-08-28', NULL, 14, 4),
+('Baby', 3.36, 3438945678, '2010-01-18', NULL, 14, 4),
+
+-- Bruno Mars
+('Uptown Funk', 4.30, 3038945678, '2014-11-10', NULL, 15, 3),
+('Just the Way You Are', 3.40, 2638945678, '2010-07-20', NULL, 15, 3),
+('Locked Out of Heaven', 3.53, 2438945678, '2012-10-01', NULL, 15, 3),
+('Grenade', 3.42, 2138945678, '2010-09-28', NULL, 15, 3),
+('24K Magic', 3.46, 1738945678, '2016-10-07', NULL, 15, 3),
+
+-- Coldplay
+('Yellow', 4.26, 2438945678, '2000-06-26', NULL, 16, 4),
+('Fix You', 4.55, 2638945678, '2005-09-05', NULL, 16, 4),
+('Viva La Vida', 4.04, 3038945678, '2008-06-13', NULL, 16, 4),
+('Paradise', 4.38, 2738945678, '2011-09-12', NULL, 16, 4),
+('Adventure of a Lifetime', 4.23, 1938945678, '2015-11-06', NULL, 16, 4),
+
+-- Post Malone
+('Circles', 3.35, 2838945678, '2019-08-30', NULL, 17, 4),
+('Rockstar', 3.38, 3138945678, '2017-09-15', NULL, 17, 4),
+('Sunflower', 2.39, 3238945678, '2018-10-19', NULL, 17, 4),
+('Wow.', 2.29, 2438945678, '2018-12-24', NULL, 17, 4),
+('Better Now', 3.51, 1938945678, '2018-05-08', NULL, 17, 4),
+
+-- Rihanna
+('Umbrella', 4.36, 3038945678, '2007-03-29', NULL, 18, 3),
+('Diamonds', 3.45, 2838945678, '2012-09-27', NULL, 18, 3),
+('We Found Love', 3.54, 2738945678, '2011-09-22', NULL, 18, 3),
+('Only Girl In the World', 3.56, 2438945678, '2010-09-10', NULL, 18, 3),
+('Rude Boy', 3.42, 1938945678, '2009-02-19', NULL, 18, 3),
+
+-- Drake
+('God Plan', 3.19, 3138945678, '2018-01-19', NULL, 19, 4),
+('One Dance', 2.53, 3238945678, '2016-04-05', NULL, 19, 4),
+('In My Feelings', 3.38, 2838945678, '2018-07-10', NULL, 19, 4),
+('Hotline Bling', 4.27, 2638945678, '2015-07-31', NULL, 19, 4),
+('Nonstop', 3.58, 1938945678, '2018-06-29', NULL, 19, 4),
+
+-- Billie Eilish
+
+('bad guy', 3.14, 3538945678, '2019-03-29', NULL, 20, 4),
+('everything i wanted', 4.05, 2938945678, '2019-11-13', NULL, 20, 4),
+('when the party is over', 3.16, 2738945678, '2018-10-17', NULL, 20, 4),
+('ocean eyes', 3.20, 2138945678, '2016-11-18', NULL, 20, 4),
+('lovely', 3.21, 1938945678, '2018-04-19', NULL, 20, 4);
+
+
+
 
 
 INSERT INTO playlist (title, date_of_post, number_of_save, _description, state, user_id) VALUES
@@ -226,21 +379,21 @@ INSERT INTO playlist (title, date_of_post, number_of_save, _description, state, 
     ('Soulful Sunday', '2021-12-05', 412, 'A soulful collection for a laid-back Sunday.', 'private', 8),
     ('Techno Underground', '2022-04-14', 1951, 'Dark and driving techno for the underground scene lovers.', 'public', 9),
     ('Blues Legends', '2020-11-08', 764, 'A playlist featuring the greatest blues legends of all time.', 'private', 10),
-    ('Mes chansons du matin', '2021-09-10', 512, 'Les chansons qui me donnent de l\'énergie chaque matin.', 'private', 11),
-    ('Souvenirs d\'été 2019', '2019-09-01', 348, 'Les morceaux qui ont marqué mon été 2019.', 'private', 12),
+    ('Mes chansons du matin', '2021-09-10', 512, 'Les chansons qui me donnent de l’énergie chaque matin.', 'private', 11),
+    ('Souvenirs d’été 2019', '2019-09-01', 348, 'Les morceaux qui ont marqué mon été 2019.', 'private', 12),
     ('Road Trip Bretagne', '2022-07-18', 134, 'Ma playlist spéciale pour mon road trip en Bretagne.', 'private', 13),
-    ('Chansons de ma jeunesse', '2020-03-04', 891, 'Les chansons que j\'écoutais en grandissant, pleine de nostalgie.', 'public', 14),
+    ('Chansons de ma jeunesse', '2020-03-04', 891, 'Les chansons que j’écoutais en grandissant, pleine de nostalgie.', 'public', 14),
     ('Playlist du Dimanche Matin', '2021-12-19', 243, 'Des chansons calmes et relaxantes pour mes dimanches matins tranquilles.', 'private', 15),
     ('Ma playlist motivation', '2022-05-11', 1231, 'Les morceaux qui me motivent à fond pour mes objectifs.', 'public', 16),
     ('Best of soirées avec les potes', '2021-04-23', 1879, 'Les titres qui font bouger lors de nos soirées entre amis.', 'public', 17),
-    ('Les sons de mes vacances 2020', '2020-08-12', 602, 'La bande sonore de mes vacances d\'été 2020.', 'private', 18),
-    ('Mélancolie du soir', '2020-11-26', 431, 'Les morceaux que j\'écoute lorsque je me sens mélancolique en soirée.', 'private', 19),
-    ('Les classiques de ma vie', '2019-06-30', 1029, 'Les chansons intemporelles qui m\'ont toujours accompagné.', 'public', 20),
+    ('Les sons de mes vacances 2020', '2020-08-12', 602, 'La bande sonore de mes vacances d’été 2020.', 'private', 18),
+    ('Mélancolie du soir', '2020-11-26', 431, 'Les morceaux que j’écoute lorsque je me sens mélancolique en soirée.', 'private', 19),
+    ('Les classiques de ma vie', '2019-06-30', 1029, 'Les chansons intemporelles qui m’ont toujours accompagné.', 'public', 20),
     ('Mon top rap français', '2021-01-22', 1247, 'Ma sélection personnelle des meilleurs titres du rap français.', 'public', 1),
-    ('Ma zone de confort', '2022-03-14', 698, 'Les chansons qui me mettent à l\'aise et me réconfortent.', 'private', 2),
+    ('Ma zone de confort', '2022-03-14', 698, 'Les chansons qui me mettent à l’aise et me réconfortent.', 'private', 2),
     ('Soirées chill entre amis', '2020-07-28', 1368, 'Les morceaux parfaits pour une soirée détente entre amis.', 'public', 3),
     ('Moments inoubliables', '2019-10-17', 921, 'Les chansons qui accompagnent les moments inoubliables de ma vie.', 'private', 4),
-    ('Ambiance travail', '2022-06-20', 510, 'Les sons qui m\'aident à me concentrer et à travailler efficacement.', 'private', 5);
+    ('Ambiance travail', '2022-06-20', 510, 'Les sons qui m’aident à me concentrer et à travailler efficacement.', 'private', 5);
 
 
 
@@ -248,24 +401,3 @@ INSERT INTO playlist_has_song VALUES
     (1, 1),
     (2, 2);
 
-INSERT INTO user (username, first_name, last_name, email, password, role, date_of_birth) VALUES
-    ('kallan93', 'Kallan', 'Giraud', 'kallan.giraud@gmail.com', 'aZ4@pQr7nDgR', 'user', '1992-11-15'), 
-    ('mila86', 'Mila', 'Rochefort', 'mila.rochefort@yahoo.fr', '8Fg&kH%JxE12', 'admin', '1995-06-21'), 
-    ('levan_12', 'Levan', 'Aubert', 'levan.aubert@orange.fr', 'Vh!3fWq$97T', 'user', '1989-03-03'),
-    ('camille92', 'Camille', 'Perret', 'camille.perret@gmail.com', 'jP7!9hR6cOpM2', 'user', '1996-09-12'),
-    ('zoe74', 'Zoe', 'Fontaine', 'zoe.fontaine@sfr.fr', 'Nf3#bP9kYl8', 'admin', '1993-07-19'), 
-    ('jules23', 'Jules', 'Bernard', 'jules.bernard@hotmail.fr', 'xP2&aM4nT7qJ9', 'user', '2001-04-27'), 
-    ('mathis41', 'Mathis', 'Lemoine', 'mathis.lemoine@laposte.net', 'D4s$F7gA3vC6', 'user', '1997-02-11'), 
-    ('lea59', 'Lea', 'Renard', 'lea.renard@gmail.com', 'eB9&zW5rC3yK8', 'admin', '1998-08-30'), 
-    ('lucie84', 'Lucie', 'Descamps', 'lucie.descamps@yahoo.com', 'Qj6@pL8nF4dT2', 'user', '1994-11-05'), 
-    ('mael37', 'Mael', 'Dumont', 'mael.dumont@orange.fr', 'K7l!R2mB3vG5', 'user', '1990-05-23'), 
-    ('nina66', 'Nina', 'Gautier', 'nina.gautier@sfr.fr', 'Hj9*E3mW8xL6', 'admin', '1991-12-14'), 
-    ('axel49', 'Axel', 'Fleury', 'axel.fleury@gmail.com', 'uT2&gV7nL5pC4', 'user', '1999-03-18'),
-    ('lola77', 'Lola', 'Collet', 'lola.collet@hotmail.fr', 'Rf3#D9bY2vG1', 'user', '1992-10-09'), 
-    ('ethan63', 'Ethan', 'Poulain', 'ethan.poulain@laposte.net', 'M6l@cR8zY3pG5', 'admin', '1996-12-28'),
-    ('emma52', 'Emma', 'Blanc', 'emma.blanc@yahoo.fr', 'Xf8*V3jL2qR9', 'user', '1995-07-17'), 
-    ('leo88', 'Leo', 'Morel', 'leo.morel@orange.fr', 'T4k!P2jG5mC7', 'user', '2000-04-02'), 
-    ('alice38', 'Alice', 'Noir', 'alice.noir@sfr.fr', 'Bp7#T9kD3wV6', 'admin', '1997-05-13'), 
-    ('adam25', 'Adam', 'Girard', 'adam.girard@gmail.com', 'Hj5&L3qP9vT4', 'user', '1993-11-27'), 
-    ('ines53', 'Ines', 'Durand', 'ines.durand@hotmail.fr', 'F2m@K7pL8zT6', 'admin', '1994-06-02'), 
-    ('nathan44', 'Nathan', 'Martin', 'nathan.martin@laposte.net', 'J3q&F5kW9lT8', 'user', '1989-01-15'),
