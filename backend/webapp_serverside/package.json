@@ -19,6 +19,12 @@
     "mysql2": "^3.11.4",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0"
+
   },
   "description": ""
+
+    
+  },
+  "proxy": "http://localhost:9000"
+
 }

@@ -22,6 +22,7 @@ async function songListAction(request, response) {
 }
 async function songShowAction(request, response) {
     var oneSong = await songRepo.getOneSong(request.params.songId);
+    console.log(oneSong);
     response.send(JSON.stringify(oneSong));
 }
 async function songDelAction(request, response) {
@@ -32,7 +33,6 @@ async function songDelAction(request, response) {
 }
 
 
-
 function formatDate(dateString) {
     const date = new Date(dateString); // Parse the input date string
     const year = date.getFullYear();
@@ -40,6 +40,36 @@ function formatDate(dateString) {
     const day = String(date.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
+
+function formatDate(incomingDate) {
+    const date = new Date(incomingDate);
+// Format the date (e.g., as 'YYYY-MM-DD')
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    return formattedDate;
+}
+
+
+
+async function songUpdateAction(request, response) {
+    var songID = request.params.songId;
+    console.log(request.body);
+
+    /*if (songID === "0") {
+        songID = await songRepo.addOneSong(
+            request.body.song_genre
+        );
+    }*/
+
+    var numRows = await songRepo.editOneSong(songID, 
+            request.body.title, 
+            request.body.duration, 
+            request.body.number_of_streams, 
+            request.body.lyrics,
+            request.body.id_author, 
+            formatDate(request.body.date_of_post),);
+
+    let result = { rowsUpdated: numRows };
+    response.send(JSON.stringify(result));
 }
 
 
