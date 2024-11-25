@@ -108,7 +108,7 @@ module.exports = {
         try {
             deleteInPlaylist(songId)
             let sql = "DELETE FROM song WHERE id_song = ?";
-            const [okPacket, fields] = await pool.execute(sql, [ songId ]); s
+            const [okPacket, fields] = await pool.execute(sql, [ songId ]);
             console.log("DELETE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
         }
@@ -159,7 +159,7 @@ module.exports = {
                 throw new Error("Invalid genre name provided.");
             }
             const genreId = await getGenreIdByName(songGenre); // Translate genre name to ID
-    
+            console.log("GENRE ID: " + genreId);
             if (!songTitle || typeof songTitle !== "string") {
                 throw new Error("Invalid song title provided.");
             }
