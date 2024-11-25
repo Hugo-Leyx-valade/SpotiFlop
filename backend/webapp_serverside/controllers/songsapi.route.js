@@ -63,19 +63,20 @@ async function songAddAction(request, response) {
 
     async function songUpdateAction(request, response) {
         try {
-            const { id_genre, title, duration, number_of_streams, lyrics, id_author, id_song } = request.body;
+            const { genre, title, duration, number_of_streams,date_of_post, lyrics, author, id_song } = request.body;
     
-            if (!id_genre || !title || !id_author || !id_song) {
+            if (!genre || !title || !author || !id_song) {
                 throw new Error("Missing required fields in the request.");
             }
     
             const numRows = await songRepo.editOneSong(
-                id_genre, // Should be a valid genre name, not NaN
+                genre, // Should be a valid genre name, not NaN
                 title,
                 duration,
                 number_of_streams,
+                date_of_post,
                 lyrics,
-                id_author,
+                author,
                 id_song
             );
             response.send({ rowsUpdated: numRows });

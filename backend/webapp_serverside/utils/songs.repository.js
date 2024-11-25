@@ -6,6 +6,14 @@ async function deleteInPlaylist(songId){
     await pool.execute(sql,[songId]);
 }
 
+function formatDate(dateString) {
+    const date = new Date(dateString); // Parse the input date string
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
 
 async function getGenreIdByName(genreName) {
     let sql = "SELECT id_genre FROM genre WHERE upper(name) = upper(?)";
@@ -153,29 +161,29 @@ module.exports = {
 
 
     
-    async editOneSong(songGenre, songTitle, songDuration, songNumberOfStream, songLyrics, songAuthor, songId) {
+    async editOneSong(songGenre, songTitle, songDuration, songNumberOfStream,dateOfPost, songLyrics, songAuthor, songId) {
         try {
             if (!songGenre || typeof songGenre !== "string") {
                 throw new Error("Invalid genre name provided.");
             }
-            const genreId = await getGenreIdByName(songGenre); // Translate genre name to ID
+            const genreId = await getGenreIdByName(songGenre);
+            const authorId = await getAuthorIdByAlias(songAuthor) // Translate genre name to ID
             console.log("GENRE ID: " + genreId);
             if (!songTitle || typeof songTitle !== "string") {
                 throw new Error("Invalid song title provided.");
             }
     
             let sql = `
-                UPDATE song 
-                SET id_genre=?, title=?, duration=?, number_of_streams=?, lyrics=?, id_author=? 
-                WHERE id_song=?
+                UPDATE song SET id_genre=?, title=?, duration=?, number_of_streams=?,date_of_post = ? , lyrics=?, id_author=? WHERE id_song=?
             `;
             const [okPacket] = await pool.execute(sql, [
-                genreId,
+                parseInt(genreId),
                 songTitle,
                 songDuration,
                 songNumberOfStream,
+                formatDate(dateOfPost),
                 songLyrics,
-                songAuthor,
+                parseInt(authorId),
                 songId
             ]);
             console.log("UPDATE " + JSON.stringify(okPacket));
