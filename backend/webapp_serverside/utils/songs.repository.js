@@ -69,9 +69,6 @@ module.exports = {
         try {
 
             let sql = "SELECT * FROM song inner join author on song.id_author = author.id_author inner join genre on song.id_genre = genre.id_genre order by id_song asc;";
-
-            let sql = "SELECT * FROM song inner join genre on song.id_genre=genre.id_genre inner join author on song.id_author=author.id_author";
-
             const [rows, fields] = await pool.execute(sql);
             console.log("SONGS FETCHED: "+rows.length);
             return rows;
@@ -101,9 +98,6 @@ module.exports = {
             
 
             let sql = "SELECT * FROM song inner join author on song.id_author = author.id_author inner join genre on song.id_genre = genre.id_genre WHERE id_song = ?";
-
-            let sql = "SELECT * FROM song inner join genre on song.id_genre=genre.id_genre inner join author on song.id_author=author.id_author WHERE id_song = ?";
-
             const [rows, fields] = await pool.execute(sql, [ songId ]);
             console.log("SINGLE SONG FETCHED: "+rows.length);
             if (rows.length == 1) {
@@ -127,9 +121,6 @@ module.exports = {
             deleteInPlaylist(songId)
             let sql = "DELETE FROM song WHERE id_song = ?";
             const [okPacket, fields] = await pool.execute(sql, [ songId ]);
-
-            let sql = "DELETE FROM song WHERE id_song = ?";
-            const [okPacket, fields] = await pool.execute(sql, [ songId ]); 
 
             console.log("DELETE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
@@ -156,7 +147,7 @@ module.exports = {
                 (title, duration, number_of_streams, date_of_post, lyrics, id_author, id_genre) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             `;
-            const [okPacket, fields] = await pool.execute(sql, [
+            const [okPacket, fields] = await pool.execute(sql,[
                 songTitle,
                 songDuration,
                 parseInt(songNumberOfStream),
@@ -164,21 +155,13 @@ module.exports = {
                 songLyrics,
                 authorId, // Use the fetched author ID
                 genreId   // Use the fetched genre ID
-            ]);
-
-
-    async addOneSong(songId, songTitle, songDuration, songNumberOfPrice, songDate_OfPost, songLyrics, songIdAuthors){ 
-        try {
-            let sql = "INSERT INTO song (title, duration, number_of_streams, date_of_post, lyrics, id_author, id_genre) VALUES (?) ";
-            const [okPacket, fields] = await pool.execute(sql, [ songId, songTitle, songDuration, songNumberOfPrice, songDate_OfPost, songLyrics, songIdAuthors ]); 
-
-            console.log("INSERT " + JSON.stringify(okPacket));
-            return okPacket.insertId; // Return the new song's ID
-        } catch (err) {
+            ])
+        }catch(err){
             console.log(err);
-            throw err;
+            throw(err);
         }
     },
+
 
 
 
@@ -219,25 +202,4 @@ module.exports = {
 };
     
 
-    async editOneSong(songId, songTitle, songDuration, songNumberOfStreams, songLyrics, songIdAuthors,songDateOfPost) {
-        const sql = `
-            select * from song;
-        `;
-        try {
-            const [okPacket, fields] = await pool.execute(sql, [
-                songTitle, 
-                songDuration, 
-                songNumberOfStreams, 
-                songDateOfPost,
-                songLyrics, 
-                songIdAuthors, 
-                songId
-            ]);
-            console.log('Update Successful!', okPacket);
-            return okPacket.affectedRows; // Return affected rows
-        } catch (error) {
-            console.error('Error updating song:', error.message);
-            throw error;
-        }
-    }}
 
