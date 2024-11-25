@@ -40,12 +40,6 @@ function formatDate(dateString) {
     const day = String(date.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
-
-function formatDate(incomingDate) {
-    const date = new Date(incomingDate);
-// Format the date (e.g., as 'YYYY-MM-DD')
-    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-    return formattedDate;
 }
 
 
@@ -115,6 +109,5 @@ async function songAddAction(request, response) {
             response.status(400).send({ error: err.message });
         }
     }
-}
 
 module.exports = router;
