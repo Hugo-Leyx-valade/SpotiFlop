@@ -41,13 +41,7 @@ function formatDate(dateString) {
 
     return `${year}-${month}-${day}`;
 
-function formatDate(incomingDate) {
-    const date = new Date(incomingDate);
-// Format the date (e.g., as 'YYYY-MM-DD')
-    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-    return formattedDate;
 }
-
 
 
 async function songUpdateAction(request, response) {
@@ -83,30 +77,30 @@ async function songAddAction(request, response) {
             request.body.number_of_streams ?? 0,
             formatDate(request.body.date_of_post) ?? formatDate(new Date()), 
             request.body.lyrics ?? "Unknown",
-            request.body.author ?? "Unknown",
-            request.body.genre  ?? "Unknown"
+            request.body.alias ?? "Unknown",
+            request.body.name  ?? "Unknown"
         );
         let result = { rowsUpdated: numRows };
         response.send(JSON.stringify(result));
     }
 
 
-    async function songUpdateAction(request, response) {
+async function songUpdateAction(request, response) {
         try {
-            const { genre, title, duration, number_of_streams,date_of_post, lyrics, author, id_song } = request.body;
+            const { name, title, duration, number_of_streams,date_of_post, lyrics, alias, id_song } = request.body;
     
-            if (!genre || !title || !author || !id_song) {
+            if (!name || !title || !alias || !id_song) {
                 throw new Error("Missing required fields in the request.");
             }
     
             const numRows = await songRepo.editOneSong(
-                genre, // Should be a valid genre name, not NaN
+                name, // Should be a valid genre name, not NaN
                 title,
                 duration,
                 number_of_streams,
                 date_of_post,
                 lyrics,
-                author,
+                alias,
                 id_song
             );
             response.send({ rowsUpdated: numRows });

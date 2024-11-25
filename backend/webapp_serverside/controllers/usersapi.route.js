@@ -29,6 +29,7 @@ async function userDelAction(request, response) {
     let result = { rowsDeleted: numRows };
     response.send(JSON.stringify(result));
 }
+
 async function userUpdateAction(request, response) {
     // var json = JSON.stringify(request.body); // bodyParser can process json in body + regular POST form input too
     // console.log(json);
