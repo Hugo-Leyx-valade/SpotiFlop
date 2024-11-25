@@ -1,6 +1,12 @@
 // utils/songs.repository.js
 pool = require(__dirname + "\\db.include.js"); // use same folder as the current file
 
+async function deleteSongRelation(authorId){
+    let sql = " DELETE FROM song WHERE id_author = ?";
+    await pool.execute(sql,[authorId]);
+}
+
+
 module.exports = {
     getBlankAuthor(){ // defines the entity model
         return {
@@ -49,7 +55,7 @@ module.exports = {
             
             let sql = "SELECT * FROM author WHERE id_author = ?";
             const [rows, fields] = await pool.execute(sql, [ authorId ]);
-            console.log("author  "+rows.length);
+            console.log("author du truc "+rows.length);
             if (rows.length == 1) {
                 return rows[0];
             } else {
@@ -65,8 +71,8 @@ module.exports = {
 
     async delOneAuthor(authorId){ 
         try {
-            deleteInPlaylist(authorId)
-            let sql = "DELETE FROM author WHERE author_id = ?";
+            deleteSongRelation(authorId)
+            let sql = "DELETE FROM author WHERE id_author = ?";
             const [okPacket, fields] = await pool.execute(sql, [ authorId ]); 
             console.log("DELETE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
@@ -87,7 +93,7 @@ module.exports = {
     async addOneAuthor(authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified){ 
         try {
 
-            let sql = "INSERT INTO author (author_alias,author_first_name,author_last_name,author_biography,author_veified) VALUES (?,?,?,?,?) ";
+            let sql = "INSERT INTO author (alias,first_name,last_name,biography,verified) VALUES (?,?,?,?,?) ";
             const [okPacket, fields] = await pool.execute(sql, [ authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified ]); 
             console.log("INSERT " + JSON.stringify(okPacket));
             return okPacket.insertId;
@@ -112,5 +118,18 @@ module.exports = {
             console.log(err);
             throw err; 
         }
-    }
+    },
+
+
+    async getSongByAuthor(authorId){
+        try {
+            let sql = "SELECT * FROM song WHERE id_author = ?";
+            const [rows, fields] = await pool.execute(sql, [ authorId ]);
+            return rows;
+        }
+        catch (err) {
+            console.log(err);
+            throw err;
+    }},
+
 };

@@ -5,9 +5,12 @@ const authorRepo = require('../utils/authors.repository');
 
 // Routes
 router.get('/list', authorListAction);
-router.get('/show/:authorId', authorShowAction);
+router.get('/show/:authorId',authorShowAction );
 router.get('/del/:authorId', authorDelAction);
 router.post('/update/:authorId', authorUpdateAction);
+router.get("/songAuthor/:authorId",authorListSearchAction );
+router.post('/add', authorAddAction);
+
 
 // http://localhost:9000/authorsapi/list
 async function authorListAction(request, response) {
@@ -25,15 +28,11 @@ async function authorShowAction(request, response) {
 }
 
 async function authorDelAction(request, response) {
-    try {
         // TODO: Add logic to handle dependent data if needed before deletion
         var numRows = await authorRepo.delOneAuthor(request.params.authorId);
         let result = { rowsDeleted: numRows };
         response.send(JSON.stringify(result));
-    } catch (error) {
-        response.status(500).send({ error: 'Failed to delete the author.' });
     }
-}
 
 async function authorUpdateAction(request, response) {
         // Validate input data if necessary
@@ -49,5 +48,28 @@ async function authorUpdateAction(request, response) {
         let result = { rowsUpdated: numRows };
         response.send(JSON.stringify(result));
 }
+
+async function authorListSearchAction(request, response) {
+    try {
+        var songs = await authorRepo.getSongByAuthor(request.params.authorId);
+        response.send(JSON.stringify(songs));
+    } catch (error) {
+        response.status(500).send({ error: 'Failed to retrieve the songs.' });
+    }
+}
+
+async function authorAddAction(request, response) {
+    // var json = JSON.stringify(request.body); // bodyParser can process json in body + regular POST form input too
+    // console.log(json);    var songId = request.params.songId; 
+    var numRows = await authorRepo.addOneAuthor(
+            request.body.alias ?? "Unknown", 
+            request.body.first_name ?? 'Unknown', 
+            request.body.last_name ?? 'Unknown',
+            request.body.biography ?? "Unknown",
+            request.body.verified ?? 0,
+        );
+        let result = { rowsUpdated: numRows };
+        response.send(JSON.stringify(result));
+    }
 
 module.exports = router;

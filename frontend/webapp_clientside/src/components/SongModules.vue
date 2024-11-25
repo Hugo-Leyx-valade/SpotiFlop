@@ -14,25 +14,29 @@
         <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: -40%; font-size: 200%;">Number of Streams</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21.2%; margin-left: -32.5%; font-size: 200%;">{{oneSong.number_of_streams}}</p>
         <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28%; margin-left: -3%; font-size: 180%;">Date of Post</p>    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 31%; margin-left: -3%; font-size: 200%;">{{formatDate(oneSong.date_of_post)}}</p>
         <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: 75%; font-size: 200%;">Lyrics</p>    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8%; margin-left: 75%; font-size: 120%; width: 20%;">{{oneSong.lyrics}}</p>
-        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 30%; font-size: 200%;">Author</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 30%; font-size: 200%;">{{oneSong.id_author}}</p>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 30%; font-size: 200%;">Author</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 30%; font-size: 200%;">{{oneSong.alias}}</p>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 32%; margin-left: 37%; font-size: 200%;">Genre</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 32%; margin-left: 50%; font-size: 200%;">{{oneSong.name}}</p>
+
     </div>
 
     <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
       <img src="../assets/pink-cover.png" alt="logo_white" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%;"/>
         <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: -23%; font-size: 200%;">Title</p>   <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; margin-left: -23%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;;border-color: white;text-align: center;" v-model="oneSong.title"/>
         <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: 30%; font-size: 200%;">Duration</p>    <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 30%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.duration"/>
-        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: -40%; font-size: 200%;">Number of Streams</p>   <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21.2%; margin-left: -32.5%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.number_of_stream"/>
-        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28%; margin-left: -3%; font-size: 180%;">Date of Post</p>    <input type="date" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 31%; margin-left: -3%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.date"/>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: -40%; font-size: 200%;">Number of Streams</p>   <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21.2%; margin-left: -32.5%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.number_of_streams"/>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28%; margin-left: -3%; font-size: 180%;">Date of Post</p>    <input type="date" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 31%; margin-left: -3%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.date_of_post"/>
         <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: 75%; font-size: 200%;">Lyrics</p>    <span class="textarea" role="textbox" contenteditable >{{ oneSong.lyrics }}</span>
-        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 30%; font-size: 200%;">Author</p>   <input style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 30%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.author_id"/>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 30%; font-size: 200%;">Author</p>   <input style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 30%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.author"/>
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 32%; margin-left: 37%; font-size: 200%;">Genre</p>   <input style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 32%; margin-left: 55%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.genre"/>
         <input type="button" value="Save Changes" @click="sendEditRequest()" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'"/>
       </div>
-  
+
 
       <!-- FOR List /songs/list/all -->
       <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
+        <a :href="'/#/songs/edit/0'" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
         <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
-          <td>ID</td><td>Title</td><td>Duration</td><td>Number Of Streams</td><td>Date Of Post</td><td>SHOW DETAILS</td><td>EDIT SONG</td><td>DELETE SONG</td>
+          <td>ID</td><td>Title</td><td>Duration</td><td>Number Of Streams</td><td>Date Of Post</td><td>Author</td><td>Genre</td><td>SHOW DETAILS</td><td>EDIT SONG</td><td>DELETE SONG</td>
         </tr>
         <tr v-for="s of song" v-bind:key="s.song_id">
           <td style="color: aliceblue; font-weight: bold;">{{ s.id_song }}</td>
@@ -41,6 +45,8 @@
           <td style="color: aliceblue; font-weight: bold;">{{ s.number_of_streams }}</td>
 
           <td style="color: aliceblue; font-weight: bold;">{{ formatDate(s.date_of_post) }}</td>
+          <td style="color: aliceblue; font-weight: bold;">{{ s.alias }}</td>
+          <td style="color: aliceblue; font-weight: bold;">{{ s.name }}</td>
           <td><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
           <td><a :href="'/#/songs/edit/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
           <td><input type="button" value="DELETE" @click="sendDeleteRequest(s.id_song)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#fa8c8c'" onMouseLeave="this.style.background='white'"  /></td>
@@ -58,7 +64,9 @@
   import BacktohomeModule from './BacktohomeModule.vue';
   import Home from './homeModulesAdmin.vue';
 
+
   export default {
+   
     name: 'Songs',
     components: {
       Home,
@@ -75,7 +83,8 @@
           song_number_of_stream: 0,
           song_date:'',
           song_lyrics: 'lyrics',
-          song_author_id: 0,
+          song_author: "",
+          song_genre: ""
         }
       }
     },
@@ -112,18 +121,20 @@
       if (this.$props.id === "all" || this.$props.id === "0") {
         this.oneSong = {
           song_id: 0,
-          song_title: '',
-          song_duration: '0:0',
-          song_number_of_stream: 0,
-          song_date: '0000-00-00',
-          song_lyrics: "",
+          title: '',
+          duration: 0,
+          number_os_streams: 0,
+          date_of_post: '0000-00-00',
+          lyrics: "Lyrics",
+          author: "",
+          genre: ""
         };
         return;
       }
       try {
         let responseSong = await this.$http.get("http://localhost:9000/songsapi/show/" + this.$props.id);
         this.oneSong = responseSong.data;
-        console.log("oneSong: " + this.oneSong.title);
+        console.log("oneSong: " + this.oneSong.title+" "+ this.oneSong.duration+" "+ this.oneSong.number_of_streams+" "+ this.oneSong.date_of_post+" "+ this.oneSong.lyrics+" "+ this.oneSong.id_author+" "+ this.oneSong.id_genre);
         // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
       }
       catch (ex) { console.log(ex); }
@@ -141,15 +152,30 @@
       catch (ex) { console.log(ex); }
     },
 
-
+  async sendAddRequest() {
+        try {
+          alert("ADDING... " + this.oneSong.title);
+          let response = await this.$http.post("http://localhost:9000/songsapi/add", this.oneSong);
+          alert("ADDED: " + response.data.rowsAdded);
+          this.$router.push({ path: '/songs/list/all' });
+          this.getAllData();
+        }
+        catch (ex) { console.log(ex); }
+      },
 
     async sendEditRequest() {
       try {
-        alert("EDITING... " + this.oneSong.id_song +" "+ this.oneSong.title + " "+ this.oneSong.duration +" " + this.oneSong.number_of_streams +" " + this.oneSong.date_of_post +" " + this.oneSong.lyrics +" " + this.oneSong.id_author);
+        if(this.$props.id === "0"){
+          let response = await this.$http.post(
+              "http://localhost:9000/songsapi/add/",this.oneSong);
+          alert("Added: " + response.data.rowsUpdated);
+          this.$router.push({ path: '/songs/list/all' });
+          this.getAllData();
+        }
         let response = await this.$http.post(
               "http://localhost:9000/songsapi/update/" + this.oneSong.id_song, this.oneSong);
         alert("EDITED: " + response.data.rowsUpdated);
-        this.$router.push({ path: '/author/list/all' });
+        this.$router.push({ path: '/songs/list/all' });
         this.getAllData();
       }
       catch (ex) { console.log(ex); }
@@ -176,10 +202,6 @@
   }
   
   }
-
-
-
-
   </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -226,6 +248,7 @@
   margin-top: 6%;
   font-size: 20px;
 }
+
 
   </style>
   
