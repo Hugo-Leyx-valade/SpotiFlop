@@ -17,7 +17,7 @@ module.exports = {
             let sql = "SELECT * FROM genres";
 			// .execute() does: getConnection() + prepare() + query() + releaseConnection()
             const [rows, fields] = await pool.execute(sql); 
-            console.log("BRANDS FETCHED: "+rows.length);
+            console.log("GENRE FETCHED: "+rows.length);
             return rows;
         }
         catch (err) {
@@ -58,9 +58,9 @@ module.exports = {
             
             let sql = "SELECT * FROM song inner join genre on song.id_genre=genre.id_genre inner join author on song.id_author=author.id_author WHERE id_song = ?";
             const [rows, fields] = await pool.execute(sql, [ songId ]);
-            console.log("SINGLE CAR FETCHED: "+rows.length);
+            console.log("SINGLE SONG FETCHED: "+rows.length);
             if (rows.length == 1) {
-                console.log("song car: "+rows[0]);
+                console.log("song: "+rows[0]);
                 return rows[0];
             } else {
                 return false;
