@@ -62,7 +62,7 @@ module.exports = {
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
             
-            let sql = "SELECT * FROM user left join playlist on user.id_user = playlist.user_id WHERE user.id_user = ?";
+            let sql = "SELECT id_user,username,first_name,last_name,email,role,date_of_birth,genre,id_playlist,title,date_of_post,number_of_save,_description,state FROM user left join playlist on user.id_user = playlist.user_id WHERE user.id_user = 5;";
             const [rows, fields] = await pool.execute(sql, [ userId ]);
             console.log("user : "+rows.values);
             if (rows.length >= 0) {
