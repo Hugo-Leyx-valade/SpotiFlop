@@ -195,12 +195,12 @@ INSERT INTO genre (name) VALUES
 -- Insert data into the song table
 INSERT INTO song (title, duration, number_of_streams, date_of_post, lyrics, id_author,id_genre) VALUES
 -- Earth, Wind & Fire
-('Boogie Wonderland', 4.45, 702345678, '2013-09-01', NULL, 1, 5),
-('September', 3.35, 912345678, '2013-09-01', NULL, 1, 5),
-('Fantasy', 4.38, 812345678, '2013-09-01', NULL, 1, 5),
-('Shining Star', 3.15, 562345678, '2013-09-01', NULL, 1, 5),
-('After the Love Has Gone', 4.25, 482345678, '2013-09-01', NULL, 1, 5),
-('Lets Groove',5.36, 597458154, '2013-09-01', NULL, 1,5),
+('Boogie Wonderland', 4.45, 702345678, '2013-09-01', NULL, 1, 16),
+('September', 3.35, 912345678, '2013-09-01', NULL, 1, 16),
+('Fantasy', 4.38, 812345678, '2013-09-01', NULL, 1, 16),
+('Shining Star', 3.15, 562345678, '2013-09-01', NULL, 1, 16),
+('After the Love Has Gone', 4.25, 482345678, '2013-09-01', NULL, 1, 16),
+('Lets Groove',5.36, 597458154, '2013-09-01', NULL, 1, 16),
 
 -- Michael Jackson (MJ)
 ('Billie Jean', 4.54, 1582345678, '1982-11-30', NULL, 2, 5),
@@ -211,44 +211,44 @@ INSERT INTO song (title, duration, number_of_streams, date_of_post, lyrics, id_a
 ('Smooth Criminal', 9.25, 988804859, '2010-11-19', NULL, 2,5),
 
 -- Imagine Dragons
-('Radioactive', 3.06, 1897345678, '2012-09-18', NULL, 3, 5),
-('Demons', 2.57, 1736345678, '2013-01-28', NULL, 3, 5),
-('Believer', 3.37, 1632345678, '2017-02-01', NULL, 3, 5),
-('Thunder', 3.07, 1526345678, '2017-04-27', NULL, 3, 5),
-('Bones', 2.45, 1016345678, '2022-03-11', NULL, 3, 5),
-('Enemy', 2.53, 1588206980, '2021-10-28', NULL, 3,5),
+('Radioactive', 3.06, 1897345678, '2012-09-18', NULL, 3, 1),
+('Demons', 2.57, 1736345678, '2013-01-28', NULL, 3, 1),
+('Believer', 3.37, 1632345678, '2017-02-01', NULL, 3, 1),
+('Thunder', 3.07, 1526345678, '2017-04-27', NULL, 3, 1 ),
+('Bones', 2.45, 1016345678, '2022-03-11', NULL, 3, 1),
+('Enemy', 2.53, 1588206980, '2021-10-28', NULL, 3, 1),
 
 -- The Weeknd
-('Blinding Lights', 3.20, 2827345678, '2019-11-29', NULL, 4, 3),
-('Save Your Tears', 3.36, 2327345678, '2020-03-20', NULL, 4, 3),
-('Starboy', 3.50, 2027345678, '2016-09-21', NULL, 4, 3),
-('Can’t Feel My Face', 3.35, 1827345678, '2015-06-08', NULL, 4, 3),
-('In Your Eyes', 3.58, 1727345678, '2020-03-20', NULL, 4, 3),
-('Heartless', 3.18, 1018698991, '2020-12-03', NULL, 4,3),
+('Blinding Lights', 3.20, 2827345678, '2019-11-29', NULL, 4, 9),
+('Save Your Tears', 3.36, 2327345678, '2020-03-20', NULL, 4, 9),
+('Starboy', 3.50, 2027345678, '2016-09-21', NULL, 4, 9),
+('Can’t Feel My Face', 3.35, 1827345678, '2015-06-08', NULL, 4, 9),
+('In Your Eyes', 3.58, 1727345678, '2020-03-20', NULL, 4, 9),
+('Heartless', 3.18, 1018698991, '2020-12-03', NULL, 4, 9),
 
 -- Lady Gaga
-('Just Dance', 4.01, 1927345678, '2008-04-08', NULL, 5, 3),
-('Bad Romance', 4.55, 2127345678, '2009-10-26', NULL, 5, 3),
-('Shallow', 3.36, 1427345678, '2018-09-27', NULL, 5, 3),
-('Born This Way', 4.20, 1827345678, '2011-02-11', NULL, 5, 3),
-('The Edge of Glory', 5.21, 1327345678, '2011-05-09', NULL, 5, 3),
-('Poker Face', 3.57, 1398566907, '2009-12-20', NULL, 5,3),
+('Just Dance', 4.01, 1927345678, '2008-04-08', NULL, 5, 5),
+('Bad Romance', 4.55, 2127345678, '2009-10-26', NULL, 5, 5),
+('Shallow', 3.36, 1427345678, '2018-09-27', NULL, 5, 5),
+('Born This Way', 4.20, 1827345678, '2011-02-11', NULL, 5, 5),
+('The Edge of Glory', 5.21, 1327345678, '2011-05-09', NULL, 5, 5),
+('Poker Face', 3.57, 1398566907, '2009-12-20', NULL, 5, 5),
 
 -- Eminem
-('Lose Yourself', 5.20, 2037345678, '2002-10-28', NULL, 6, 1),
-('Stan', 6.44, 1337345678, '2000-11-21', NULL, 6, 1),
-('Love The Way You Lie', 4.23, 1837345678, '2010-06-21', NULL, 6, 1),
-('Rap God', 6.09, 1627345678, '2013-10-14', NULL, 6, 1),
-('Not Afraid', 4.10, 1527345678, '2010-04-29', NULL, 6, 1),
-('Without Me', 4.50, 1398566907, '2009-06-17', NULL, 6,1),
+('Lose Yourself', 5.20, 2037345678, '2002-10-28', NULL, 6, 3),
+('Stan', 6.44, 1337345678, '2000-11-21', NULL, 6, 3),
+('Love The Way You Lie', 4.23, 1837345678, '2010-06-21', NULL, 6, 3),
+('Rap God', 6.09, 1627345678, '2013-10-14', NULL, 6, 3),
+('Not Afraid', 4.10, 1527345678, '2010-04-29', NULL, 6, 3),
+('Without Me', 4.50, 1398566907, '2009-06-17', NULL, 6, 3),
 
 -- FEMTOGO
-('Parallel Worlds', 3.33, 478590, '2023-01-01', NULL, 7, 2),
-('Quantum Leap', 4.12, 567890, '2023-01-10', NULL, 7, 2),
-('Echoes of Time', 3.59, 387590, '2023-02-15', NULL, 7, 2),
-('Neural Networks', 4.22, 257890, '2023-03-01', NULL, 7, 2),
-('Binary Dance', 2.58, 147890, '2023-04-01', NULL, 7, 2),
-('SCOPOLAMINE', 2.29, 1876483, '2023-11-27', NULL, 7,2),
+('Parallel Worlds', 3.33, 478590, '2023-01-01', NULL, 7, 13),
+('Quantum Leap', 4.12, 567890, '2023-01-10', NULL, 7, 13),
+('Echoes of Time', 3.59, 387590, '2023-02-15', NULL, 7, 13),
+('Neural Networks', 4.22, 257890, '2023-03-01', NULL, 7, 13),
+('Binary Dance', 2.58, 147890, '2023-04-01', NULL, 7, 13),
+('SCOPOLAMINE', 2.29, 1876483, '2023-11-27', NULL, 7, 13),
 
 -- Daft Punk
 ('Get Lucky', 6.09, 2037345678, '2013-04-19', NULL, 8, 6),
@@ -260,11 +260,11 @@ INSERT INTO song (title, duration, number_of_streams, date_of_post, lyrics, id_a
 ('Veridis Quo', 5.20, 638173590, '2001-03-12', NULL, 8,6),
 
 -- Kendrick Lamar
-('HUMBLE.', 2.57, 2037345678, '2017-03-30', NULL, 9, 5),
-('DNA.', 3.05, 1827345678, '2017-04-14', NULL, 9, 5),
-('Alright', 3.39, 1527345678, '2015-06-30', NULL, 9, 5),
-('King Kunta', 3.55, 1277345678, '2015-03-15', NULL, 9, 5),
-('Swimming Pools Drank', 4.07, 1077345678, '2012-07-31', NULL, 9, 5),
+('HUMBLE.', 2.57, 2037345678, '2017-03-30', NULL, 9, 3),
+('DNA.', 3.05, 1827345678, '2017-04-14', NULL, 9, 3),
+('Alright', 3.39, 1527345678, '2015-06-30', NULL, 9, 3),
+('King Kunta', 3.55, 1277345678, '2015-03-15', NULL, 9, 3),
+('Swimming Pools Drank', 4.07, 1077345678, '2012-07-31', NULL, 9, 3),
 
 -- David Guetta
 ('Titanium', 4.05, 1827345678, '2011-08-08', NULL, 10, 6),
@@ -274,75 +274,75 @@ INSERT INTO song (title, duration, number_of_streams, date_of_post, lyrics, id_a
 ('Play Hard', 3.28, 872734567, '2013-03-22', NULL, 10, 6);
 
 -- Adele
-('Hello', 4.55, 2738945678, '2015-10-23', NULL, 11, 4),
-('Rolling in the Deep', 3.48, 2138945678, '2010-11-29', NULL, 11, 4),
-('Someone Like You', 4.45, 1938945678, '2011-01-24', NULL, 11, 4),
-('Skyfall', 4.46, 1838945678, '2012-10-05', NULL, 11, 4),
-('Set Fire to the Rain', 4.02, 1738945678, '2011-07-04', NULL, 11, 4),
+('Hello', 4.55, 2738945678, '2015-10-23', NULL, 11, 5),
+('Rolling in the Deep', 3.48, 2138945678, '2010-11-29', NULL, 11, 15),
+('Someone Like You', 4.45, 1938945678, '2011-01-24', NULL, 11, 5),
+('Skyfall', 4.46, 1838945678, '2012-10-05', NULL, 11, 5),
+('Set Fire to the Rain', 4.02, 1738945678, '2011-07-04', NULL, 11, 15),
 
 -- Beyoncé
-('Halo', 3.44, 2638945678, '2008-01-20', NULL, 12, 3),
-('Single Ladies', 3.13, 2438945678, '2008-10-13', NULL, 12, 3),
-('Crazy in Love', 3.56, 2838945678, '2003-05-14', NULL, 12, 3),
-('Irreplaceable', 3.47, 1938945678, '2006-10-23', NULL, 12, 3),
-('Run the World (Girls)', 3.55, 1538945678, '2011-04-21', NULL, 12, 3),
+('Crazy In Love', 3.56, 1804567890, '2003-05-20', NULL, 12, 9),
+('Halo', 4.21, 1902345678, '2008-01-20', NULL, 12, 5),
+('Single Ladies', 3.13, 2003456789, '2008-10-13', NULL, 12, 9),
+('Formation', 3.26, 1505678901, '2016-02-06', NULL, 12, 9),
+('Irreplaceable', 3.47, 1601234567, '2006-10-23', NULL, 12, 5);
 
 -- Ed Sheeran
-('Shape of You', 4.24, 3338945678, '2017-01-06', NULL, 13, 4),
-('Perfect', 4.40, 2838945678, '2017-03-03', NULL, 13, 4),
-('Thinking Out Loud', 4.41, 2538945678, '2014-09-24', NULL, 13, 4),
-('Bad Habits', 3.51, 1938945678, '2021-06-25', NULL, 13, 4),
-('Photograph', 4.19, 1738945678, '2014-05-20', NULL, 13, 4),
+('Shape of You', 3.53, 2803456789, '2017-01-06', NULL, 13, 5),
+('Thinking Out Loud', 4.41, 2401234567, '2014-09-24', NULL, 13, 11),
+('Perfect', 4.23, 2605678901, '2017-03-03', NULL, 13, 5),
+('Photograph', 4.19, 2002345678, '2014-06-20', NULL, 13, 11),
+('Bad Habits', 3.50, 1904567890, '2021-06-25', NULL, 13, 5);
 
 -- Justin Bieber
-('Peaches', 3.18, 2538945678, '2021-03-19', NULL, 14, 4),
-('Sorry', 3.20, 3038945678, '2015-10-22', NULL, 14, 4),
-('Love Yourself', 3.53, 2938945678, '2015-11-09', NULL, 14, 4),
-('What Do You Mean?', 3.25, 2838945678, '2015-08-28', NULL, 14, 4),
-('Baby', 3.36, 3438945678, '2010-01-18', NULL, 14, 4),
+('Bad Guy', 3.14, 2701234567, '2019-03-29', NULL, 19, 5),
+('Lovely', 3.22, 1905678901, '2018-04-19', NULL, 19, 13),
+('Ocean Eyes', 3.20, 1602345678, '2016-11-18', NULL, 19, 13),
+('When the Party’s Over', 3.16, 1703456789, '2018-10-17', NULL, 19, 5),
+('Everything I Wanted', 4.05, 1802345678, '2019-11-13', NULL, 19, 13);
 
 -- Bruno Mars
-('Uptown Funk', 4.30, 3038945678, '2014-11-10', NULL, 15, 3),
-('Just the Way You Are', 3.40, 2638945678, '2010-07-20', NULL, 15, 3),
-('Locked Out of Heaven', 3.53, 2438945678, '2012-10-01', NULL, 15, 3),
-('Grenade', 3.42, 2138945678, '2010-09-28', NULL, 15, 3),
-('24K Magic', 3.46, 1738945678, '2016-10-07', NULL, 15, 3),
+('Uptown Funk', 4.30, 2406789012, '2014-11-10', NULL, 14, 16),
+('Just the Way You Are', 3.41, 1801234567, '2010-07-20', NULL, 14, 5),
+('Locked Out of Heaven', 3.53, 1602345678, '2012-10-01', NULL, 14, 16),
+('Grenade', 3.42, 1703456789, '2010-09-28', NULL, 14, 5),
+('24K Magic', 3.46, 1405678901, '2016-10-07', NULL, 14, 16);
 
 -- Coldplay
-('Yellow', 4.26, 2438945678, '2000-06-26', NULL, 16, 4),
-('Fix You', 4.55, 2638945678, '2005-09-05', NULL, 16, 4),
-('Viva La Vida', 4.04, 3038945678, '2008-06-13', NULL, 16, 4),
-('Paradise', 4.38, 2738945678, '2011-09-12', NULL, 16, 4),
-('Adventure of a Lifetime', 4.23, 1938945678, '2015-11-06', NULL, 16, 4),
+('Fix You', 4.55, 2001234567, '2005-09-05', NULL, 15, 1),
+('Viva La Vida', 4.04, 2304567890, '2008-06-12', NULL, 15, 1),
+('Yellow', 4.26, 1902345678, '2000-06-26', NULL, 15, 1),
+('The Scientist', 5.09, 1805678901, '2002-08-27', NULL, 15, 1),
+('A Sky Full of Stars', 4.28, 2006789012, '2014-05-02', NULL, 15, 6);
 
 -- Post Malone
-('Circles', 3.35, 2838945678, '2019-08-30', NULL, 17, 4),
-('Rockstar', 3.38, 3138945678, '2017-09-15', NULL, 17, 4),
-('Sunflower', 2.39, 3238945678, '2018-10-19', NULL, 17, 4),
-('Wow.', 2.29, 2438945678, '2018-12-24', NULL, 17, 4),
-('Better Now', 3.51, 1938945678, '2018-05-08', NULL, 17, 4),
+('Circles', 3.35, 1802345678, '2019-08-30', NULL, 16, 3),
+('Sunflower', 2.38, 2403456789, '2018-10-19', NULL, 16, 5),
+('Rockstar', 3.38, 2605678901, '2017-09-15', NULL, 16, 3),
+('Congratulations', 3.40, 2001234567, '2016-11-04', NULL, 16, 3),
+('Wow.', 2.29, 1702345678, '2018-12-24', NULL, 16, 3);
 
 -- Rihanna
-('Umbrella', 4.36, 3038945678, '2007-03-29', NULL, 18, 3),
-('Diamonds', 3.45, 2838945678, '2012-09-27', NULL, 18, 3),
-('We Found Love', 3.54, 2738945678, '2011-09-22', NULL, 18, 3),
-('Only Girl In the World', 3.56, 2438945678, '2010-09-10', NULL, 18, 3),
-('Rude Boy', 3.42, 1938945678, '2009-02-19', NULL, 18, 3),
+('Umbrella', 4.36, 2303456789, '2007-03-29', NULL, 17, 9),
+('Diamonds', 3.45, 2201234567, '2012-09-26', NULL, 17, 5),
+('We Found Love', 3.37, 2405678901, '2011-09-22', NULL, 17, 5),
+('Stay', 4.00, 2002345678, '2013-01-07', NULL, 17, 9),
+('Work', 3.39, 1904567890, '2016-01-27', NULL, 17, 9);
 
 -- Drake
-('God Plan', 3.19, 3138945678, '2018-01-19', NULL, 19, 4),
-('One Dance', 2.53, 3238945678, '2016-04-05', NULL, 19, 4),
-('In My Feelings', 3.38, 2838945678, '2018-07-10', NULL, 19, 4),
-('Hotline Bling', 4.27, 2638945678, '2015-07-31', NULL, 19, 4),
-('Nonstop', 3.58, 1938945678, '2018-06-29', NULL, 19, 4),
+('God’s Plan', 3.18, 2503456789, '2018-01-19', NULL, 18, 3),
+('In My Feelings', 3.37, 2105678901, '2018-07-10', NULL, 18, 9),
+('Hotline Bling', 4.27, 2001234567, '2015-07-31', NULL, 18, 9),
+('Started From the Bottom', 2.53, 1902345678, '2013-02-01', NULL, 18, 3),
+('One Dance', 2.54, 2204567890, '2016-04-05', NULL, 18, 9);
 
 -- Billie Eilish
 
-('bad guy', 3.14, 3538945678, '2019-03-29', NULL, 20, 4),
-('everything i wanted', 4.05, 2938945678, '2019-11-13', NULL, 20, 4),
-('when the party is over', 3.16, 2738945678, '2018-10-17', NULL, 20, 4),
-('ocean eyes', 3.20, 2138945678, '2016-11-18', NULL, 20, 4),
-('lovely', 3.21, 1938945678, '2018-04-19', NULL, 20, 4);
+('Bad Guy', 3.14, 2701234567, '2019-03-29', NULL, 19, 5),
+('Lovely', 3.22, 1905678901, '2018-04-19', NULL, 19, 13),
+('Ocean Eyes', 3.20, 1602345678, '2016-11-18', NULL, 19, 13),
+('When the Party’s Over', 3.16, 1703456789, '2018-10-17', NULL, 19, 5),
+('Everything I Wanted', 4.05, 1802345678, '2019-11-13', NULL, 19, 13);
 
 
 
@@ -394,7 +394,6 @@ INSERT INTO playlist (title, date_of_post, number_of_save, _description, state, 
     ('Soirées chill entre amis', '2020-07-28', 1368, 'Les morceaux parfaits pour une soirée détente entre amis.', 'public', 3),
     ('Moments inoubliables', '2019-10-17', 921, 'Les chansons qui accompagnent les moments inoubliables de ma vie.', 'private', 4),
     ('Ambiance travail', '2022-06-20', 510, 'Les sons qui m’aident à me concentrer et à travailler efficacement.', 'private', 5);
-
 
 
 INSERT INTO playlist_has_song VALUES 
