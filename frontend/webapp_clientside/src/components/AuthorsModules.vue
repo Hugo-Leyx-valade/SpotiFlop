@@ -99,20 +99,15 @@
     </div>
 
     <!-- FOR List /authors/list/all -->
-    <a v-if="action === 'list'" :href="'/#/authors/edit/0'" style="padding-bottom: -100%;margin-left: 5%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
+    <a v-if="action === 'list'" :href="'/#/authors/edit/0'" style="padding:0.7% 1% ;margin-left: 90%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
     <div v-if="action === 'list'" class="container">
-
       <div class="row">
-
         <div class="author-card" v-for="a of authors" v-bind:key="a.authors_id">
-
-          <a :href="'/#/authors/show/' + a.id_author" class="link-offset-2 link-underline link-underline-opacity-0">
             <div class="image-container" style="background-color: white;">
               <div class="overlay">
                 <span class="author-name">{{ a.alias }}</span>
               </div>
             </div>
-          </a>
         </div>
       </div>
     </div>

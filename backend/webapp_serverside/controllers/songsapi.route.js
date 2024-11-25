@@ -9,7 +9,6 @@ router.get('/show/:songId', songShowAction);
 router.get('/del/:songId', songDelAction);
 router.post('/update/:songId', songUpdateAction);
 router.post('/add', songAddAction);
-router.get("/find", songListSearchAction);
 
 // http://localhost:9000/carsapi/brands
 async function genreListAction(request, response) {

@@ -1,10 +1,15 @@
 <template>
     <div class="hello" onload="changeBodyBackgroundColor()">
       <BacktohomeModule></BacktohomeModule>
+      
+
       <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
         Songs 
         {{ action }} {{ id }}
       </p>
+
+      <div class="flex items-center justify-between">
+      </div>
   
       <!-- FOR DATA SHEET /songs/show/42 -->
     <div v-if="action === 'show'" style="display: flex; justify-content: center;">
@@ -31,12 +36,11 @@
         <input type="button" value="Save Changes" @click="sendEditRequest()" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'"/>
       </div>
 
-
       <!-- FOR List /songs/list/all -->
       <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
-        <a :href="'/#/songs/edit/0'" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
         <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
           <td>ID</td><td>Title</td><td>Duration</td><td>Number Of Streams</td><td>Date Of Post</td><td>Author</td><td>Genre</td><td>SHOW DETAILS</td><td>EDIT SONG</td><td>DELETE SONG</td>
+          <a :href="'/#/songs/edit/0'" style="background:white;padding: 15% 25%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
         </tr>
         <tr v-for="s of song" v-bind:key="s.song_id">
           <td style="color: aliceblue; font-weight: bold;">{{ s.id_song }}</td>
@@ -61,16 +65,15 @@
   
   <script>
   //import 
-  import BacktohomeModule from './BacktohomeModule.vue';
+import BacktohomeModule from './BacktohomeModule.vue';
   import Home from './homeModulesAdmin.vue';
-
 
   export default {
    
     name: 'Songs',
     components: {
       Home,
-      BacktohomeModule 
+      BacktohomeModule
     },
     props:['action','id'],
     data () {
@@ -100,7 +103,7 @@
       try {
         let responseSong = await fetch("http://localhost:9000/songsapi/list");
         this.song = await responseSong.json();
-        console.log(" songs" + this.song[1].song_title );
+        console.log(" songs " + this.song[1].song_title );
         /*
         this.brands = [ { brand_id: 1, brand_name: "BMW" }, { brand_id: 2, brand_name: "Audi" }, { brand_id: 3, brand_name: "Citroen" } ];
         this.cars = [ { car_id: 1, car_brand: 2, car_name: "Audi S4", car_baseprice: 40000, car_isfancy: 0, car_realprice: 45000 }, { car_id: 2, car_brand: 1, car_name: "BMW i8", car_baseprice: 80000, car_isfancy: 1, car_realprice: 90000 } ];
@@ -202,6 +205,12 @@
   }
   
   }
+
+  const handleSearch = (value) => {
+    searchfilter.value = value;
+  }
+
+
   </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->

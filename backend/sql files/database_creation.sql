@@ -29,14 +29,15 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.author (
 -- Table projet_harone_hugo.user
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS projet_harone_hugo.user (
-  id_user INT NOT NULL AUTO_INCREMENT,
-  username VARCHAR(45) CHARACTER SET 'utf8' NOT NULL,
-  first_name VARCHAR(45) NOT NULL,
-  last_name VARCHAR(45) NOT NULL,
-  email VARCHAR(100) NOT NULL,
-  password VARCHAR(100) NOT NULL,
-  role VARCHAR(45) NOT NULL DEFAULT 'user',
-  date_of_birth DATE NOT NULL,
+	id_user INT,
+	username VARCHAR(255),
+	first_name VARCHAR(255),
+	last_name VARCHAR(255),
+	email VARCHAR(255),
+	password VARCHAR(255),
+	role VARCHAR(50),
+	date_of_birth DATE,
+	genre INT,
   PRIMARY KEY (id_user),
   UNIQUE INDEX id_user_UNIQUE (id_user ASC) VISIBLE,
   UNIQUE INDEX username_UNIQUE (username ASC) VISIBLE
@@ -138,27 +139,29 @@ INSERT INTO author (alias, first_name, last_name, biography, verified) VALUES
 ('David Guetta', 'David', 'Guetta', NULL, 1);
 
 -- Insert data into the user table
-INSERT INTO user (username, first_name, last_name, email, password, role, date_of_birth) VALUES
-('kallan93', 'Kallan', 'Giraud', 'kallan.giraud@gmail.com', 'aZ4@pQr7nDgR', 'user', '1992-11-15'),
-('mila86', 'Mila', 'Rochefort', 'mila.rochefort@yahoo.fr', '8Fg&kH%JxE12', 'admin', '1995-06-21'),
-('levan_12', 'Levan', 'Aubert', 'levan.aubert@orange.fr', 'Vh!3fWq$97T', 'user', '1989-03-03'),
-('camille92', 'Camille', 'Perret', 'camille.perret@gmail.com', 'jP7!9hR6cOpM2', 'user', '1996-09-12'),
-('zoe74', 'Zoe', 'Fontaine', 'zoe.fontaine@sfr.fr', 'Nf3#bP9kYl8', 'admin', '1993-07-19'),
-('jules23', 'Jules', 'Bernard', 'jules.bernard@hotmail.fr', 'xP2&aM4nT7qJ9', 'user', '2001-04-27'),
-('mathis41', 'Mathis', 'Lemoine', 'mathis.lemoine@laposte.net', 'D4s$F7gA3vC6', 'user', '1997-02-11'),
-('lea59', 'Lea', 'Renard', 'lea.renard@gmail.com', 'eB9&zW5rC3yK8', 'admin', '1998-08-30'),
-('lucie84', 'Lucie', 'Descamps', 'lucie.descamps@yahoo.com', 'Qj6@pL8nF4dT2', 'user', '1994-11-05'),
-('mael37', 'Mael', 'Dumont', 'mael.dumont@orange.fr', 'K7l!R2mB3vG5', 'user', '1990-05-23'),
-('nina66', 'Nina', 'Gautier', 'nina.gautier@sfr.fr', 'Hj9*E3mW8xL6', 'admin', '1991-12-14'),
-('axel49', 'Axel', 'Fleury', 'axel.fleury@gmail.com', 'uT2&gV7nL5pC4', 'user', '1999-03-18'),
-('lola77', 'Lola', 'Collet', 'lola.collet@hotmail.fr', 'Rf3#D9bY2vG1', 'user', '1992-10-09'),
-('ethan63', 'Ethan', 'Poulain', 'ethan.poulain@laposte.net', 'M6l@cR8zY3pG5', 'admin', '1996-12-28'),
-('emma52', 'Emma', 'Blanc', 'emma.blanc@yahoo.fr', 'Xf8*V3jL2qR9', 'user', '1995-07-17'),
-('leo88', 'Leo', 'Morel', 'leo.morel@orange.fr', 'T4k!P2jG5mC7', 'user', '2000-04-02'),
-('alice38', 'Alice', 'Noir', 'alice.noir@sfr.fr', 'Bp7#T9kD3wV6', 'admin', '1997-05-13'),
-('adam25', 'Adam', 'Girard', 'adam.girard@gmail.com', 'Hj5&L3qP9vT4', 'user', '1993-11-27'),
-('ines53', 'Ines', 'Durand', 'ines.durand@hotmail.fr', 'F2m@K7pL8zT6', 'admin', '1994-06-02'),
-('nathan44', 'Nathan', 'Martin', 'nathan.martin@laposte.net', 'J3q&F5kW9lT8', 'user', '1989-01-15');
+INSERT INTO users (user_id, user_username, user_first_name, user_last_name, user_email, user_password, user_role, user_date_of_birth, genre) VALUES
+(1, 'kallan93', 'Kallan', 'Giraud', 'kallan.giraud@gmail.com', 'aZ4@pQr7nDgR', 'user', '1992-11-15', 1),
+(2, 'mila86', 'Mila', 'Rochefort', 'mila.rochefort@yahoo.fr', '8Fg&kH%JxE12', 'admin', '1995-06-21', 0),
+(3, 'levan_12', 'Levan', 'Aubert', 'levan.aubert@orange.fr', 'Vh!3fWq$97T', 'user', '1989-03-03', 1),
+(4, 'camille92', 'Camille', 'Perret', 'camille.perret@gmail.com', 'jP7!9hR6cOpM2', 'user', '1996-09-12', 0),
+(5, 'zoe74', 'Zoe', 'Fontaine', 'zoe.fontaine@sfr.fr', 'Nf3#bP9kYl8', 'admin', '1993-07-19', 0),
+(6, 'jules23', 'Jules', 'Bernard', 'jules.bernard@hotmail.fr', 'xP2&aM4nT7qJ9', 'user', '2001-04-27', 1),
+(7, 'mathis41', 'Mathis', 'Lemoine', 'mathis.lemoine@laposte.net', 'D4s$F7gA3vC6', 'user', '1997-02-11', 1),
+(8, 'lea59', 'Lea', 'Renard', 'lea.renard@gmail.com', 'eB9&zW5rC3yK8', 'admin', '1998-08-30', 0),
+(9, 'lucie84', 'Lucie', 'Descamps', 'lucie.descamps@yahoo.com', 'Qj6@pL8nF4dT2', 'user', '1994-11-05', 0),
+(10, 'mael37', 'Mael', 'Dumont', 'mael.dumont@orange.fr', 'K7l!R2mB3vG5', 'user', '1990-05-23', 1),
+(11, 'nina66', 'Nina', 'Gautier', 'nina.gautier@sfr.fr', 'Hj9*E3mW8xL6', 'admin', '1991-12-14', 0),
+(12, 'axel49', 'Axel', 'Fleury', 'axel.fleury@gmail.com', 'uT2&gV7nL5pC4', 'user', '1999-03-18', 1),
+(13, 'lola77', 'Lola', 'Collet', 'lola.collet@hotmail.fr', 'Rf3#D9bY2vG1', 'user', '1992-10-09', 0),
+(14, 'ethan63', 'Ethan', 'Poulain', 'ethan.poulain@laposte.net', 'M6l@cR8zY3pG5', 'admin', '1996-12-28', 1),
+(15, 'emma52', 'Emma', 'Blanc', 'emma.blanc@yahoo.fr', 'Xf8*V3jL2qR9', 'user', '1995-07-17', 0),
+(16, 'leo88', 'Leo', 'Morel', 'leo.morel@orange.fr', 'T4k!P2jG5mC7', 'user', '2000-04-02', 1),
+(17, 'alice38', 'Alice', 'Noir', 'alice.noir@sfr.fr', 'Bp7#T9kD3wV6', 'admin', '1997-05-13', 0),
+(18, 'adam25', 'Adam', 'Girard', 'adam.girard@gmail.com', 'Hj5&L3qP9vT4', 'user', '1993-11-27', 1),
+(19, 'ines53', 'Ines', 'Durand', 'ines.durand@hotmail.fr', 'F2m@K7pL8zT6', 'admin', '1994-06-02', 0),
+(20, 'nathan44', 'Nathan', 'Martin', 'nathan.martin@laposte.net', 'G5v!T3wP7kD', 'user', '1991-09-19', 1),
+(21, 'admin', 'admin', 'admin', 'admin.example@model.com', 'admin', 'admin', '1989-01-15', 1),
+(22, 'user', 'user', 'user', 'user.example@model.com', 'user', 'user', '1989-01-15', 1);
 
 INSERT INTO genre (name) VALUES
     ('Rock'),
