@@ -199,7 +199,33 @@ module.exports = {
         }
     },
 
-};
-    
-
+    async editOneSong(songId, songTitle, songDuration, songNumberOfStreams, songLyrics, songIdAuthors,songDateOfPost) {
+        const sql = `
+            UPDATE song 
+            SET title = ?, 
+                duration = ?, 
+                number_of_streams = ?, 
+                date_of_post = ?,
+                lyrics = ?, 
+                id_author = ? 
+            WHERE id_song = ?
+        `;
+        try {
+            const [okPacket, fields] = await pool.execute(sql, [
+                songTitle, 
+                songDuration, 
+                songNumberOfStreams, 
+                songDateOfPost,
+                songLyrics, 
+                songIdAuthors, 
+                songId
+            ]);
+            console.log('Update Successful!', okPacket);
+            return okPacket.affectedRows; // Return affected rows
+        } catch (error) {
+            console.error('Error updating song:', error.message);
+            throw error;
+        }
+    }
+}
 
