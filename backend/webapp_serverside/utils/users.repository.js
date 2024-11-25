@@ -6,6 +6,14 @@ async function deleteInPlaylist(userId){
     await pool.execute(sql,[userId]);
 }
 
+function formatDate(dateString) {
+    const date = new Date(dateString); // Parse the input date string
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
 
 module.exports = {
     getBlankUser(){ // defines the entity model
@@ -62,7 +70,7 @@ module.exports = {
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
             
-            let sql = "SELECT id_user,username,first_name,last_name,email,role,date_of_birth,genre,id_playlist,title,date_of_post,number_of_save,_description,state FROM user left join playlist on user.id_user = playlist.user_id WHERE user.id_user = 5;";
+            let sql = "SELECT id_user,username,first_name,last_name,email,role,date_of_birth,genre,id_playlist,title,date_of_post,number_of_save,_description,state FROM user left join playlist on user.id_user = playlist.user_id WHERE user.id_user = ?;";
             const [rows, fields] = await pool.execute(sql, [ userId ]);
             console.log("user : "+rows.values);
             if (rows.length >= 0) {
@@ -79,11 +87,11 @@ module.exports = {
 
 
 
-    async delOneSong(userId){ 
+    async delOneUser(userId){ 
         try {
             deleteInPlaylist(userId)
             let sql = "DELETE FROM user WHERE id_user = ?";
-            const [okPacket, fields] = await pool.execute(sql, [ userId ]); s
+            const [okPacket, fields] = await pool.execute(sql, [ userId ]);
             console.log("DELETE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
         }
@@ -101,12 +109,12 @@ module.exports = {
             // Fetch genre ID based on the genre name
 
             let sql = `
-                INSERT INTO song 
+                INSERT INTO user 
                 (username, first_name, last_name, email, password, role, date_of_birth,id_genre) 
                 VALUES (?, ?, ?, ?, ?, ?, ?,?)
             `;
             const [okPacket, fields] = await pool.execute(sql, [
-                username, first_name, last_name, email, password, role, date_of_birth,id_genre // Use the fetched genre ID
+                username, first_name, last_name, email, password, role, formatDate(date_of_birth),id_genre // Use the fetched genre ID
             ]);
 
             console.log("INSERT " + JSON.stringify(okPacket));
@@ -119,17 +127,17 @@ module.exports = {
 
 
     
-    async editOneSong(username, first_name, last_name, email, password, role, date_of_birth,id_genre, songId) {
+    async editOneUser(username, first_name, last_name, email, password, role, date_of_birth,genre,id_user) {
         try {
             
     
             let sql = `
-                UPDATE song 
-                SET username=?, first_name=?, last_name=?, email=?, password=?, role=?, date_of_birth=?,id_genre=? 
-                WHERE id_song=?
+                UPDATE user 
+                SET username=?, first_name=?, last_name=?, email=?, password=?, role=?, date_of_birth=?,genre=? 
+                WHERE id_user=?
             `;
             const [okPacket] = await pool.execute(sql, [
-                username, first_name, last_name, email, password, role, date_of_birth,id_genre, songId
+                username??"Unknown", first_name??"Unknown", last_name??"Unknown", email??"Unknown", password??"Unknown", role??0, formatDate(date_of_birth)??"2004-13-06",genre??1,id_user
             ]);
             console.log("UPDATE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
