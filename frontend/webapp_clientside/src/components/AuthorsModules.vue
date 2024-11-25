@@ -100,10 +100,10 @@
 
     <!-- FOR List /authors/list/all -->
     <a v-if="action === 'list'" :href="'/#/authors/edit/0'" style="padding:0.7% 1% ;margin-left: 90%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
-    <div v-if="action === 'list'" class="container">
+    <div v-if="action === 'list'" class="container"  >
       <div class="row">
-        <div class="author-card" v-for="a of authors" v-bind:key="a.authors_id">
-            <div class="image-container" style="background-color: white;">
+        <div class="author-card" v-for="a of authors" v-bind:key="a.authors_id" @click="$router.push('/authors/show/' + a.id_author)">
+            <div class="image-container" style="background-color: white;" >
               <div class="overlay">
                 <span class="author-name">{{ a.alias }}</span>
               </div>

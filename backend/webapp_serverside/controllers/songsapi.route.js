@@ -40,6 +40,30 @@ function formatDate(dateString) {
     const day = String(date.getDate()).padStart(2, '0');
 
     return `${year}-${month}-${day}`;
+
+}
+
+
+async function songUpdateAction(request, response) {
+    var songID = request.params.songId;
+    console.log(request.body);
+
+    /*if (songID === "0") {
+        songID = await songRepo.addOneSong(
+            request.body.song_genre
+        );
+    }*/
+
+    var numRows = await songRepo.editOneSong(songID, 
+            request.body.title, 
+            request.body.duration, 
+            request.body.number_of_streams, 
+            request.body.lyrics,
+            request.body.id_author, 
+            formatDate(request.body.date_of_post),);
+
+    let result = { rowsUpdated: numRows };
+    response.send(JSON.stringify(result));
 }
 
 
@@ -53,30 +77,30 @@ async function songAddAction(request, response) {
             request.body.number_of_streams ?? 0,
             formatDate(request.body.date_of_post) ?? formatDate(new Date()), 
             request.body.lyrics ?? "Unknown",
-            request.body.author ?? "Unknown",
-            request.body.genre  ?? "Unknown"
+            request.body.alias ?? "Unknown",
+            request.body.name  ?? "Unknown"
         );
         let result = { rowsUpdated: numRows };
         response.send(JSON.stringify(result));
     }
 
 
-    async function songUpdateAction(request, response) {
+async function songUpdateAction(request, response) {
         try {
-            const { genre, title, duration, number_of_streams,date_of_post, lyrics, author, id_song } = request.body;
+            const { name, title, duration, number_of_streams,date_of_post, lyrics, alias, id_song } = request.body;
     
-            if (!genre || !title || !author || !id_song) {
+            if (!name || !title || !alias || !id_song) {
                 throw new Error("Missing required fields in the request.");
             }
     
             const numRows = await songRepo.editOneSong(
-                genre, // Should be a valid genre name, not NaN
+                name, // Should be a valid genre name, not NaN
                 title,
                 duration,
                 number_of_streams,
                 date_of_post,
                 lyrics,
-                author,
+                alias,
                 id_song
             );
             response.send({ rowsUpdated: numRows });

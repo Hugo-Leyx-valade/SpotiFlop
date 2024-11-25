@@ -107,7 +107,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="u in users" :key="u.id_user">
+    <tr v-for="u in users">
       <td>{{ u.id_user }}</td>
       <td>{{ u.username }}</td>
       <td>{{ u.email }}</td>
@@ -196,7 +196,8 @@
           user_role: 'user',
           user_date_of_birth: 'K',
           user_genre:0,
-        }
+        };
+        this.user = [];
         return;
         };
         try{
