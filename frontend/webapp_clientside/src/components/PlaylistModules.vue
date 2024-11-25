@@ -3,7 +3,7 @@
       <BacktohomeModule></BacktohomeModule>
       <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
         Playlists 
-        {{ action }}
+        {{ action }} {{ id }}
       </p>
       
       <!-- Détails de la playlist pour /playlist/show/ID -->
