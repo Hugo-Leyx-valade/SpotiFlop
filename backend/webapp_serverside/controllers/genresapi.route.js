@@ -13,7 +13,7 @@ router.get('/del/:genreId', genreDeleteAction);
 async function genreListAction(request, response) {
     try {
         const genres = await genreRepo.getAllGenres();
-        response.send(genres);
+        response.send(JSON.stringify(genres));
     } catch (err) {
         console.error(err);
         response.status(500).send({ error: "Unable to fetch genres." });
