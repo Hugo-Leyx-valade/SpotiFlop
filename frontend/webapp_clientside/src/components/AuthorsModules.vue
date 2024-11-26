@@ -1,89 +1,63 @@
 <template>
   <div class="hello" onload="changeBodyBackgroundColor()">
-    <BackgroundModule></BackgroundModule>
     <BacktohomeModule></BacktohomeModule>
     <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%;" >Authors {{ action }} {{ id }}</span>
 
     <div id="tables" style="margin-top: 13%;">
     <!-- FOR DATA SHEET /authors/show/42 -->
-    <div v-if="action === 'show'" style="width: 50%; margin-left: 5%; margin-top: -3%; background-color: none; border-radius: 8px; padding: 10px;">
-    <!-- Alias - Large Text, Aligned to the Left -->
-      <div style="font-size: 400%; color: white; font-weight: 900; text-align: left;">
-          <span style="color: #4CAF50;"></span> {{oneAuthor.alias}}
-      </div>
-      <!-- First Name and Last Name - Slightly Smaller, Aligned to the Left -->
-      <div style="text-align: left; margin-top: 0%; display: flex;">
-        <div style="font-size: 200%; color: white; text-align: left; margin-top: 0%;">{{oneAuthor.first_name}} {{oneAuthor.last_name}}</div>
-        <div v-if="oneAuthor.verified === 1" style="color: green; font-size: 130%;">Verified</div>
-        <div v-if="oneAuthor.verified === 0" style="color: green; font-size: 130%;">Not Verified</div>
-      </div>
-      <!-- Biography - Aligned to the Left -->
-      <div style="margin-bottom: 15px; font-size: 16px; color: white; text-align: left;">
-          <span style="color: #4CAF50;"></span> {{oneAuthor.biography}}
-      </div>
-      <!-- Edit Button - Centered -->
-      <div style="text-align: center; margin-left: -91%; margin-top: 5%;">
-          <a :href="'/#/authors/edit/' + oneAuthor.id_author" 
-              style="color: white; background-color: #007BFF; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;"
-              @click="oneAuthorLoad(oneAuthor)">[EDIT]</a>
-      </div>
-      <table style="width: 100%; margin-top: 5%; border-collapse: collapse;">
-    <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
-        <td>ID</td>
-        <td>Title</td>
-        <td>Duration</td>
-        <td>Number Of Streams</td>
-        <td>Date Of Post</td>
-        <td>Author</td>
-        <td>Genre</td>
-        <td>SHOW DETAILS</td>
-        <td>EDIT SONG</td>
-        <td>DELETE SONG</td>
+      <div v-if="action === 'show'" style="width: 50%; margin-left: 5%; margin-top: -3%; background-color: none; border-radius: 8px; padding: 10px;">
+      <!-- Alias - Large Text, Aligned to the Left -->
+        <div style="font-size: 400%; color: white; font-weight: 900; text-align: left;">
+            <span style="color: #4CAF50;"></span> {{songAuthor[0].alias}}
+        </div>
+        <!-- First Name and Last Name - Slightly Smaller, Aligned to the Left -->
+        <div style="text-align: left; margin-top: 0%; display: flex;">
+          <div style="font-size: 200%; color: white; text-align: left; margin-top: 0%;">{{songAuthor[0].first_name}} {{songAuthor[0].last_name}}</div>
+          <div v-if="songAuthor[0].verified === 1" style="color: green; font-size: 130%;">Verified</div>
+          <div v-if="songAuthor[0].verified === 0" style="color: green; font-size: 130%;">Not Verified</div>
+        </div>
+        <!-- Biography - Aligned to the Left -->
+        <div style="margin-bottom: 15px; font-size: 16px; color: white; text-align: left;">
+            <span style="color: #4CAF50;"></span> {{songAuthor[0].biography}}
+        </div>
+        <!-- Edit Button - Centered -->
+        <div style="text-align: center; margin-left: -91%; margin-top: 5%;">
+            <a :href="'/#/authors/edit/' + songAuthor[0].id_author" 
+                style="color: green; background-color: aliceblue; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;"
+                >EDIT</a>
+        </div>
+        <h1 v-if="action === 'show'" style="font-size: 400%; font-weight: 900; margin-top: 15%; text-align: left; text-shadow: 2px 2px 4px green; color: aliceblue;">SONGS</h1>
+
+      <table style="width: 100%; margin-top: 5%; border-collapse: collapse;" class="table table-striped table-bordered table-hover">
+      <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
+      </tr>
+      <tr id="song-body" v-for="x of songAuthor" :key="x.id_song" class="table-row">
+      <td class="table-cell">{{ x.title }}</td>
+      <td class="table-cell" style="padding-right: 20px;">{{ x.duration }}</td>
+      <td class="table-cell">{{ x.number_of_streams }}</td>
+      <td class="table-cell">{{ formatDate(x.date_of_post) }}</td>
+      <td class="table-cell">{{ x.alias }}</td>
+      <td class="table-cell">{{ x.name }}</td>
+      <td class="table-cell">
+        <a :href="'/#/songs/show/' + x.id_song" class="show-link" style="color: green;">SHOW</a>
+      </td>
     </tr>
-    <tr id="song-body" v-for="song in songAuthor" :key="song.id_song">
-        <td style="color: aliceblue; font-weight: bold;">{{ song.id_song }}</td>
-        <td style="color: aliceblue; font-weight: bold;">{{ song.title }}</td>
-        <td style="color: aliceblue; font-weight: bold;">{{ song.duration }}</td>
-        <td style="color: aliceblue; font-weight: bold;">{{ song.number_of_streams }}</td>
-        <td style="color: aliceblue; font-weight: bold;">{{ formatDate(song.date_of_post) }}</td>
-        <td style="color: aliceblue; font-weight: bold;">{{ song.alias }}</td>
-        <td style="color: aliceblue; font-weight: bold;">{{ song.name }}</td>
-        <td>
-            <a :href="'/#/songs/show/' + song.id_song" 
-              style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"
-              @mouseover="this.style.background='#7efca4'" 
-              @mouseleave="this.style.background='white'">SHOW</a>
-        </td>
-        <td>
-            <a :href="'/#/songs/edit/' + song.id_song" 
-              style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"
-              @mouseover="this.style.background='#6efff3'" 
-              @mouseleave="this.style.background='white'">EDIT</a>
-        </td>
-        <td>
-            <input type="button" value="DELETE" 
-                  @click="sendDeleteRequest(song.id_song)" 
-                  style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"
-                  @mouseover="this.style.background='#fa8c8c'" 
-                  @mouseleave="this.style.background='white'" />
-        </td>
-    </tr>
-</table>
-    </div>
+  </table>
+      </div>
 </div>
     
     <div v-if="action === 'edit'" class="container2 ">
       <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
         <span class="input-group-text" style="margin-bottom: 5%;">Alias</span>
-        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthor.alias" :placeholder="oneAuthor.alias" style="margin-bottom: 5%;">
+        <input type="text" name="authors_alias" class="form-control" v-model="songAuthor[0].alias" :placeholder="songAuthor[0].alias" style="margin-bottom: 5%;">
       </div>
       <div class=" input-group" style="padding-left: 30%; padding-right: 30%;">
         <span class="input-group-text">First and last name</span>
-        <input type="text" aria-label="First name" class="form-control" v-model="oneAuthor.first_name" >
-        <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthor.last_name">
+        <input type="text" aria-label="First name" class="form-control" v-model="songAuthor[0].first_name" >
+        <input type="text" aria-label="Last name" class="form-control" v-model="songAuthor[0].last_name">
       </div>
-      <textarea id="bio" role="textbox" contenteditable v-model="oneAuthor.biography">{{ oneAuthor.biography }}</textarea>
-      <div class="p-2 g-col-6"><select name="authors_verified" v-model="oneAuthor.verified" style="padding:0.7% ; border-radius: 1000px;">
+      <textarea id="bio" role="textbox" contenteditable v-model="songAuthor[0].biography">{{ songAuthor[0].biography }}</textarea>
+      <div class="p-2 g-col-6"><select name="authors_verified" v-model="songAuthor[0].verified" style="padding:0.7% ; border-radius: 1000px;">
             <option>
               0
             </option>
@@ -93,7 +67,7 @@
           </select>
         </div>
       <div id="buttons_container" class="g-col-6 mt-5" >
-          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(oneAuthor.id_author)">DELETE</button>
+          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(songAuthor[0].id_author)">DELETE</button>
           <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest()" />
       </div>  
     </div>
@@ -203,7 +177,7 @@ if (this.$props.id === "all" || this.$props.id === "0") {
 }
 try {
   let responseAuthor = await this.$http.get("http://localhost:9000/authorsapi/show/" + this.$props.id);
-  this.oneAuthor = responseAuthor.data;
+  this.songAuthor = responseAuthor.data;
   console.log(this.oneAuthor[0].title)
   console.log("oneAuthor: " + this.oneAuthor.alias);
   // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
@@ -257,7 +231,11 @@ try {
 catch (ex) { console.log(ex); }
 },
 
-
+formatDate(incomingDate) {
+      const date = new Date(incomingDate);
+// Format the date (e.g., as 'YYYY-MM-DD')
+      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+      return formattedDate;},
 
 changeBodyBackgroundColor() {
   document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
@@ -271,9 +249,6 @@ watch:{
 id: function(newVal, oldVAl){
   this.refreshOneAuthor();},
 
-authorId(newVal) {
-    this.getSongsFromAuthor(newVal);
-}
 },
 
 created(){
@@ -419,5 +394,66 @@ td{
   margin-left: 0%;
   margin-top: 1%;
   font-size: 20px;
+}
+
+
+/* Table Styles */
+.table {
+  width: 100%;
+  margin-top: 5%;
+  border-collapse: collapse;
+  background-color: #1e1e1e41; /* Dark background for better contrast */
+  border-radius: 10px;
+  overflow: hidden;
+  border: none; /* Supprime la bordure extérieure */
+}
+
+/* Header Row */
+.table-header {
+  color: white;
+  text-transform: capitalize;
+  font-weight: bold;
+  background-color: #333; /* Darker shade for header */
+  text-align: left;
+}
+
+/* Table Rows */
+.table-row:nth-child(even) {
+  background-color: #ffffff33; /* Alternate row color */
+}
+
+.table-row:nth-child(odd) {
+  background-color: #bbbbbb5d;
+}
+
+.table-row:hover {
+  background-color: #d4ffd469; /* Highlight row on hover */
+  cursor: pointer;
+}
+
+/* Table Cells */
+.table-cell {
+  color: aliceblue;
+  font-weight: bold;
+  padding: 1%;
+  text-align: left;
+  border: none; /* Supprime les bordures des cellules */
+}
+
+/* Links */
+.show-link {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 25px;
+  display: inline-block;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.show-link:hover {
+  background-color: #7efca4;
+  color: #1e1e1e;
 }
 </style>
