@@ -53,7 +53,7 @@ module.exports = {
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
             
-            let sql = "SELECT * FROM author left join song on author.id_author = song.id_author WHERE author.id_author = ?;";
+            let sql = "SELECT * FROM author left join song on author.id_author = song.id_author left join genre on genre.id_genre = song.id_genre WHERE author.id_author = ?;";
             const [rows, fields] = await pool.execute(sql, [ authorId ]);
             console.log("author du truc "+rows.length);
             if (rows.length > 0) {

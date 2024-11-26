@@ -37,8 +37,6 @@
           <td>Author</td>
           <td>Genre</td>
           <td>SHOW DETAILS</td>
-          <td>EDIT SONG</td>
-          <td>DELETE SONG</td>
       </tr>
       <tr id="song-body" v-for="x of songAuthor">
           <td style="color: aliceblue; font-weight: bold;">{{ x.id_song }}</td>
@@ -53,19 +51,6 @@
                 style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"
                 @mouseover="this.style.background='#7efca4'" 
                 @mouseleave="this.style.background='white'">SHOW</a>
-          </td>
-          <td>
-              <a :href="'/#/songs/edit/' + x.id_song" 
-                style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"
-                @mouseover="this.style.background='#6efff3'" 
-                @mouseleave="this.style.background='white'">EDIT</a>
-          </td>
-          <td>
-              <input type="button" value="DELETE" 
-                    @click="sendDeleteRequest(x.id_song)" 
-                    style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"
-                    @mouseover="this.style.background='#fa8c8c'" 
-                    @mouseleave="this.style.background='white'" />
           </td>
       </tr>
   </table>
