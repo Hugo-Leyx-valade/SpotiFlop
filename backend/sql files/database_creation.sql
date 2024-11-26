@@ -398,3 +398,20 @@ INSERT INTO playlist (title, date_of_post, number_of_save, _description, state, 
 INSERT INTO playlist_has_song VALUES 
     (1, 1),
     (2, 2);
+    
+    
+    ALTER TABLE song ADD COLUMN formatted_duration VARCHAR(5);
+
+UPDATE song
+SET formatted_duration = CONCAT(
+    LPAD(FLOOR(duration), 2, '0'), ':',
+    LPAD(ROUND((duration - FLOOR(duration)) * 60), 2, '0')
+);
+
+ALTER TABLE song DROP COLUMN duration;
+
+ALTER TABLE song CHANGE COLUMN formatted_duration duration VARCHAR(5);
+
+select * from song;
+
+select * from projet_harone_hugo
