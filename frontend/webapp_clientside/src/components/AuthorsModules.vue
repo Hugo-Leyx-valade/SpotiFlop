@@ -24,35 +24,25 @@
         <!-- Edit Button - Centered -->
         <div style="text-align: center; margin-left: -91%; margin-top: 5%;">
             <a :href="'/#/authors/edit/' + songAuthor[0].id_author" 
-                style="color: white; background-color: #007BFF; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;"
-                >[EDIT]</a>
+                style="color: green; background-color: aliceblue; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;"
+                >EDIT</a>
         </div>
-        <table style="width: 100%; margin-top: 5%; border-collapse: collapse;">
+        <h1 v-if="action === 'show'" style="font-size: 400%; font-weight: 900; margin-top: 15%; text-align: left; text-shadow: 2px 2px 4px green; color: aliceblue;">SONGS</h1>
+
+      <table style="width: 100%; margin-top: 5%; border-collapse: collapse;" class="table table-striped table-bordered table-hover">
       <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
-          <td>ID</td>
-          <td>Title</td>
-          <td>Duration</td>
-          <td>Number Of Streams</td>
-          <td>Date Of Post</td>
-          <td>Author</td>
-          <td>Genre</td>
-          <td>SHOW DETAILS</td>
       </tr>
-      <tr id="song-body" v-for="x of songAuthor">
-          <td style="color: aliceblue; font-weight: bold;">{{ x.id_song }}</td>
-          <td style="color: aliceblue; font-weight: bold;">{{ x.title }}</td>
-          <td style="color: aliceblue; font-weight: bold;">{{ x.duration }}</td>
-          <td style="color: aliceblue; font-weight: bold;">{{ x.number_of_streams }}</td>
-          <td style="color: aliceblue; font-weight: bold;">{{ formatDate(x.date_of_post) }}</td>
-          <td style="color: aliceblue; font-weight: bold;">{{ x.alias }}</td>
-          <td style="color: aliceblue; font-weight: bold;">{{ x.name }}</td>
-          <td>
-              <a :href="'/#/songs/show/' + x.id_song" 
-                style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"
-                @mouseover="this.style.background='#7efca4'" 
-                @mouseleave="this.style.background='white'">SHOW</a>
-          </td>
-      </tr>
+      <tr id="song-body" v-for="x of songAuthor" :key="x.id_song" class="table-row">
+      <td class="table-cell">{{ x.title }}</td>
+      <td class="table-cell">{{ x.duration }}</td>
+      <td class="table-cell">{{ x.number_of_streams }}</td>
+      <td class="table-cell">{{ formatDate(x.date_of_post) }}</td>
+      <td class="table-cell">{{ x.alias }}</td>
+      <td class="table-cell">{{ x.name }}</td>
+      <td class="table-cell">
+        <a :href="'/#/songs/show/' + x.id_song" class="show-link">SHOW</a>
+      </td>
+    </tr>
   </table>
       </div>
 </div>
@@ -405,5 +395,66 @@ td{
   margin-left: 0%;
   margin-top: 1%;
   font-size: 20px;
+}
+
+
+/* Table Styles */
+.table {
+  width: 100%;
+  margin-top: 5%;
+  border-collapse: collapse;
+  background-color: #1e1e1e41; /* Dark background for better contrast */
+  border-radius: 10px;
+  overflow: hidden;
+  border: none; /* Supprime la bordure extérieure */
+}
+
+/* Header Row */
+.table-header {
+  color: white;
+  text-transform: capitalize;
+  font-weight: bold;
+  background-color: #333; /* Darker shade for header */
+  text-align: left;
+}
+
+/* Table Rows */
+.table-row:nth-child(even) {
+  background-color: #ffffff33; /* Alternate row color */
+}
+
+.table-row:nth-child(odd) {
+  background-color: #bbbbbb5d;
+}
+
+.table-row:hover {
+  background-color: #d4ffd469; /* Highlight row on hover */
+  cursor: pointer;
+}
+
+/* Table Cells */
+.table-cell {
+  color: aliceblue;
+  font-weight: bold;
+  padding: 1%;
+  text-align: left;
+  border: none; /* Supprime les bordures des cellules */
+}
+
+/* Links */
+.show-link {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 25px;
+  display: inline-block;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.show-link:hover {
+  background-color: #7efca4;
+  color: #1e1e1e;
 }
 </style>
