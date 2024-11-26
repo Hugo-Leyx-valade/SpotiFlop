@@ -10,12 +10,37 @@
     <div class="flex items-center justify-between"></div>
 
     <!-- FOR DATA SHEET /genres/show/42 -->
-    <div v-if="action === 'show'" style="display: flex; justify-content: center;">
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; font-size: 200%;">Name</p>   
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; font-size: 150%;">{{ oneGenre.name }}</p>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 10%; font-size: 150%;">Description</p>   
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 14%; font-size: 120%; width: 30%;">{{ oneGenre.description }}</p>
+    <div v-if="action === 'show'" style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+      <p style="color: aliceblue; font-weight: bold; font-size: 200%;">Name</p>   
+      <p style="color: aliceblue; font-weight: bold; font-size: 150%;">{{ oneGenre.name }}</p>
+      <p style="color: aliceblue; font-weight: bold; font-size: 200%;">Description</p>   
+      <p style="color: aliceblue; font-weight: bold; font-size: 120%; width: 30%;">{{ oneGenre.description }}</p>
+
+      <div v-if="songs.length > 0" style="margin-top: 20px; width: 50%; text-align: center;">
+        <h3 style="color: white;">Associated Songs</h3>
+        <table style="color: white; width: 100%; border: 1px solid white; text-align: center;">
+          <thead>
+            <tr>
+              <th style="padding: 10px; border-bottom: 1px solid white;">ID</th>
+              <th style="padding: 10px; border-bottom: 1px solid white;">Title</th>
+              <th style="padding: 10px; border-bottom: 1px solid white;">Artist</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="song in songs" :key="song.id_song">
+              <td style="padding: 10px;">{{ song.id_song }}</td>
+              <td style="padding: 10px;">{{ song.title }}</td>
+              <td style="padding: 10px;">{{ song.artist }}</td>
+            </tr>
+          </tbody>
+        </table>
     </div>
+
+  <div v-else style="margin-top: 20px; color: white;">
+    <p>No songs associated with this genre.</p>
+  </div>
+</div>
+
 
     <!-- FOR EDIT /genres/edit/42 -->
     <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
@@ -54,6 +79,7 @@
 // Import
 import BacktohomeModule from './BacktohomeModule.vue';
 
+
 export default {
   name: 'Genres',
   components: {
@@ -67,8 +93,9 @@ export default {
         id_genre: 0,
         name: '',
         description: ''
-      }
-    }
+      },
+    songs: []
+    };
   },
 
   mounted() {
@@ -89,20 +116,39 @@ export default {
       return `${date.getFullYear()}`-`${(date.getMonth() + 1).toString().padStart(2, '0')}`-`${date.getDate().toString().padStart(2, '0')}`;
     },
 
-    async refreshOneGenre() {
-      if (this.$props.id === "0") {
-        this.oneGenre = {
-          id_genre: 0,
-          name: '',
-          description: ''
-        };
-        return;
-      }
+    async getSongsByGenre(genreId) {
       try {
-        let responseGenre = await this.$http.get("http://localhost:9000/genresapi/show/" + this.$props.id);
-        this.oneGenre = responseGenre.data;
-      } catch (ex) { console.log(ex); }
+        if (!genreId) {
+          console.error('Genre ID is undefined or null');
+          return;
+        }
+        let response = await fetch(`http://localhost:9000/genresapi/show/${this.$props.id}`);
+        if (response.ok) {
+          this.songs = await response.json();
+        } else {
+          console.error('Failed to fetch songs for this genre');
+          this.songs = [];
+        }
+      } catch (error) {
+        console.error("Error while fetching songs: ", error);
+        this.songs = [];
+      }
     },
+
+async refreshOneGenre() {
+    try {
+        let responseGenre = await fetch(`http://localhost:9000/genresapi/show/${this.$props.id}`);
+        if (responseGenre.ok) {
+            this.oneGenre = await responseGenre.json();
+            await this.getSongsByGenre(this.$props.id); // Récupérer les chansons associées
+        } else {
+            console.error("Failed to fetch genre");
+        }
+    } catch (ex) {
+        console.log(ex);
+    }
+},
+
 
     async sendDeleteRequest(genreId) {
       try {

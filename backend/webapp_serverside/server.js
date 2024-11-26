@@ -53,4 +53,8 @@ app.use("/songsapi", require("./controllers/songsapi.route"));
 app.use("/authorsapi", require("./controllers/authorsapi.route"));
 app.use("/usersapi", require("./controllers/usersapi.route"));
 app.use("/genresapi", require("./controllers/genresapi.route"));
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
 // app.use("/auth", require("./controllers/auth.route"));

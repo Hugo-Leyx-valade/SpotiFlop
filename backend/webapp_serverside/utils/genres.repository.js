@@ -1,3 +1,4 @@
+import axios from "axios";
 const pool = require(__dirname + "\\db.include.js");
 
 module.exports = {
@@ -25,6 +26,23 @@ module.exports = {
         } catch (err) {
             console.error(err);
             throw err;
+        }
+    },
+    
+    async getSongsByGenre(genreId) {
+        try {
+            const sql = `
+                SELECT s.id_song, s.title, a.alias AS artist
+                FROM song s
+                INNER JOIN genre g ON s.id_genre = g.id_genre
+                INNER JOIN author a ON s.id_author = a.id_author
+                WHERE g.id_genre = ?
+            `;
+            const [rows] = await pool.execute(sql, [genreId]);
+            return rows;
+        } catch (err) {
+            console.error(err);
+            throw new Error("Unable to fetch songs for this genre.");
         }
     },
 

@@ -8,6 +8,9 @@ router.get('/show/:genreId', genreShowAction);
 router.post('/add', genreAddAction);
 router.post('/update/:genreId', genreUpdateAction);
 router.get('/del/:genreId', genreDeleteAction);
+router.get('/genre/:genreId/songs', genreSongsAction);
+
+
 
 // List all genres
 async function genreListAction(request, response) {
@@ -75,6 +78,21 @@ async function genreDeleteAction(request, response) {
     } catch (err) {
         console.error(err);
         response.status(500).send({ error: "Unable to delete genre." });
+    }
+}
+
+async function genreSongsAction(request, response) {
+    try {
+        const genreId = request.params.genreId;
+        const songs = await genreRepo.getSongsByGenre(genreId);
+        if (songs && songs.length > 0) {
+            response.send(songs);
+        } else {
+            response.status(404).send({ error: "No songs found for this genre." });
+        }
+    } catch (err) {
+        console.error(err);
+        response.status(500).send({ error: "Unable to fetch songs." });
     }
 }
 
