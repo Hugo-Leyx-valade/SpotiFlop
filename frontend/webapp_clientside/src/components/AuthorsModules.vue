@@ -43,15 +43,15 @@
     <div v-if="action === 'edit'" class="container2 ">
       <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
         <span class="input-group-text" style="margin-bottom: 5%;">Alias</span>
-        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthor[0].alias" :placeholder="oneAuthor[0].alias" style="margin-bottom: 5%;">
+        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthor.alias" :placeholder="oneAuthor.alias" style="margin-bottom: 5%;">
       </div>
       <div class=" input-group" style="padding-left: 30%; padding-right: 30%;">
         <span class="input-group-text">First and last name</span>
-        <input type="text" aria-label="First name" class="form-control" v-model="oneAuthor[0].first_name" >
-        <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthor[0].last_name">
+        <input type="text" aria-label="First name" class="form-control" v-model="oneAuthor.first_name" >
+        <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthor.last_name">
       </div>
-      <textarea id="bio" role="textbox" contenteditable v-model="oneAuthor[0].biography">{{ oneAuthor[0].biography }}</textarea>
-      <div class="p-2 g-col-6"><select name="authors_verified" v-model="oneAuthor[0].verified" style="padding:0.7% ; border-radius: 1000px;">
+      <textarea id="bio" role="textbox" contenteditable v-model="oneAuthor.biography">{{ oneAuthor.biography }}</textarea>
+      <div class="p-2 g-col-6"><select name="authors_verified" v-model="oneAuthor.verified" style="padding:0.7% ; border-radius: 1000px;">
             <option>
               0
             </option>
@@ -60,7 +60,7 @@
             </option>
           </select>
       <div id="buttons_container" class="g-col-6 mt-5" >
-          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(oneAuthor[0].id_author)">DELETE</button>
+          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(oneAuthor.id_author)">DELETE</button>
           <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest()" />
       </div>  
     </div>
