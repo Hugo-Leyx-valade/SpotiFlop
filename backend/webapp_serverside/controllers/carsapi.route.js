@@ -36,8 +36,11 @@ async function carDelAction(request, response) {
     let result = { rowsDeleted: numRows };
     response.send(JSON.stringify(result));
 }
+
+
+
 async function carUpdateAction(request, response) {
-    // var json = JSON.stringify(request.body); // bodyParser can process json in body + regular POST form input too
+    var json = JSON.stringify(request.body); // bodyParser can process json in body + regular POST form input too
     // console.log(json);
     // TODO: !!! INPUT VALIDATION !!!
     var carId = request.params.carId;
