@@ -1,4 +1,3 @@
-import axios from "axios";
 const pool = require(__dirname + "\\db.include.js");
 
 module.exports = {

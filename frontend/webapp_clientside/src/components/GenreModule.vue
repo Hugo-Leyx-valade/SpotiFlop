@@ -100,6 +100,7 @@ export default {
 
   mounted() {
     this.changeBodyBackgroundColor();
+    this.getSongsByGenre();
   },
 
   methods: {
@@ -122,7 +123,7 @@ export default {
           console.error('Genre ID is undefined or null');
           return;
         }
-        let response = await fetch(`http://localhost:9000/genresapi/show/${this.$props.id}`);
+        let response = await fetch("http://localhost:9000/genresapi/show/" + this.songs.genreIds);
         if (response.ok) {
           this.songs = await response.json();
         } else {
