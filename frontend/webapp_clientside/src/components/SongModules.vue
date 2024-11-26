@@ -26,15 +26,46 @@
 
   <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
     <img src="../assets/pink-cover.png" alt="logo_white" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%;"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: -23%; font-size: 200%;">Title</p>   <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; margin-left: -23%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;;border-color: white;text-align: center;" v-model="oneSong.title"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: 30%; font-size: 200%;">Duration</p>    <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 30%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.duration"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: -40%; font-size: 200%;">Number of Streams</p>   <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21.2%; margin-left: -32.5%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.number_of_streams"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28%; margin-left: -3%; font-size: 180%;">Date of Post</p>    <input type="date" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 31%; margin-left: -3%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.date_of_post"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: 75%; font-size: 200%;">Lyrics</p>    <span class="textarea" role="textbox" contenteditable >{{ oneSong.lyrics }}</span>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 30%; font-size: 200%;">Author</p>   <input style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 30%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.alias"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 32%; margin-left: 37%; font-size: 200%;">Genre</p>   <input style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 32%; margin-left: 55%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;border-color: white;text-align: center;" v-model="oneSong.name"/>
-      <input type="button" value="Save Changes" @click="sendEditRequest()" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'"/>
-    </div>
+    <form class="song-form" @submit.prevent="sendEditRequest" style="margin-left: 50%;">
+  <!-- Title -->
+  <p class="label">Title</p>
+  <input type="text" class="input" v-model="oneSong.title" required />
+
+  <!-- Duration -->
+  <p class="label" style="margin-top: 18%;">Duration</p>
+  <input type="text" class="input" v-model="oneSong.duration" pattern="^([0-9][0-9]):([0-9][0-9])$" 
+  title="Enter a valid time in mm:ss format (e.g., 25:06 or 5:06)" 
+  required />
+
+  <!-- Number of Streams -->
+  <p class="label" style="margin-top: 18%; margin-left: -40%;">Number of Streams</p>
+  <input
+    type="text"
+    class="input"
+    v-model="oneSong.number_of_streams"
+    required
+  />
+
+  <!-- Date of Post -->
+  <p class="label" style="margin-top: 28%; margin-left: -3%;">Date of Post</p>
+  <input type="date" class="input" v-model="oneSong.date_of_post" required />
+
+  <!-- Lyrics -->
+  <p class="label" style="margin-top: 2.5%; margin-left: 75%;">Lyrics</p>
+  <span class="textarea" role="textbox" contenteditable>{{ oneSong.lyrics }}</span>
+
+  <!-- Author -->
+  <p class="label" style="margin-top: 4%;">Author</p>
+  <input type="text" class="input" v-model="oneSong.alias" required />
+
+  <!-- Genre -->
+  <p class="label" style="margin-top: 32%; margin-left: 37%;">Genre</p>
+  <input type="text" class="input" v-model="oneSong.name" required />
+
+  <!-- Save Changes -->
+  <button type="submit">Submit</button>
+</form>
+  </div>
 
     <!-- FOR List /songs/list/all -->
     <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
@@ -53,7 +84,7 @@
         <td style="color: aliceblue; font-weight: bold;">{{ s.name }}</td>
         <td><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
         <td><a :href="'/#/songs/edit/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
-        <td><input type="button" value="DELETE" @click="sendDeleteRequest(s.id_song)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#fa8c8c'" onMouseLeave="this.style.background='white'"  /></td>
+        <td><input type="button" value="DELETE" @click="sendDeleteRequest(s.id_song)" style="color: black;background-color: white; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#fa8c8c'" onMouseLeave="this.style.background='white'"  /></td>
       </tr>
     </table>
   <div style="margin-top: 16%;"></div>
@@ -258,5 +289,85 @@ margin-top: 6%;
 font-size: 20px;
 }
 
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
 
+/* Header styles */
+.table tr:first-child {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: rgba(255, 255, 255, 0);
+  text-transform: capitalize;
+  font-weight: bolder;
+}
+
+/* Row styles */
+.table tr {
+  transition: background-color 0.3s ease;
+}
+
+/* Row hover effect */
+.table tr:hover {
+  background-color: #d7fff0cc;
+}
+
+/* Cell styles */
+.table td {
+  padding: 12px 15px;
+  color: #333;
+  font-weight: 500;
+  text-align: left; 
+}
+
+/* Specific styles for buttons and links */
+.table a {
+  display: inline-block;
+  padding: 8px 15px;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.table a:hover {
+  background-color: #7efca4;
+}
+
+.table input[type="button"] {
+  padding: 8px 15px;
+  color: black;
+  font-weight: bold;
+  border-radius: 25px;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.table input[type="button"]:hover {
+  background-color: #fa8c8c;
+  color: white;
+}
+
+/* Add button styles */
+.add-button {
+  display: inline-block;
+  margin: 10px 0;
+  padding: 10px 25px;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #7efca4;
+}
 </style>

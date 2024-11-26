@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.user (
 CREATE TABLE IF NOT EXISTS projet_harone_hugo.song (
   id_song INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(45) NOT NULL,
-  duration INT,
+  duration VARCHAR(50),
   number_of_streams bigint,
   date_of_post DATE NOT NULL,
   lyrics VARCHAR(1000),
