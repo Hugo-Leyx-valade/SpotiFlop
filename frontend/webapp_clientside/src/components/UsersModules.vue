@@ -36,9 +36,9 @@
 </div>
 
 <!-- Playlist Header -->
-<h1 v-if="action === 'show'" style="font-size: 400%; font-weight: 900; margin-top: 35%; text-align: center; text-shadow: 2px 2px 4px green; color: aliceblue;">PLAYLIST</h1>
+<h1 v-if="action === 'show'" style="font-size: 400%; font-weight: 900; margin-top: 30%; text-align: center; text-shadow: 2px 2px 4px green; color: aliceblue;">PLAYLIST</h1>
 <!-- Table -->
-<table v-if="action === 'show'" class="table table-striped table-bordered table-hover" style="width: 50%; margin: 3% auto; border-radius: 10px;">
+<table v-if="action === 'show'" class="table table-striped table-bordered table-hover" style="width: 50%; margin: 0% auto; border-radius: 10px;">
   <thead>
     <tr>  
       <th>Username</th>
@@ -49,7 +49,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="u in user" :key="u.id_user">
+    <tr v-for="u of user" v-bind:key="u.id_user">
       <td>{{ u.username }}</td>
       <td>{{ u.email }}</td>
       <td>
@@ -90,7 +90,11 @@
         <input type="date" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: 25%; font-size: 120%; width: 20%;background-color: transparent; border-radius: 20px;width:10%;text-align: center;border-color: white;" v-model="user[0].date_of_birth"/>
 
         <input type="button" value="CONFIRM CHANGES" @click="id === '0' ? addUser() : sendEditRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%; margin-left: 15%;" />
-        <input type="button" value="RESET PASSWORD " @click="id === '0' ? addUser() : sendResetPasswordRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%;  margin-left: -15%;"/>
+        <input v-if="user[0].genre === 1" type="button" value="RESET PASSWORD " @click="id === '0' ? addUser() : sendResetPasswordRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%;  margin-left: -15%;"/>
+        <div>
+          <input v-if="user[0].genre === 0" type="text" value="SET PASSWORD" @click="id === '0' ? addUser() : sendResetPasswordRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%;  margin-left: -15%;"/>
+
+        </div>
       </div>
 
       
@@ -107,7 +111,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="u in users" :key="u.id_user">
+    <tr v-for="u in users">
       <td>{{ u.id_user }}</td>
       <td>{{ u.username }}</td>
       <td>{{ u.email }}</td>
@@ -118,11 +122,12 @@
         <a :href="`/#/users/edit/${u.user_id}`" class="action-button edit">EDIT</a>
       </td>
       <td>
-        <input type="button" value="DELETE" @click="sendDeleteRequest()" class="action-button delete" />
+        <input type="button" value="DELETE" @click="sendDeleteRequest(u.id_user)" class="action-button delete" />
       </td>
     </tr>
   </tbody>
 </table>
+<p style="margin-top: 5%; color: aliceblue;font-weight: 900;">SPOTIFLOP</p>
 </div>
   </template>
   
@@ -196,13 +201,13 @@
           user_role: 'user',
           user_date_of_birth: 'K',
           user_genre:0,
-        }
+        };
         return;
         };
         try{
           let response = await this.$http.get("http://localhost:9000/usersapi/show/" + this.$props.id);
           this.user = response.data;
-          console.log(" user " + this.users.length);
+          console.log(" user " + this.user[0].length);
         }catch (ex){console.log(ex);}
       },
 
@@ -211,20 +216,6 @@
         document.body.style.backgroundSize = 'cover';
         document.body.style.height = '100%';
         document.body.style.backgroundColor = 'rgb(0,0,0)';
-    },
-
-
-    oneUserLoad(user){
-      this.oneUser.user_id = user.user_id;
-      this.oneUser.user_username = user.user_username;
-      this.oneUser.user_first_name = user.user_first_name;
-      this.oneUser.user_last_name = user.user_last_name;
-      this.oneUser.user_email = user.user_email;
-      this.oneUser.user_password = user.user_password;
-      this.oneUser.user_role = user.user_role;
-      this.oneUser.user_date_of_birth = user.user_date_of_birth;
-      this.oneUser.user_genre = user.genre;
-      this.changeGenderImage();
     },
 
 
@@ -246,35 +237,33 @@
     },
 
     async sendDeleteRequest(user_id){
-      console.log("DeleteUser function called");
-      try{
-        this.users = this.users.filter(user=> user.user_id !== user_id);
-        alert("User has been deleted successfully");
-        /*
-        let responesUsers = await this.$http.get("backend/url",newUser);
-        this.user.push(response.data);
-        */
-
-        /*const ID = this.users.findIndex(user=> user.user_id === user_id);
-
-        if(ID !== this.users.length && ID !== -1){
-          this.users.splice(ID,1);
-          alert("User has been deleted successfully");
-        }else{
-          alert("The user cannot be found");
-        }
-        */
-
-      }catch(error){
-        console.error("Error when deleting a user :", error);
-      }
-
-
-    },
+      try {
+      alert("DELETING... " + user_id);
+      let response = await this.$http.get("http://localhost:9000/usersapi/del/" + user_id);
+      alert("DELETED: " + response.data.rowsDeleted);
+      this.getALLData();
+    }
+    catch (ex) { console.log(ex); }
+  },
   
-        async sendEditRequest(id){
-          console.log(user[user_id])
-        },
+
+        async sendEditRequest(){
+          try {
+            if(this.$props.id === "0"){
+              let response = await this.$http.post(
+                  "http://localhost:9000/usersapi/add/",this.user[0]);
+              alert("Added: " + response.data.rowsUpdated);
+              this.$router.push({ path: '/songs/list/all' });
+              this.getAllData();
+            }
+            let response = await this.$http.post(
+                  "http://localhost:9000/usersapi/update/" + this.user[0].id_song, this.user[0]);
+            alert("EDITED: " + response.data.rowsUpdated);
+            this.$router.push({ path: '/users/list/all' });
+            this.getAllData();
+          }
+        catch (ex) { console.log(ex); }
+      },
     },
     
     

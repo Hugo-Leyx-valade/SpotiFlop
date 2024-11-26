@@ -29,6 +29,7 @@ async function userDelAction(request, response) {
     let result = { rowsDeleted: numRows };
     response.send(JSON.stringify(result));
 }
+
 async function userUpdateAction(request, response) {
     // var json = JSON.stringify(request.body); // bodyParser can process json in body + regular POST form input too
     // console.log(json);
@@ -43,7 +44,7 @@ async function userUpdateAction(request, response) {
         request.body.date_of_birth,
         request.body.genre);
     else{
-        var numRows = await userRepo.editOneUser(userId, 
+        var numRows = await userRepo.editOneUser( 
             request.body.username, 
             request.body.first_name, 
             request.body.last_name, 
@@ -51,7 +52,8 @@ async function userUpdateAction(request, response) {
             request.body.password,
             request.body.role,
             request.body.date_of_birth,
-            request.body.genre);
+            request.body.genre,
+            request.body.id_user);
         }
     let result = { rowsUpdated: numRows };
     response.send(JSON.stringify(result));
