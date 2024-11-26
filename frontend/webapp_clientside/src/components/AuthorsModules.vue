@@ -1,6 +1,5 @@
 <template>
   <div class="hello" onload="changeBodyBackgroundColor()">
-    <BackgroundModule></BackgroundModule>
     <BacktohomeModule></BacktohomeModule>
     <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%;" >Authors {{ action }} {{ id }}</span>
 
@@ -34,13 +33,13 @@
       </tr>
       <tr id="song-body" v-for="x of songAuthor" :key="x.id_song" class="table-row">
       <td class="table-cell">{{ x.title }}</td>
-      <td class="table-cell">{{ x.duration }}</td>
+      <td class="table-cell" style="padding-right: 20px;">{{ x.duration }}</td>
       <td class="table-cell">{{ x.number_of_streams }}</td>
       <td class="table-cell">{{ formatDate(x.date_of_post) }}</td>
       <td class="table-cell">{{ x.alias }}</td>
       <td class="table-cell">{{ x.name }}</td>
       <td class="table-cell">
-        <a :href="'/#/songs/show/' + x.id_song" class="show-link">SHOW</a>
+        <a :href="'/#/songs/show/' + x.id_song" class="show-link" style="color: green;">SHOW</a>
       </td>
     </tr>
   </table>
