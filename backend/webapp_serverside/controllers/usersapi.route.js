@@ -44,7 +44,7 @@ async function userUpdateAction(request, response) {
         request.body.date_of_birth,
         request.body.genre);
     else{
-        var numRows = await userRepo.editOneUser(userId, 
+        var numRows = await userRepo.editOneUser( 
             request.body.username, 
             request.body.first_name, 
             request.body.last_name, 
@@ -52,7 +52,8 @@ async function userUpdateAction(request, response) {
             request.body.password,
             request.body.role,
             request.body.date_of_birth,
-            request.body.genre);
+            request.body.genre,
+            request.body.id_user);
         }
     let result = { rowsUpdated: numRows };
     response.send(JSON.stringify(result));
