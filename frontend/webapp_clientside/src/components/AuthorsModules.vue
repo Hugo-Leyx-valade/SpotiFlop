@@ -7,6 +7,7 @@
     <div id="tables" style="margin-top: 13%;">
     <!-- FOR DATA SHEET /authors/show/42 -->
     <div v-if="action === 'show'" style="width: 50%; margin-left: 5%; margin-top: -3%; background-color: none; border-radius: 8px; padding: 10px;">
+      <img src="/src/assets/${oneAuthor.image}`" alt="Author image" style="width: 150px; height: auto; border-radius: 8px;">
     <!-- Alias - Large Text, Aligned to the Left -->
       <div style="font-size: 400%; color: white; font-weight: 900; text-align: left;">
           <span style="color: #4CAF50;"></span> {{oneAuthor.alias}}
@@ -102,8 +103,9 @@
     <a v-if="action === 'list'" :href="'/#/authors/edit/0'" style="padding:0.7% 1% ;margin-left: 90%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
     <div v-if="action === 'list'" class="container"  >
       <div class="row">
-        <div class="author-card" v-for="a of authors" v-bind:key="a.authors_id" @click="$router.push('/authors/show/' + a.id_author)">
-            <div class="image-container" style="background-color: white;" >
+        <div class="author-card" v-for="a of authors" v-bind:key="a.id_author" @click="$router.push('/authors/show/' + a.id_author)">
+            <div class="image-container" style="background-color: white;">
+              <img :src="`getAuthorImage(a.image)`"alt="Author Images" class="author-image" @error="handleImageError">  
               <div class="overlay">
                 <span class="author-name">{{ a.alias }}</span>
               </div>
@@ -116,6 +118,7 @@
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
+import { images, defaultImage } from '../images.js';
 
 export default {
   name: 'Authors',
@@ -151,29 +154,34 @@ export default {
 
   methods:{
 
-    async getSongsFromAuthor(authorId) {
-            if (!authorId) {
-                console.warn("Author ID is not set.");
-                return; // Exit if authorId is not provided
-            }
+  async getSongsFromAuthor(authorId) {
+    if (!authorId) {
+        console.warn("Author ID is not set.");
+        return; // Exit if authorId is not provided
+    }
 
-            try {
-                // Fetch songs by author from the API
-                let response = await fetch(`http://localhost:9000/authorsapi/songAuthor/4`);
-                
-                // Check if response is OK (status 200-299)
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+    try {
+        // Fetch songs by author from the API
+        let response = await fetch(`http://localhost:9000/authorsapi/songAuthor/4`);
+        
+        // Check if response is OK (status 200-299)
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-                // Parse JSON response
-                const songAuthor = await response.json();
-                console.log("Fetched songs:", songAuthor); // Log to check the data
-                
-            } catch (error) {
-                console.error("Error fetching songs:", error);
-            }
-        },
+        // Parse JSON response
+        const songAuthor = await response.json();
+        console.log("Fetched songs:", songAuthor); // Log to check the data
+        
+    } catch (error) {
+        console.error("Error fetching songs:", error);
+    }
+  },
+
+// Méthode pour construire le chemin des images
+getAuthorImage(alias) {
+      return images[alias] || defaultImage;
+    },
 
 async getAllData() {
 try {
@@ -398,7 +406,6 @@ td{
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
-  border: 2px solid rgba(236, 68, 68, 0.685);
   transition: transform 0.7s ease; /* ajout de la transi sur transform*/
 }
 

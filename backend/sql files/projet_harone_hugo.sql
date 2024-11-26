@@ -400,3 +400,5 @@ INSERT INTO playlist_has_song VALUES
     (1, 1),
     (2, 2);
 
+--ajout img dans authors
+ALTER TABLE author ADD COLUMN image VARCHAR(300);
