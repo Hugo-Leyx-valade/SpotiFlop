@@ -146,10 +146,11 @@ if (this.$props.id === "all" || this.$props.id === "0") {
 try {
   let responseAuthor = await fetch("http://localhost:9000/authorsapi/show/" + this.$props.id);
   var result = await responseAuthor.json();
-  for (var i = 1; i < result.length; i++) {
-    this.songAuthor.push(result[i]);
+  for (var i = 1; i < result.songs.length; i++) {
+    this.songAuthor.push(result.songs[i]);
   }
-  this.oneAuthor = result[0][0];
+  this.oneAuthor = result.author;
+  console.log("hugo" + JSON.stringify(this.oneAuthor));
   // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
 }
 catch (ex) { console.log(ex); }

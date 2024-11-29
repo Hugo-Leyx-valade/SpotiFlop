@@ -12,7 +12,7 @@ import HomeModulesUser from '../components/homeModulesUser.vue'
 import AdminPanel from '../components/AdminPanel.vue'
 import PlaylistModules from '../components/PlaylistModules.vue'
 import GenreModule from '../components/GenreModule.vue'
-
+import AdminDashboard from '../components/AdminDashboard.vue'
 
 
 Vue.use(Router)
@@ -100,6 +100,16 @@ export default new Router({
     {
       path :'/adminPanel',
       component: AdminPanel,
+    },
+    {
+      path: '/panel',
+      redirect: '/adminDashboard/list/all'
+    },
+    {
+      path: '/adminDashboard/:action/:id',
+      name: 'songs',
+      component: AdminDashboard,
+      props:  true,
     },
   ]
 })

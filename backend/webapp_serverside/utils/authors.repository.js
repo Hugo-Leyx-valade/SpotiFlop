@@ -57,7 +57,7 @@ module.exports = {
             const [rows, fields] = await pool.execute(sql, [ authorId ]);
             console.log("author "+JSON.stringify(rows));
             if (rows.length > 0) {
-                return [rows];
+                return rows[0];
             } else {
                 return false;
             }

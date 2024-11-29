@@ -47,7 +47,7 @@
     type="text"
     placeholder="Search a playlist by Name"
     class="search-input"
-    style="margin-bottom: 10px; padding: 6px; width: 15%; border-radius: 90px; border-color: transparent; "
+    style="margin-bottom: 10px; padding: 6px; width: 15%; border-radius: 90px; border-color: transparent;         "
   />
 
 </div>
