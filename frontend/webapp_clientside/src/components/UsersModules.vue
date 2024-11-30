@@ -324,16 +324,6 @@
       return matchesSearch && matchesGenre;
     });
   },
-
-  filteredUser() {
-    return this.user.filter(user => {
-      const matchesSearch = user.username.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-                            user.email.toLowerCase().includes(this.searchQuery.toLowerCase());
-      const matchesGenre = this.selectedGenre === "" || user.genre === parseInt(this.selectedGenre);
-      return matchesSearch && matchesGenre;
-    });
-  }
-
 },
   
 

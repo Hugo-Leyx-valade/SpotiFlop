@@ -5,7 +5,7 @@
 
         <div v-if="action === 'list'" class="card">
             <div id="number of song per authors">
-                <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+               
 
             </div>
             
@@ -19,6 +19,7 @@
 
 <script>
 
+
 export default {
     props:['action'],
     name: 'AdminDashboard',
@@ -29,7 +30,11 @@ export default {
             authorsNumberOfSongsY: [],
             // Add your component data here
         };
+
+
     },
+
+    
     methods: {
 
         async getAllData() {

@@ -21,7 +21,7 @@ module.exports = {
 
     async getAllPlaylist(){ 
         try {
-            let sql = "SELECT * FROM playlist left join playlist_has_song on playlist.id_playlist = playlist_has_song.playlist_id_playlist left join song on song.id_song = playlist_has_song.song_id_song left join genre on song.id_genre = genre.id_genre order by id_song asc;";
+            let sql = "select id_playlist, title, date_of_post, number_of_save,_description, username from playlist inner join user on playlist.user_id = user.id_user where state='public' order by number_of_save desc;";
             const [rows, fields] = await pool.execute(sql);
             console.log("SONGS FETCHED: "+rows.length);
             return rows;
@@ -31,29 +31,43 @@ module.exports = {
             throw err; 
         }
     },
-    async getSongsByName(name){ 
-        try {
-            let sql = "SELECT * FROM songs INNER JOIN genres ON song_genre=genre_id WHERE upper(name) like upper(?)";
-            const [rows, fields] = await pool.execute(sql, [ `%${name}%` ]);
-            console.log("songs FILTERED: "+rows.length);
-            return rows;
-        }
-        catch (err) {
-            console.log(err);
-            throw err; 
-        }
-    },
-    async getOneSong(songId){ 
+
+
+    async getOnePlaylist(playlistId){
         try {
             // sql = "SELECT * FROM songs INNER JOIN genres ON song_genre=genre_id WHERE song_id = "+songId; 
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
             
-            let sql = "SELECT * FROM song inner join author on song.id_author = author.id_author inner join genre on song.id_genre = genre.id_genre WHERE id_song = ?";
-            const [rows, fields] = await pool.execute(sql, [ songId ]);
+            let sql = "select * from playlist where id_playlist = ?;";
+            const [rows, fields] = await pool.execute(sql, [ playlistId ]);
             console.log("song car: "+rows.length);
             if (rows.length == 1) {
                 return rows[0];
+            } else {
+                return false;
+            }
+        }
+        catch (err) {
+            console.log(err);
+            throw err; 
+        }
+        
+    },
+
+
+
+    async getPlaylistSongsById(playlistId){ 
+        try {
+            // sql = "SELECT * FROM songs INNER JOIN genres ON song_genre=genre_id WHERE song_id = "+songId; 
+            // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
+            // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
+            
+            let sql = "select * from playlist_has_song inner join song on song.id_song = song_id_song inner join playlist on playlist.id_playlist = playlist_id_playlist where playlist_id_playlist = ?;";
+            const [rows, fields] = await pool.execute(sql, [ playlistId ]);
+            console.log("song car: "+rows.length);
+            if (rows.length == 1) {
+                return rows;
             } else {
                 return false;
             }
