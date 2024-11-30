@@ -52,4 +52,6 @@ app.use("/static", express.static(__dirname + '/static'));
 app.use("/songsapi", require("./controllers/songsapi.route"));
 app.use("/authorsapi", require("./controllers/authorsapi.route"));
 app.use("/usersapi", require("./controllers/usersapi.route"));
+app.use("/adminpanel", require("./controllers/admindashboard.route"));
+app.use("/playlist", require("./controllers/playlistsapi.route"));
 // app.use("/auth", require("./controllers/auth.route"));

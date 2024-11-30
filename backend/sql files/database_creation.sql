@@ -393,8 +393,134 @@ INSERT INTO playlist (title, date_of_post, number_of_save, _description, state, 
     ('Ma zone de confort', '2022-03-14', 698, 'Les chansons qui me mettent à l\'aise et me réconfortent.', 'private', 2),
     ('Soirées chill entre amis', '2020-07-28', 1368, 'Les morceaux parfaits pour une soirée détente entre amis.', 'public', 3),
     ('Moments inoubliables', '2019-10-17', 921, 'Les chansons qui accompagnent les moments inoubliables de ma vie.', 'private', 4),
-    ('Ambiance travail', '2022-06-20', 510, 'Les sons qui m\'aident à me concentrer et à travailler efficacement.', 'private', 5);
+    ('Ambiance travail', '2022-06-20', 510, 'Les sons qui m\'aident à me concentrer et à travailler efficacement.', 'private', 5),
+	('Ambiance', '2022-06-10', 40, 'Les sons qui m\'aident à me concentrer et à travailler efficacement.', 'public', 5);
+
 
 INSERT INTO playlist_has_song VALUES 
     (1, 1),
     (2, 2);
+    
+    
+    ALTER TABLE song ADD COLUMN formatted_duration VARCHAR(5);
+
+UPDATE song
+SET formatted_duration = CONCAT(
+    LPAD(FLOOR(duration), 2, '0'), ':',
+    LPAD(ROUND((duration - FLOOR(duration)) * 60), 2, '0')
+);
+
+ALTER TABLE song DROP COLUMN duration;
+
+ALTER TABLE song CHANGE COLUMN formatted_duration duration VARCHAR(5);
+
+select * from song;
+
+select * from playlist_has_song;
+
+
+select author.id_author, author.alias, count(author.id_author) as quantity from author inner join song on author.id_author = song.id_author group by author.id_author;
+
+select id_playlist, title, date_of_post, number_of_save,_description, username from playlist inner join user on playlist.user_id = user.id_user where state='public' order by number_of_save desc;
+
+INSERT INTO playlist_has_song (playlist_id_playlist, song_id_song) VALUES
+-- Chill Vibes
+(1, 31), (1, 45), (1, 48), (1, 49), (1, 50),
+
+-- Workout Hits
+(2, 7), (2, 8), (2, 13), (2, 23), (2, 44),
+
+-- Soirée Electro
+(3, 71), (3, 74), (3, 76), (3, 82), (3, 91),
+
+-- Rock Classics
+(4, 56), (4, 57), (4, 58), (4, 59), (4, 60),
+
+-- Road Trip Tunes
+(5, 14), (5, 24), (5, 33), (5, 42), (5, 65),
+
+-- Jazz & Chill
+(6, 90), (6, 92), (6, 94), (6, 96), (6, 98),
+
+-- Summer Hits 2022
+(7, 15), (7, 18), (7, 19), (7, 21), (7, 26),
+
+-- Indie Discovery
+(8, 32), (8, 41), (8, 43), (8, 46), (8, 66),
+
+-- Party Bangers
+(9, 73), (9, 78), (9, 80), (9, 83), (9, 85),
+
+-- Acoustic Moods
+(10, 67), (10, 69), (10, 71), (10, 75), (10, 77),
+
+-- Deep House Grooves
+(11, 12), (11, 17), (11, 19), (11, 25), (11, 33),
+
+-- Throwback Jams
+(12, 1), (12, 3), (12, 5), (12, 7), (12, 9),
+
+-- Rap Français
+(13, 56), (13, 58), (13, 62), (13, 64), (13, 66),
+
+-- Classical Piano
+(14, 91), (14, 93), (14, 95), (14, 97), (14, 99),
+
+-- Afrobeats Vibes
+(15, 27), (15, 29), (15, 31), (15, 33), (15, 35),
+
+-- Feel Good Songs
+(16, 4), (16, 8), (16, 10), (16, 12), (16, 14),
+
+-- Late Night Jazz
+(17, 87), (17, 88), (17, 89), (17, 90), (17, 92),
+
+-- Lofi Study Beats
+(18, 94), (18, 96), (18, 97), (18, 99), (18, 100),
+
+-- Metal Mayhem
+(19, 51), (19, 52), (19, 53), (19, 54), (19, 55),
+
+-- Romantic Evening
+(20, 40), (20, 42), (20, 44), (20, 46), (20, 48),
+
+-- Festival Anthems
+(1, 21), (1, 23), (1, 25), (1, 27), (1, 29),
+
+-- Funky Grooves
+(2, 63), (2, 65), (2, 67), (2, 69), (2, 71),
+
+-- Latin Heat
+(3, 15), (3, 17), (3, 19), (3, 21), (3, 23),
+
+-- Ambient Soundscapes
+(4, 91), (4, 93), (4, 95), (4, 97), (4, 99),
+
+-- R&B Throwbacks
+(5, 48), (5, 50), (5, 52), (5, 54), (5, 56),
+
+-- Pop Hits 2020
+(6, 21), (6, 23), (6, 25), (6, 27), (6, 29),
+
+-- Psytrance Journey
+(7, 84), (7, 86), (7, 88), (7, 90), (7, 92),
+
+-- Soulful Sunday
+(8, 67), (8, 69), (8, 71), (8, 73), (8, 75),
+
+-- Techno Underground
+(9, 75), (9, 77), (9, 79), (9, 81),
+
+-- Blues Legends
+(10, 56), (10, 58), (10, 60), (10, 62), (10, 64);
+
+
+
+select * from playlist_has_song inner join song on song.id_song = song_id_song inner join playlist on playlist.id_playlist = playlist_id_playlist where playlist_id_playlist = ?;
+
+select * from playlist where id_playlist = 1;
+
+select * from author where id_author = 2;
+select * from playlist inner join user on user.id_user=playlist.user_id where id_playlist = 2;
+select * from song;
+select song.title, song.number_of_streams, song.date_of_post from playlist_has_song inner join song on song.id_song = song_id_song inner join playlist on playlist.id_playlist = playlist_id_playlist where playlist_id_playlist = 10 ;

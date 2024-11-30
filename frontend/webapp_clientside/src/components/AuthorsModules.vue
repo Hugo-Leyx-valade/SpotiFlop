@@ -4,60 +4,54 @@
     <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%;" >Authors {{ action }} {{ id }}</span>
 
     <div id="tables" style="margin-top: 13%;">
-    <!-- FOR DATA SHEET /authors/show/42 -->
       <div v-if="action === 'show'" style="width: 50%; margin-left: 5%; margin-top: -3%; background-color: none; border-radius: 8px; padding: 10px;">
-      <!-- Alias - Large Text, Aligned to the Left -->
         <div style="font-size: 400%; color: white; font-weight: 900; text-align: left;">
-            <span style="color: #4CAF50;"></span> {{songAuthor[0].alias}}
+            <span style="color: #4CAF50;"></span> {{oneAuthor.alias}}
         </div>
-        <!-- First Name and Last Name - Slightly Smaller, Aligned to the Left -->
         <div style="text-align: left; margin-top: 0%; display: flex;">
-          <div style="font-size: 200%; color: white; text-align: left; margin-top: 0%;">{{songAuthor[0].first_name}} {{songAuthor[0].last_name}}</div>
-          <div v-if="songAuthor[0].verified === 1" style="color: green; font-size: 130%;">Verified</div>
-          <div v-if="songAuthor[0].verified === 0" style="color: green; font-size: 130%;">Not Verified</div>
+          <div style="font-size: 200%; color: white; text-align: left; margin-top: 0%;">{{oneAuthor.first_name}} {{oneAuthor.last_name}}</div>
+          <div v-if="oneAuthor.verified === 1" style="color: green; font-size: 130%;">Verified</div>
+          <div v-if="oneAuthor.verified === 0" style="color: green; font-size: 130%;">Not Verified</div>
         </div>
-        <!-- Biography - Aligned to the Left -->
         <div style="margin-bottom: 15px; font-size: 16px; color: white; text-align: left;">
-            <span style="color: #4CAF50;"></span> {{songAuthor[0].biography}}
+            <span style="color: #4CAF50;"></span> {{oneAuthor.biography}}
         </div>
-        <!-- Edit Button - Centered -->
         <div style="text-align: center; margin-left: -91%; margin-top: 5%;">
-            <a :href="'/#/authors/edit/' + songAuthor[0].id_author" 
+            <a :href="'/#/authors/edit/' + oneAuthor.id_author" 
                 style="color: green; background-color: aliceblue; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;"
                 >EDIT</a>
         </div>
         <h1 v-if="action === 'show'" style="font-size: 400%; font-weight: 900; margin-top: 15%; text-align: left; text-shadow: 2px 2px 4px green; color: aliceblue;">SONGS</h1>
-
-      <table style="width: 100%; margin-top: 5%; border-collapse: collapse;" class="table table-striped table-bordered table-hover">
-      <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
-      </tr>
-      <tr id="song-body" v-for="x of songAuthor" :key="x.id_song" class="table-row">
-      <td class="table-cell">{{ x.title }}</td>
-      <td class="table-cell" style="padding-right: 20px;">{{ x.duration }}</td>
-      <td class="table-cell">{{ x.number_of_streams }}</td>
-      <td class="table-cell">{{ formatDate(x.date_of_post) }}</td>
-      <td class="table-cell">{{ x.alias }}</td>
-      <td class="table-cell">{{ x.name }}</td>
-      <td class="table-cell">
-        <a :href="'/#/songs/show/' + x.id_song" class="show-link" style="color: green;">SHOW</a>
-      </td>
-    </tr>
-  </table>
+        </div>
       </div>
-</div>
+
+      <table v-if="action === 'show'" style="width: 100%; margin-top: 5%; border-collapse: collapse;" class="table table-striped table-bordered table-hover">
+        <tr id="song-body" v-for="x of songAuthor" :key="x.id_song" class="table-row">
+        <td class="table-cell">{{ x.title }}</td>
+        <td class="table-cell" style="padding-right: 20px;">{{ x.duration }}</td>
+        <td class="table-cell">{{ x.number_of_streams }}</td>
+        <td class="table-cell">{{ formatDate(x.date_of_post) }}</td>
+        <td class="table-cell">{{ x.alias }}</td>
+        <td class="table-cell">{{ x.name }}</td>
+        <td class="table-cell">
+          <a :href="'/#/songs/show/' + x.id_song" class="show-link" style="color: green;">SHOW</a>
+        </td>
+      </tr>
+  </table>
+
     
     <div v-if="action === 'edit'" class="container2 ">
       <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
         <span class="input-group-text" style="margin-bottom: 5%;">Alias</span>
-        <input type="text" name="authors_alias" class="form-control" v-model="songAuthor[0].alias" :placeholder="songAuthor[0].alias" style="margin-bottom: 5%;">
+        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthor.alias" :placeholder="oneAuthor.alias" style="margin-bottom: 5%;">
       </div>
       <div class=" input-group" style="padding-left: 30%; padding-right: 30%;">
         <span class="input-group-text">First and last name</span>
-        <input type="text" aria-label="First name" class="form-control" v-model="songAuthor[0].first_name" >
-        <input type="text" aria-label="Last name" class="form-control" v-model="songAuthor[0].last_name">
+        <input type="text" aria-label="First name" class="form-control" v-model="oneAuthor.first_name" >
+        <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthor.last_name">
       </div>
-      <textarea id="bio" role="textbox" contenteditable v-model="songAuthor[0].biography">{{ songAuthor[0].biography }}</textarea>
-      <div class="p-2 g-col-6"><select name="authors_verified" v-model="songAuthor[0].verified" style="padding:0.7% ; border-radius: 1000px;">
+      <textarea id="bio" role="textbox" contenteditable v-model="oneAuthor.biography">{{ oneAuthor.biography }}</textarea>
+      <div class="p-2 g-col-6"><select name="authors_verified" v-model="oneAuthor.verified" style="padding:0.7% ; border-radius: 1000px;">
             <option>
               0
             </option>
@@ -65,13 +59,12 @@
               1
             </option>
           </select>
-        </div>
       <div id="buttons_container" class="g-col-6 mt-5" >
-          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(songAuthor[0].id_author)">DELETE</button>
+          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(oneAuthor.id_author)">DELETE</button>
           <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest()" />
       </div>  
     </div>
-
+  </div>
     <!-- FOR List /authors/list/all -->
     <a v-if="action === 'list'" :href="'/#/authors/edit/0'" style="padding:0.7% 1% ;margin-left: 90%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
     <div v-if="action === 'list'" class="container"  >
@@ -85,7 +78,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script>
@@ -98,10 +91,8 @@ export default {
   },
   props:['action','id'],
   mounted() {
-    this.getSongsFromAuthor(this.$props.id);
-    this.changeBodyBackgroundColor();
-    this.printAuthors(element);
-    },
+    this.changeBodyBackgroundColor();    
+  },
 
   
 
@@ -124,30 +115,6 @@ export default {
   },
 
   methods:{
-
-    async getSongsFromAuthor(authorId) {
-            if (!authorId) {
-                console.warn("Author ID is not set.");
-                return; // Exit if authorId is not provided
-            }
-
-            try {
-                // Fetch songs by author from the API
-                let response = await fetch(`http://localhost:9000/authorsapi/songAuthor/4`);
-                
-                // Check if response is OK (status 200-299)
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                // Parse JSON response
-                const songAuthor = await response.json();
-                console.log("Fetched songs:", songAuthor); // Log to check the data
-                
-            } catch (error) {
-                console.error("Error fetching songs:", error);
-            }
-        },
 
 async getAllData() {
 try {
@@ -173,13 +140,17 @@ if (this.$props.id === "all" || this.$props.id === "0") {
         verified:1,
         image: "",
       };
+      this.songAuthor = [];
   return;
 }
 try {
-  let responseAuthor = await this.$http.get("http://localhost:9000/authorsapi/show/" + this.$props.id);
-  this.songAuthor = responseAuthor.data;
-  console.log(this.oneAuthor[0].title)
-  console.log("oneAuthor: " + this.oneAuthor.alias);
+  let responseAuthor = await fetch("http://localhost:9000/authorsapi/show/" + this.$props.id);
+  var result = await responseAuthor.json();
+  for (var i = 1; i < result.songs.length; i++) {
+    this.songAuthor.push(result.songs[i]);
+  }
+  this.oneAuthor = result.author;
+  console.log("hugo" + JSON.stringify(this.oneAuthor));
   // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
 }
 catch (ex) { console.log(ex); }
@@ -202,7 +173,7 @@ catch (ex) { console.log(ex); }
 async sendAddRequest() {
         try {
           alert("ADDING... " + this.oneAuthor.alias);
-          let response = await this.$http.post("http://localhost:9000/songsapi/add", this.oneAuthor);
+          let response = await this.$http.post("http://localhost:9000/authorsapi/add", this.oneAuthor);
           alert("ADDED: " + response.data.rowsAdded);
           this.$router.push({ path: '/authors/list/all' });
           this.getAllData();
@@ -247,13 +218,14 @@ changeBodyBackgroundColor() {
 
 watch:{
 id: function(newVal, oldVAl){
-  this.refreshOneAuthor();},
+  this.refreshOneAuthor();
+  console.log("hugo" + this.oneAuthor);
+},
 
 },
 
 created(){
 this.getAllData();
-this.getSongsFromAuthor();
 },
 
 
