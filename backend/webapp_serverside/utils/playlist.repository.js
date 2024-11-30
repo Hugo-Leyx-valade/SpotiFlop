@@ -39,7 +39,7 @@ module.exports = {
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
             
-            let sql = "select * from playlist where id_playlist = ?;";
+            let sql = "select * from playlist inner join user on user.id_user=playlist.user_id where id_playlist = ?;";
             const [rows, fields] = await pool.execute(sql, [ playlistId ]);
             console.log("song car: "+rows.length);
             if (rows.length == 1) {
@@ -63,10 +63,10 @@ module.exports = {
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
             
-            let sql = "select * from playlist_has_song inner join song on song.id_song = song_id_song inner join playlist on playlist.id_playlist = playlist_id_playlist where playlist_id_playlist = ?;";
+            let sql = "select song.id_song, author.alias, song.title, song.number_of_streams, song.date_of_post from playlist_has_song inner join song on song.id_song = song_id_song inner join author on song.id_author = author.id_author inner join playlist on playlist.id_playlist = playlist_id_playlist where playlist_id_playlist = ?;";
             const [rows, fields] = await pool.execute(sql, [ playlistId ]);
-            console.log("song car: "+rows.length);
-            if (rows.length == 1) {
+            console.log("songs in the playlist: "+JSON.stringify(rows));
+            if (rows.length >= 0) {
                 return rows;
             } else {
                 return false;

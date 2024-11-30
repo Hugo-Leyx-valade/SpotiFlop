@@ -14,9 +14,9 @@ async function playlistListAction(request, response) {
 }
 async function playlistShowAction(request, response) {
     var onePlaylist = await playlistRepo.getOnePlaylist(request.params.playlistId);
-    var songsOfPlaylist = await playlistRepo.getPlaylistSongsById(request.params.playlistId)
-    console.log(JSON.stringify(onePlaylist));
-    response.send(JSON.stringify({ "playlist": onePlaylist, "songs": songsOfPlaylist }));
+    var songsOfPlaylist = await playlistRepo.getPlaylistSongsById(request.params.playlistId);
+    console.log( "caca" + JSON.stringify(songsOfPlaylist ));
+    response.send(JSON.stringify({ "playlist": onePlaylist, "songs": songsOfPlaylist}));
 }
 async function playlistDelAction(request, response) {
     // TODO: first remove extras for car, unless the car cannot be removed!!!

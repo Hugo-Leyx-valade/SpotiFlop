@@ -3,30 +3,57 @@
       <Home></Home>
 
       <!-- Détails de la playlist pour /playlist/show/ID -->
-    <div v-if="action === 'show'" style="display: flex; justify-content: center;">
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; margin-left: -40%; font-size: 500%; font-weight: 800;">{{onePlaylist.title}}</p>          
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8%; margin-left: 75%; font-size: 120%;">{{onePlaylist._description}}</p>
-   
-      <div > 
-        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 11.7%; margin-left: -32.5%; font-size: 100%;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-download" viewBox="0 0 16 16">
+  <div v-if="action === 'show'" style="display: flex; flex-direction: column; align-items: flex-start;">
+
+    <!-- Playlist Title -->
+    <p style="color: aliceblue; font-weight: bold; margin-top: 5.4%; margin-left: 3%; font-size: 500%; font-weight: 800;">
+      {{onePlaylist.title}}
+    </p>
+
+    <!-- Info Section -->
+    <div id="info" 
+        style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 30px; padding: 10px; color: aliceblue; font-size: 105%; font-weight: lighter;margin-left: 4%; margin-top: -2%;">
+
+      <!-- Username -->
+      <span>{{onePlaylist.username}}</span>
+
+      <!-- Download Icon and Number of Saves -->
+      <span style="display: flex; align-items: center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-download" viewBox="0 0 16 16">
           <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
           <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
-          </svg>    
-        <span style="margin-left: 5px;"> {{onePlaylist.number_of_save}}</span>
-        
-        <span style="margin-left: 20px;">
-          <svg v-if="onePlaylist.state ==='private'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
-          <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1"/>
-         </svg>
-          <svg v-if="onePlaylist.state ==='public'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
-        <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2M3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/>
         </svg>
-        {{onePlaylist.state}}</span>
-        </p>    
-        <span style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 30%; font-size: 200%;">{{formatDate(onePlaylist.date_of_post)}}</span>
-      </div>  
+        <span style="margin-left: 5px;">{{onePlaylist.number_of_save}}</span>
+      </span>
+
+      <!-- Lock/Unlock Icon and State -->
+      <span style="display: flex; align-items: center;">
+        <svg v-if="onePlaylist.state === 'private'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+          <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1"/>
+        </svg>
+        <svg v-if="onePlaylist.state === 'public'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
+          <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2M3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/>
+        </svg>
+        <span>{{onePlaylist.state}}</span>
+      </span>
+      <p id="description" style="color: aliceblue; font-size: 120%; text-align: center; margin-top: 2%;">
+        {{onePlaylist._description}}
+      </p>
     </div>
+  
+    <table v-if="action === 'show'" class="table table-striped table-bordered table-hover">
+      <tr id="legende" style="color: white; text-transform: capitalize; font-weight: bolder;">
+        <td>Title</td><td>Username</td><td>Number Of Saves</td><td>Show</td>
+      </tr>
+      <tr id="values" v-for="p of playlist">
+        <td style="color: aliceblue; font-weight: bold;">{{ p.title }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ p.alias }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ p.number_of_streams }}</td>
+        <td><a :href="'/#/songs/show/' + p.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">SHOW</a></td>
+      </tr>
+    </table>
+  
+  </div>
 
     <!-- Formulaire d'édition de la playlist pour /playlist/edit/ID -->
     <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
@@ -50,18 +77,13 @@
       <input 
         v-model="searchQuery" 
         type="text" 
-        placeholder="Search by Username or Email..." 
+        placeholder="Search by Playlist's Name or Maker..." 
         style="margin-bottom: 10px; padding: 10px; width: 20%; border-radius: 90px; border-color: transparent;"
       />
-      <select v-model="selectedGenre" style="margin-left: 10px; padding: 10px; border-radius: 360px; text-align: center; border-color: transparent;">
-        <option value="">Gender</option>
-        <option value="1">Boy ♂</option>
-        <option value="0">Girl ♀</option>
-      </select>
     </div>
     <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
       <tr id="legende" style="color: white; text-transform: capitalize; font-weight: bolder;">
-        <td>Title</td><td>Number Of Saves</td><td>Date If Post</td><td>Username</td><td>Show</td>
+        <td>Title</td><td>Number Of Saves</td><td>Date Of Post</td><td>Maker</td><td>Show</td>
       </tr>
       <tr id="values" v-for="p in filteredPlaylist" :key="p.id_playlist">
         <td style="color: aliceblue; font-weight: bold;">{{ p.title }}</td>
@@ -144,6 +166,8 @@
             this.onePlaylist = response.playlist;
             console.log("playlist " + this.onePlaylist);
             this.playlist = response.songs;
+            console.log("songs " + JSON.stringify(this.playlist));
+
           }catch (ex){console.log(ex);}
         }
       },
