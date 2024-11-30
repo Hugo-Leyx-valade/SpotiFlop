@@ -4,13 +4,11 @@
 
       <!-- Détails de la playlist pour /playlist/show/ID -->
     <div v-if="action === 'show'" style="display: flex; justify-content: center;">
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; margin-left: -40%; font-size: 500%; font-weight: 800;">{{onePlaylist.title}}</p>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 30%; font-size: 200%;">{{formatDate(onePlaylist.date_of_post)}}</p>
-          
+      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; margin-left: -40%; font-size: 500%; font-weight: 800;">{{onePlaylist.title}}</p>          
       <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8%; margin-left: 75%; font-size: 120%;">{{onePlaylist._description}}</p>
    
       <div > 
-        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21.2%; margin-left: -32.5%; font-size: 100%;">
+        <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 11.7%; margin-left: -32.5%; font-size: 100%;">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-download" viewBox="0 0 16 16">
           <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
           <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
@@ -25,7 +23,8 @@
         <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2M3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/>
         </svg>
         {{onePlaylist.state}}</span>
-        </p>      
+        </p>    
+        <span style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 30%; font-size: 200%;">{{formatDate(onePlaylist.date_of_post)}}</span>
       </div>  
     </div>
 
