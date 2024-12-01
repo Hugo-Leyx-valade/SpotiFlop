@@ -56,6 +56,8 @@
     <option value="private">Private</option>
   </select>
 
+  <a :href="'/#/playlist/edit/0'" style="background:white;padding: 0.7% 1%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
+
 </div>
 <table v-if="action === 'show'" class="playlist-user table table-striped table-bordered table-hover" style="width: 50%; margin: 0% auto; border-radius: 10px;">
   <thead>

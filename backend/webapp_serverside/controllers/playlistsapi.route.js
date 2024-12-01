@@ -7,6 +7,7 @@ router.get('/list', playlistListAction);
 router.get('/show/:playlistId', playlistShowAction);
 router.get('/del/:playlistId', playlistDelAction);
 router.post('/update/:playlistId', playlistUpdateAction);
+router.post('/add', playlistAddAction);
 
 async function playlistListAction(request, response) {
     var playlists = await playlistRepo.getAllPlaylist();
@@ -24,21 +25,35 @@ async function playlistDelAction(request, response) {
     let result = { rowsDeleted: numRows };
     response.send(JSON.stringify(result));
 }
+
+
+async function playlistAddAction(request, response) {
+    // var json = JSON.stringify(request.body); // bodyParser can process json in body + regular POST form input too
+    // console.log(json);    var songId = request.params.songId; 
+    console.log("addOnePlaylist" + JSON.stringify(request.body.title) + JSON.stringify(request.body.state) + JSON.stringify(request.body._description) + JSON.stringify(request.body.id_user));
+
+    var numRows = await playlistRepo.addOnePlaylist(
+            request.body.title, 
+            request.body.state, 
+            request.body._description,
+            request.body.id_user
+        );
+        let result = { rowsUpdated: numRows };
+        response.send(JSON.stringify(result));
+    }
+
 async function playlistUpdateAction(request, response) {
     // var json = JSON.stringify(request.body); // bodyParser can process json in body + regular POST form input too
     // console.log(json);
     // TODO: !!! INPUT VALIDATION !!!
     var playlistId = request.params.playlistId;
-    if (playlistId==="0") playlistId = await playlistRepo.addOnePlaylist(request.body.title,request.body.date_of_post,request.body.number_of_save, request.body._description,request.body.id_user);
-    else{
-        var numRows = await playlistRepo.editOnePlaylist(
-            request.body.title, 
-            request.body.date_of_post, 
-            request.body.number_of_save, 
-            request.body._description, 
-            request.body.id_playlist
-        );
-        }
+    var numRows = await playlistRepo.editOnePlaylist(
+        request.body.title, 
+        request.body.date_of_post, 
+        request.body.number_of_save, 
+        request.body._description, 
+        request.body.id_playlist
+    );
     let result = { rowsUpdated: numRows };
     response.send(JSON.stringify(result));
 }

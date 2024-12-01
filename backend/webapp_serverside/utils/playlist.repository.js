@@ -95,28 +95,19 @@ module.exports = {
     },
 
 
-
-    async addOnePlaylist(songTitle, songDuration, songNumberOfStream, songDateOfPost, songLyrics, songAuthor, songGenre) {
+    async addOnePlaylist(title,state, _description,id_user) {
         try {
-            // Fetch author ID based on the alias
-            var authorId = await getAuthorIdByAlias(songAuthor);
-
-            // Fetch genre ID based on the genre name
-            var genreId = await getGenreIdByName(songGenre);
-
             let sql = `
-                INSERT INTO song 
-                (title, duration, number_of_streams, date_of_post, lyrics, id_author, id_genre) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO playlist 
+                (title, state,date_of_post, _description, user_id) 
+                VALUES (?, ?,?, ?, ?)
             `;
             const [okPacket, fields] = await pool.execute(sql, [
-                songTitle,
-                songDuration,
-                parseInt(songNumberOfStream),
-                songDateOfPost,
-                songLyrics,
-                authorId, // Use the fetched author ID
-                genreId   // Use the fetched genre ID
+                title,
+                state,
+                new Date().toISOString().split('T')[0],
+                _description,
+                id_user
             ]);
 
             console.log("INSERT " + JSON.stringify(okPacket));
@@ -132,7 +123,7 @@ module.exports = {
     async editOnePlaylist(title, date_of_post, number_of_save, description, id_playlist) {
         try {   
             let sql = `
-                UPDATE playlist SET title=?, date_of_post=?, number_of_save=?, number_of_streams=?,_description = ? WHERE id_playlist=?
+                UPDATE playlist SET title=?, date_of_post=?, number_of_save=?,_description = ? WHERE id_playlist=?
             `;
             const [okPacket] = await pool.execute(sql, [
                 title,

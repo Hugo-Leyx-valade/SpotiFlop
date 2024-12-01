@@ -1,6 +1,7 @@
 <template>
     <div class="hello" onload="changeBodyBackgroundColor()">
       <Home></Home>
+      
 
       <!-- Détails de la playlist pour /playlist/show/ID -->
   <div v-if="action === 'show'" style="display: flex; flex-direction: column; align-items: flex-start;">
@@ -90,17 +91,33 @@
       <svg v-if="onePlaylist.state === 'public'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
         <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2M3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/>
       </svg>
-      <select class="dropdown">
-        <option disabled selected>Playlist visibility</option>
-        <option value="public">public</option>
-        <option value="private">private</option>
+      <select class="dropdown" v-model="onePlaylist.state" style="background-color: transparent; border-radius: 90px;color: aliceblue;">
+        <option disabled selected>Select an option</option>
+        <option value="public" style="color: black;">public</option>
+        <option value="private" style="color: black;">private</option>
       </select>
     </span>
-    <p id="description" style="color: aliceblue; font-size: 120%; text-align: center; margin-top: 2%;">
+    <textarea id="description" style="color: aliceblue; font-size: 120%; text-align: center; margin-top: 2%; background-color: transparent; border-radius: 90px; width: 40%; height: 1%; font-size: 90%;" v-model="onePlaylist._description">
       {{onePlaylist._description}}
-    </p>
+    </textarea>
+    <input v-if="id==='0'" type="number" min="0" v-model="onePlaylist.id_user" style="background-color: transparent; border-radius: 90px;color: aliceblue; width: 5%;">
+
+    <button type="submit" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px; border-width: 0px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">Submit</button>
   </div>
+  
 </form>
+<table v-if="action === 'edit' && id !=='0'" class="table table-striped table-bordered table-hover">
+      <tr id="legende" style="color: white; text-transform: capitalize; font-weight: bolder;">
+        <td>Title</td><td>Author</td><td>Number Of Streams</td><td>Show</td>
+      </tr>
+      <tr id="values" v-for="p of playlist">
+        <td style="color: aliceblue; font-weight: bold;">{{ p.title }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ p.alias }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ p.number_of_streams }}</td>
+        <td><a :href="'/#/songs/show/' + p.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">SHOW</a></td>
+      </tr>
+    </table>
+</div>
 
 
 
@@ -125,7 +142,6 @@
         <td><a :href="'/#/playlist/show/' + p.id_playlist" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">SHOW</a></td>
       </tr>
     </table>
-  </div>
   </div>
   </template>
   
@@ -188,7 +204,7 @@
           number_of_save:0,
           _description:'ouio',
           state:'public',
-          user_id: 0,
+          id_user: 0,
         };
       this.playlist = [];
   return;
@@ -204,6 +220,24 @@
           }catch (ex){console.log(ex);}
         }
       },
+
+      async sendEditRequest(){
+        try {
+          if(this.$props.id === "0"){
+            let response = await this.$http.post(
+                "http://localhost:9000/playlist/add/",this.onePlaylist);
+            alert("Added: " + response.data.rowsUpdated);
+            this.$router.push({ path: '/playlist/list/all' });
+            this.getAllData();
+          }else{
+            let response = await this.$http.post(
+                  "http://localhost:9000/playlist/update/" + this.onePlaylist.id_playlist, this.onePlaylist);
+            alert("EDITED: " + response.data.rowsUpdated);
+            this.$router.push({ path: '/playlist/list/all' });
+            this.getAllData();
+        }
+      }catch (ex) { console.log(ex); }
+  },
 
       changeBodyBackgroundColor() {
         document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 80%) no-repeat' ;

@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.playlist (
   id_playlist INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(45) NOT NULL,
   date_of_post DATE NOT NULL,
-  number_of_save INT,
+  number_of_save INT DEFAULT 0,
   _description VARCHAR(500),
   state VARCHAR(45) DEFAULT 'private',
   user_id INT NOT NULL,
@@ -550,4 +550,10 @@ FROM song;
 SELECT
     FLOOR(SUM(SUBSTRING_INDEX(duration, ':', 1))  + SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) / 60) AS total_minutes,
     SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) % 60 AS remaining_seconds
-FROM song;
+FROM song	;
+
+select * from playlist;
+
+INSERT INTO playlist 
+                (title, state,date_of_post, _description, user_id) 
+                VALUES ("triks", "public","2024-10-12", "uoi", 1);
