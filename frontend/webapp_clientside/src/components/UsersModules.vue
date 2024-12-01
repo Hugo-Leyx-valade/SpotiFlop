@@ -82,7 +82,7 @@
         <a :href="`/#/playlist/edit/${p.id_playlist}`" class="action-button edit">EDIT</a>
       </td>
       <td>
-        <input type="button" value="DELETE" @click="sendDeleteRequest()" class="action-button delete" />
+        <input type="button" value="DELETE" @click="playlistDelete(p.id_playlist)" class="action-button delete" />
       </td>
     </tr>
   </tbody>
@@ -288,6 +288,16 @@
       let response = await this.$http.get("http://localhost:9000/usersapi/del/" + user_id);
       alert("DELETED: " + response.data.rowsDeleted);
       this.getALLData();
+    }
+    catch (ex) { console.log(ex); }
+  },
+
+  async playlistDelete(playlistId){
+    try {
+      alert("DELETING... " + playlistId);
+      let response = await this.$http.get("http://localhost:9000/playlist/del/" + playlistId);
+      alert("DELETED: " + response.data.rowsDeleted);
+      this.refreshOneUser();
     }
     catch (ex) { console.log(ex); }
   },

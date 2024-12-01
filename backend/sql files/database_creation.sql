@@ -532,4 +532,22 @@ inner join playlist on playlist.id_playlist = playlist_id_playlist
 where playlist_id_playlist = 7;
 SELECT id_user,username,first_name,last_name,email,role,date_of_birth,genre,id_playlist,title,date_of_post,number_of_save,_description,state FROM user left join playlist on user.id_user = playlist.user_id WHERE user.id_user = 1;
 
-select * from user where id_user=1;
+select * from playlist where user_id=1;
+select count(user.id_user) from playlist_has_song inner join playlist on playlist_id_playlist = id_playlist inner join user on playlist.user_id = id_user where id_user = 1;
+DELETE playlist_has_song
+FROM playlist_has_song
+INNER JOIN playlist
+ON playlist_id_playlist = id_playlist
+WHERE playlist.user_id = 1;
+
+
+
+SELECT
+sum(SUBSTRING_INDEX(duration, ':', 1)) as minutes,
+sum(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) as seconds
+FROM song;
+
+SELECT
+    FLOOR(SUM(SUBSTRING_INDEX(duration, ':', 1))  + SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) / 60) AS total_minutes,
+    SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) % 60 AS remaining_seconds
+FROM song;

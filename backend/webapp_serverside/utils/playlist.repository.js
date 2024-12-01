@@ -1,9 +1,9 @@
 // utils/songs.repository.js
 pool = require(__dirname + "\\db.include.js"); // use same folder as the current file
 
-async function deleteInPlaylist(songId){
-    let sql = " DELETE FROM playlist_has_song WHERE song_id_song = ?";
-    await pool.execute(sql,[songId]);
+async function deleteInPlaylistAsSong(playlistId){
+    let sql = " DELETE FROM playlist_has_song WHERE playlist_id_playlist = ?;";
+    await pool.execute(sql,[playlistId]);
 }
 
 function formatDate(dateString) {
@@ -80,11 +80,11 @@ module.exports = {
 
 
 
-    async delOneSong(songId){ 
+    async delOnePlaylist(playlistId){ 
         try {
-            deleteInPlaylist(songId)
-            let sql = "DELETE FROM song WHERE id_song = ?";
-            const [okPacket, fields] = await pool.execute(sql, [ songId ]);
+            deleteInPlaylistAsSong(playlistId);
+            let sql = "DELETE FROM playlist WHERE id_playlist = ?";
+            const [okPacket, fields] = await pool.execute(sql, [ playlistId ]);
             console.log("DELETE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
         }
