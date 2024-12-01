@@ -18,54 +18,73 @@
       <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: 30%; font-size: 200%;">Duration</p>    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 30%; font-size: 200%;">{{oneSong.duration}}</p>
       <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: -40%; font-size: 200%;">Number of Streams</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21.2%; margin-left: -32.5%; font-size: 200%;">{{oneSong.number_of_streams}}</p>
       <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28%; margin-left: -3%; font-size: 180%;">Date of Post</p>    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 31%; margin-left: -3%; font-size: 200%;">{{formatDate(oneSong.date_of_post)}}</p>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: 75%; font-size: 200%;">Lyrics</p>    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8%; margin-left: 75%; font-size: 120%; width: 20%;">{{oneSong.lyrics}}</p>
+      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 75%; font-size: 200%;">Lyrics</p>    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 75%; font-size: 120%; width: 20%;">{{oneSong.lyrics}}</p>
       <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 30%; font-size: 200%;">Author</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 30%; font-size: 140%;">{{oneSong.alias}}</p>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 32%; margin-left: 37%; font-size: 200%;">Genre : </p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 32%; margin-left: 47.8%; font-size: 200%;"> {{oneSong.name}}</p>
+      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: 75%; font-size: 200%;">Genre</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 75%; font-size: 200%;"> {{oneSong.name}}</p>
 
   </div>
 
-  <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
-    <img src="../assets/pink-cover.png" alt="logo_white" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%;"/>
-    <form class="song-form" @submit.prevent="sendEditRequest" style="margin-left: 50%;">
-  <!-- Title -->
-  <p class="label">Title</p>
-  <input type="text" class="input" v-model="oneSong.title" required />
 
-  <!-- Duration -->
-  <p class="label" style="margin-top: 18%;">Duration</p>
+
+  <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
+    <img src="../assets/pink-cover.png" alt="logo_white" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%; z-index: -1;"/>
+    <form class="song-form" @submit.prevent="sendEditRequest" style="margin-left: 0%; z-index: 1; display: flex">
+  <!-- Title -->
+
+  <div style="margin-top: 2.7%;margin-left:-13.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+    <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Title</p>
+    <input type="text" class="input" v-model="oneSong.title" style="width: 330%; margin-top: 75%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"  required />
+  </div>
+
+<!-- Duration -->
+<div style="margin-top: 18.5%;margin-left:11.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+  <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Duration</p>
   <input type="text" class="input" v-model="oneSong.duration" pattern="^([0-9][0-9]):([0-9][0-9])$" 
   title="Enter a valid time in mm:ss format (e.g., 25:06 or 5:06)" 
-  required />
+  required style="width: 100%; margin-top: 40%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;" />
+</div> 
+
 
   <!-- Number of Streams -->
-  <p class="label" style="margin-top: 18%; margin-left: -40%;">Number of Streams</p>
+<div style="margin-top: 18.5%;margin-left:-24.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+  <p class="label" style="color: aliceblue; font-weight: bold;font-size: 180%;">Number of Streams</p>
   <input
     type="text"
     class="input"
     v-model="oneSong.number_of_streams"
     required
-  />
+    style="width: 70%; margin-top: 22%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
+</div>
+
 
   <!-- Date of Post -->
-  <p class="label" style="margin-top: 28%; margin-left: -3%;">Date of Post</p>
-  <input type="date" class="input" v-model="oneSong.date_of_post" required />
+<div style="margin-top: 28.5%;margin-left:-6.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+  <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Date of Post</p>
+  <input type="date" placeholder="01/06/2004" class="input" v-model.lazy="oneSong.date_of_post" required style="width: 70%; margin-top: 26%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
+</div>
 
   <!-- Lyrics -->
-  <p class="label" style="margin-top: 2.5%; margin-left: 75%;">Lyrics</p>
-  <span class="textarea" role="textbox" contenteditable>{{ oneSong.lyrics }}</span>
+<div style="margin-top: 5%;margin-left:30%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+  <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%; margin-left: 60%;">Lyrics</p>
+  <input type="text" class="textarea" role="textbox" v-model="oneSong.lyrics" contenteditable style="width: 400%; margin-top: 60%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"></input>
+</div>
 
   <!-- Author -->
-  <p class="label" style="margin-top: 4%;">Author</p>
-  <input type="text" class="input" v-model="oneSong.alias" required />
-
+<div style="margin-top: 4.8%;margin-left:12%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+  <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Author</p>
+  <input type="text" class="input" v-model="oneSong.alias" required style="width: 200%; margin-top: 45%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
+</div>
   <!-- Genre -->
-  <p class="label" style="margin-top: 32%; margin-left: 37%;">Genre</p>
-  <input type="text" class="input" v-model="oneSong.name" required />
-
+  <div style="margin-top: 18.7%;margin-left:32%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+  <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Genre</p>
+  <input type="text" class="input" v-model="oneSong.name" required style="width: 120%; margin-top: 50%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
+</div>
   <!-- Save Changes -->
-  <button type="submit">Submit</button>
+  <button type="submit" style="position: absolute; border-radius: 90px; border-width: 0px; color: black; background-color: aliceblue; margin-top: 36%; padding: 0.5% 1%;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='aliceblue'">Submit</button>
 </form>
   </div>
+
+
 
     <!-- FOR List /songs/list/all -->
     <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
@@ -89,7 +108,7 @@
     </table>
   <div style="margin-top: 16%;"></div>
   <footer>
-    <p style="color: white; font-weight: bold; font-size: 20px; position: absolute; top: 120%; left: 46%;">Spotiflop</p>
+    <p style="color: white; font-weight: bold; font-size: 20px; position: absolute; top: 100%; left: 50%;" >Spotiflop</p>
   </footer>  
 </div>
 </template>
@@ -151,6 +170,13 @@ export default {
     return formattedDate;
 },
 
+formatDate2(incomingDate){
+  const date = new Date(incomingDate);
+// Format the date (e.g., as 'YYYY-MM-DD')
+    const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+    return formattedDate;
+},
+
   async refreshOneSong() {
     if (this.$props.id === "all" || this.$props.id === "0") {
       this.oneSong = {
@@ -168,6 +194,7 @@ export default {
     try {
       let responseSong = await this.$http.get("http://localhost:9000/songsapi/show/" + this.$props.id);
       this.oneSong = responseSong.data;
+      this.oneSong.date_of_post = this.formatDate(this.oneSong.date_of_post);
       console.log("oneSong: " + this.oneSong.title+" "+ this.oneSong.duration+" "+ this.oneSong.number_of_streams+" "+ this.oneSong.date_of_post+" "+ this.oneSong.lyrics+" "+ this.oneSong.id_author+" "+ this.oneSong.id_genre);
       // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
     }
