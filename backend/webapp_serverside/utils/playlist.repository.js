@@ -1,9 +1,9 @@
 // utils/songs.repository.js
 pool = require(__dirname + "\\db.include.js"); // use same folder as the current file
 
-async function deleteInPlaylist(songId){
-    let sql = " DELETE FROM playlist_has_song WHERE song_id_song = ?";
-    await pool.execute(sql,[songId]);
+async function deleteInPlaylistAsSong(playlistId){
+    let sql = " DELETE FROM playlist_has_song WHERE playlist_id_playlist = ?;";
+    await pool.execute(sql,[playlistId]);
 }
 
 function formatDate(dateString) {
@@ -80,11 +80,11 @@ module.exports = {
 
 
 
-    async delOneSong(songId){ 
+    async delOnePlaylist(playlistId){ 
         try {
-            deleteInPlaylist(songId)
-            let sql = "DELETE FROM song WHERE id_song = ?";
-            const [okPacket, fields] = await pool.execute(sql, [ songId ]);
+            deleteInPlaylistAsSong(playlistId);
+            let sql = "DELETE FROM playlist WHERE id_playlist = ?";
+            const [okPacket, fields] = await pool.execute(sql, [ playlistId ]);
             console.log("DELETE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
         }
@@ -95,28 +95,19 @@ module.exports = {
     },
 
 
-
-    async addOneSong(songTitle, songDuration, songNumberOfStream, songDateOfPost, songLyrics, songAuthor, songGenre) {
+    async addOnePlaylist(title,state, _description,id_user) {
         try {
-            // Fetch author ID based on the alias
-            var authorId = await getAuthorIdByAlias(songAuthor);
-
-            // Fetch genre ID based on the genre name
-            var genreId = await getGenreIdByName(songGenre);
-
             let sql = `
-                INSERT INTO song 
-                (title, duration, number_of_streams, date_of_post, lyrics, id_author, id_genre) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO playlist 
+                (title, state,date_of_post, _description, user_id) 
+                VALUES (?, ?,?, ?, ?)
             `;
             const [okPacket, fields] = await pool.execute(sql, [
-                songTitle,
-                songDuration,
-                parseInt(songNumberOfStream),
-                songDateOfPost,
-                songLyrics,
-                authorId, // Use the fetched author ID
-                genreId   // Use the fetched genre ID
+                title,
+                state,
+                new Date().toISOString().split('T')[0],
+                _description,
+                id_user
             ]);
 
             console.log("INSERT " + JSON.stringify(okPacket));
@@ -129,30 +120,17 @@ module.exports = {
 
 
     
-    async editOneSong(songGenre, songTitle, songDuration, songNumberOfStream,dateOfPost, songLyrics, songAuthor, songId) {
-        try {
-            if (!songGenre || typeof songGenre !== "string") {
-                throw new Error("Invalid genre name provided.");
-            }
-            const genreId = await getGenreIdByName(songGenre);
-            const authorId = await getAuthorIdByAlias(songAuthor) // Translate genre name to ID
-            console.log("GENRE ID: " + genreId);
-            if (!songTitle || typeof songTitle !== "string") {
-                throw new Error("Invalid song title provided.");
-            }
-    
+    async editOnePlaylist(title, date_of_post, number_of_save, description, id_playlist) {
+        try {   
             let sql = `
-                UPDATE song SET id_genre=?, title=?, duration=?, number_of_streams=?,date_of_post = ? , lyrics=?, id_author=? WHERE id_song=?
+                UPDATE playlist SET title=?, date_of_post=?, number_of_save=?,_description = ? WHERE id_playlist=?
             `;
             const [okPacket] = await pool.execute(sql, [
-                parseInt(genreId),
-                songTitle,
-                songDuration,
-                songNumberOfStream,
-                formatDate(dateOfPost),
-                songLyrics,
-                parseInt(authorId),
-                songId
+                title,
+                formatDate(date_of_post),
+                parseInt(number_of_save),
+                description,
+                id_playlist
             ]);
             console.log("UPDATE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;

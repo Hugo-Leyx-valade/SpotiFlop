@@ -1,6 +1,7 @@
 <template>
     <div class="hello" onload="changeBodyBackgroundColor()">
       <Home></Home>
+      
 
       <!-- Détails de la playlist pour /playlist/show/ID -->
   <div v-if="action === 'show'" style="display: flex; flex-direction: column; align-items: flex-start;">
@@ -55,22 +56,70 @@
   
   </div>
 
+
+
     <!-- Formulaire d'édition de la playlist pour /playlist/edit/ID -->
-    <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
-      <img src="../assets/pink-cover.png" alt="cover" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%;"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: -23%; font-size: 200%;">Title</p>
-      <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; margin-left: -23%; font-size: 120%; background-color: transparent; border-radius: 20px; width:10%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_title"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: 30%; font-size: 200%;">Date of Post</p>
-      <input type="date" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 30%; font-size: 120%; background-color: transparent; border-radius: 20px; width:10%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_date"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: -40%; font-size: 200%;">Number of Saves</p>
-      <input type="number" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21.2%; margin-left: -32.5%; font-size: 120%; background-color: transparent; border-radius: 20px; width:10%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_num_saves"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28%; margin-left: -3%; font-size: 180%;">Description</p>
-      <textarea style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 31%; margin-left: -3%; font-size: 120%; background-color: transparent; border-radius: 20px; width:20%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_description"></textarea>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: 75%; font-size: 200%;">State</p>
-      <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8%; margin-left: 75%; font-size: 120%; background-color: transparent; border-radius: 20px; width:10%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_state"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 30%; font-size: 200%;">Author ID</p>
-      <input style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 30%; font-size: 120%; background-color: transparent; border-radius: 20px; width:10%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_author_id"/>
-    </div>
+  <div v-if="action === 'edit'" style="display: flex; flex-direction: column; align-items: flex-start;">
+
+<form class="playlist-form" @submit.prevent="sendEditRequest" style="margin-left: 2%; margin-top: 2%;"> 
+<!-- Playlist Title -->
+<input style="color: aliceblue; font-weight: bold; margin-top: 5.4%; margin-left: 3%; font-size: 500%; font-weight: 800; background-color: transparent;border-radius: 90px;" v-model="onePlaylist.title" required>
+  
+</input>
+
+<!-- Info Section -->
+  <div id="info" 
+      style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 30px; padding: 10px; color: aliceblue; font-size: 105%; font-weight: lighter;margin-left: 4%; margin-top: -1%;">
+
+    <!-- Username -->
+    <span>{{onePlaylist.username}}</span>
+
+    <!-- Download Icon and Number of Saves -->
+    <span style="display: flex; align-items: center;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-download" viewBox="0 0 16 16">
+        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+      </svg>
+      <span style="margin-left: 5px;">{{onePlaylist.number_of_save}}</span>
+    </span>
+
+    <!-- Lock/Unlock Icon and State -->
+    <span style="display: flex; align-items: center;">
+      <svg v-if="onePlaylist.state === 'private'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1"/>
+      </svg>
+      <svg v-if="onePlaylist.state === 'public'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
+        <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2M3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/>
+      </svg>
+      <select class="dropdown" v-model="onePlaylist.state" style="background-color: transparent; border-radius: 90px;color: aliceblue;">
+        <option disabled selected>Select an option</option>
+        <option value="public" style="color: black;">public</option>
+        <option value="private" style="color: black;">private</option>
+      </select>
+    </span>
+    <textarea id="description" style="color: aliceblue; font-size: 120%; text-align: center; margin-top: 2%; background-color: transparent; border-radius: 90px; width: 40%; height: 1%; font-size: 90%;" v-model="onePlaylist._description">
+      {{onePlaylist._description}}
+    </textarea>
+    <input v-if="id==='0'" type="number" min="0" v-model="onePlaylist.id_user" style="background-color: transparent; border-radius: 90px;color: aliceblue; width: 5%;">
+
+    <button type="submit" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px; border-width: 0px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">Submit</button>
+  </div>
+  
+</form>
+<table v-if="action === 'edit' && id !=='0'" class="table table-striped table-bordered table-hover">
+      <tr id="legende" style="color: white; text-transform: capitalize; font-weight: bolder;">
+        <td>Title</td><td>Author</td><td>Number Of Streams</td><td>Show</td>
+      </tr>
+      <tr id="values" v-for="p of playlist">
+        <td style="color: aliceblue; font-weight: bold;">{{ p.title }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ p.alias }}</td>
+        <td style="color: aliceblue; font-weight: bold;">{{ p.number_of_streams }}</td>
+        <td><a :href="'/#/songs/show/' + p.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">SHOW</a></td>
+      </tr>
+    </table>
+</div>
+
+
 
     <!-- Liste des playlists pour /playlist/list/all -->
     <div v-if="action === 'list'" class="filters">
@@ -155,7 +204,7 @@
           number_of_save:0,
           _description:'ouio',
           state:'public',
-          user_id: 0,
+          id_user: 0,
         };
       this.playlist = [];
   return;
@@ -171,6 +220,24 @@
           }catch (ex){console.log(ex);}
         }
       },
+
+      async sendEditRequest(){
+        try {
+          if(this.$props.id === "0"){
+            let response = await this.$http.post(
+                "http://localhost:9000/playlist/add/",this.onePlaylist);
+            alert("Added: " + response.data.rowsUpdated);
+            this.$router.push({ path: '/playlist/list/all' });
+            this.getAllData();
+          }else{
+            let response = await this.$http.post(
+                  "http://localhost:9000/playlist/update/" + this.onePlaylist.id_playlist, this.onePlaylist);
+            alert("EDITED: " + response.data.rowsUpdated);
+            this.$router.push({ path: '/playlist/list/all' });
+            this.getAllData();
+        }
+      }catch (ex) { console.log(ex); }
+  },
 
       changeBodyBackgroundColor() {
         document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 80%) no-repeat' ;

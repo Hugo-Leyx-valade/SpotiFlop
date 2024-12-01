@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.playlist (
   id_playlist INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(45) NOT NULL,
   date_of_post DATE NOT NULL,
-  number_of_save INT,
+  number_of_save INT DEFAULT 0,
   _description VARCHAR(500),
   state VARCHAR(45) DEFAULT 'private',
   user_id INT NOT NULL,
@@ -523,4 +523,37 @@ select * from playlist where id_playlist = 1;
 select * from author where id_author = 2;
 select * from playlist inner join user on user.id_user=playlist.user_id where id_playlist = 2;
 select * from song;
-select song.title, song.number_of_streams, song.date_of_post from playlist_has_song inner join song on song.id_song = song_id_song inner join playlist on playlist.id_playlist = playlist_id_playlist where playlist_id_playlist = 10 ;
+select username from playlist_has_song inner join song on song.id_song = song_id_song inner join playlist on playlist.id_playlist = playlist_id_playlist where playlist_id_playlist = 10 ;
+select username from playlist inner join user on user.id_user = user_id where id_playlist = 7;
+select author.alias, song.title, song.number_of_streams, song.date_of_post from playlist_has_song 
+inner join song on song.id_song = song_id_song
+inner join author on song.id_author = author.id_author  
+inner join playlist on playlist.id_playlist = playlist_id_playlist 
+where playlist_id_playlist = 7;
+SELECT id_user,username,first_name,last_name,email,role,date_of_birth,genre,id_playlist,title,date_of_post,number_of_save,_description,state FROM user left join playlist on user.id_user = playlist.user_id WHERE user.id_user = 1;
+
+select * from playlist where user_id=1;
+select count(user.id_user) from playlist_has_song inner join playlist on playlist_id_playlist = id_playlist inner join user on playlist.user_id = id_user where id_user = 1;
+DELETE playlist_has_song
+FROM playlist_has_song
+INNER JOIN playlist
+ON playlist_id_playlist = id_playlist
+WHERE playlist.user_id = 1;
+
+
+
+SELECT
+sum(SUBSTRING_INDEX(duration, ':', 1)) as minutes,
+sum(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) as seconds
+FROM song;
+
+SELECT
+    FLOOR(SUM(SUBSTRING_INDEX(duration, ':', 1))  + SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) / 60) AS total_minutes,
+    SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) % 60 AS remaining_seconds
+FROM song	;
+
+select * from playlist;
+
+INSERT INTO playlist 
+                (title, state,date_of_post, _description, user_id) 
+                VALUES ("triks", "public","2024-10-12", "uoi", 1);
