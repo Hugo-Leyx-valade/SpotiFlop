@@ -29,14 +29,16 @@ async function playlistUpdateAction(request, response) {
     // console.log(json);
     // TODO: !!! INPUT VALIDATION !!!
     var playlistId = request.params.playlistId;
-    if (playlistId==="0") playlistId = await playlistRepoepo.addOnePlaylist(request.body.car_brand);
-    var isFancy = (request.body.car_isFancy === undefined || request.body.car_isFancy === false) ? 0 : 1; 
-    var numRows = await playlistRepoepo.editOnePlaylist(playlistId, 
-        request.body.car_brand, 
-        request.body.car_name, 
-        request.body.car_baseprice, 
-        isFancy, 
-        request.body.car_realPrice);
+    if (playlistId==="0") playlistId = await playlistRepo.addOnePlaylist(request.body.title,request.body.date_of_post,request.body.number_of_save, request.body._description,request.body.id_user);
+    else{
+        var numRows = await playlistRepo.editOnePlaylist(
+            request.body.title, 
+            request.body.date_of_post, 
+            request.body.number_of_save, 
+            request.body._description, 
+            request.body.id_playlist
+        );
+        }
     let result = { rowsUpdated: numRows };
     response.send(JSON.stringify(result));
 }

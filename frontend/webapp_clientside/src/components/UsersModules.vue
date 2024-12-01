@@ -47,7 +47,7 @@
     type="text"
     placeholder="Search a playlist by Name"
     class="search-input"
-    style="margin-bottom: 10px; padding: 6px; width: 15%; border-radius: 90px; border-color: transparent;         "
+    style="margin-bottom: 10px; padding: 6px; width: 15%; border-radius: 90px; border-color: transparent;"
   />
 
   <select v-model="selectedGenre" style="margin-left: 10px; padding: 10px; border-radius: 360px; text-align: center; border-color: transparent;">
@@ -155,7 +155,7 @@
         <a :href="'/#/users/show/'+u.id_user" class="action-button show">SHOW</a>
       </td>
       <td>
-        <a :href="`/#/users/edit/${u.user_id}`" class="action-button edit">EDIT</a>
+        <a :href="`/#/users/edit/${u.id_user}`" class="action-button edit">EDIT</a>
       </td>
       <td>
         <input type="button" value="DELETE" @click="sendDeleteRequest(u.id_user)" class="action-button delete" />
@@ -292,6 +292,7 @@
     catch (ex) { console.log(ex); }
   },
 
+
   async playlistDelete(playlistId){
     try {
       alert("DELETING... " + playlistId);
@@ -307,19 +308,29 @@
       try {
         if(this.$props.id === "0"){
           let response = await this.$http.post(
-              "http://localhost:9000/usersapi/add/",this.user[0]);
+              "http://localhost:9000/usersapi/add/",this.user);
           alert("Added: " + response.data.rowsUpdated);
           this.$router.push({ path: '/songs/list/all' });
           this.getAllData();
         }
         let response = await this.$http.post(
-              "http://localhost:9000/usersapi/update/" + this.user[0].id_song, this.user[0]);
+              "http://localhost:9000/usersapi/update/" + this.user.id_song, this.user);
         alert("EDITED: " + response.data.rowsUpdated);
         this.$router.push({ path: '/users/list/all' });
-        this.getAllData();
+        this.refreshOneUser();
       }
     catch (ex) { console.log(ex); }
   },
+},
+
+async playlistEdit(playlistId){
+  try {
+    alert("EDITING... " + playlistId);
+    let response = await this.$http.get("http://localhost:9000/playlist/edit/" + playlistId);
+    alert("EDITED: " + response.data.rowsUpdated);
+    this.refreshOneUser();
+  }
+  catch (ex) { console.log(ex); }
 },
     
     

@@ -55,22 +55,54 @@
   
   </div>
 
+
+
     <!-- Formulaire d'édition de la playlist pour /playlist/edit/ID -->
-    <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
-      <img src="../assets/pink-cover.png" alt="cover" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%;"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: -23%; font-size: 200%;">Title</p>
-      <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; margin-left: -23%; font-size: 120%; background-color: transparent; border-radius: 20px; width:10%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_title"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: 30%; font-size: 200%;">Date of Post</p>
-      <input type="date" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21%; margin-left: 30%; font-size: 120%; background-color: transparent; border-radius: 20px; width:10%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_date"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 18%; margin-left: -40%; font-size: 200%;">Number of Saves</p>
-      <input type="number" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 21.2%; margin-left: -32.5%; font-size: 120%; background-color: transparent; border-radius: 20px; width:10%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_num_saves"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28%; margin-left: -3%; font-size: 180%;">Description</p>
-      <textarea style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 31%; margin-left: -3%; font-size: 120%; background-color: transparent; border-radius: 20px; width:20%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_description"></textarea>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: 75%; font-size: 200%;">State</p>
-      <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8%; margin-left: 75%; font-size: 120%; background-color: transparent; border-radius: 20px; width:10%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_state"/>
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 4%; margin-left: 30%; font-size: 200%;">Author ID</p>
-      <input style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 7%; margin-left: 30%; font-size: 120%; background-color: transparent; border-radius: 20px; width:10%; border-color: white; text-align: center;" v-model="onePlaylist.playlist_author_id"/>
-    </div>
+  <div v-if="action === 'edit'" style="display: flex; flex-direction: column; align-items: flex-start;">
+
+<form class="playlist-form" @submit.prevent="sendEditRequest" style="margin-left: 2%; margin-top: 2%;"> 
+<!-- Playlist Title -->
+<input style="color: aliceblue; font-weight: bold; margin-top: 5.4%; margin-left: 3%; font-size: 500%; font-weight: 800; background-color: transparent;border-radius: 90px;" v-model="onePlaylist.title" required>
+  
+</input>
+
+<!-- Info Section -->
+  <div id="info" 
+      style="display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 30px; padding: 10px; color: aliceblue; font-size: 105%; font-weight: lighter;margin-left: 4%; margin-top: -1%;">
+
+    <!-- Username -->
+    <span>{{onePlaylist.username}}</span>
+
+    <!-- Download Icon and Number of Saves -->
+    <span style="display: flex; align-items: center;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-download" viewBox="0 0 16 16">
+        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+      </svg>
+      <span style="margin-left: 5px;">{{onePlaylist.number_of_save}}</span>
+    </span>
+
+    <!-- Lock/Unlock Icon and State -->
+    <span style="display: flex; align-items: center;">
+      <svg v-if="onePlaylist.state === 'private'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lock" viewBox="0 0 16 16">
+        <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1"/>
+      </svg>
+      <svg v-if="onePlaylist.state === 'public'" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
+        <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2M3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"/>
+      </svg>
+      <select class="dropdown">
+        <option disabled selected>Playlist visibility</option>
+        <option value="public">public</option>
+        <option value="private">private</option>
+      </select>
+    </span>
+    <p id="description" style="color: aliceblue; font-size: 120%; text-align: center; margin-top: 2%;">
+      {{onePlaylist._description}}
+    </p>
+  </div>
+</form>
+
+
 
     <!-- Liste des playlists pour /playlist/list/all -->
     <div v-if="action === 'list'" class="filters">
@@ -93,6 +125,7 @@
         <td><a :href="'/#/playlist/show/' + p.id_playlist" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">SHOW</a></td>
       </tr>
     </table>
+  </div>
   </div>
   </template>
   

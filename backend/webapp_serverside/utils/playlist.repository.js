@@ -96,7 +96,7 @@ module.exports = {
 
 
 
-    async addOneSong(songTitle, songDuration, songNumberOfStream, songDateOfPost, songLyrics, songAuthor, songGenre) {
+    async addOnePlaylist(songTitle, songDuration, songNumberOfStream, songDateOfPost, songLyrics, songAuthor, songGenre) {
         try {
             // Fetch author ID based on the alias
             var authorId = await getAuthorIdByAlias(songAuthor);
@@ -129,30 +129,17 @@ module.exports = {
 
 
     
-    async editOneSong(songGenre, songTitle, songDuration, songNumberOfStream,dateOfPost, songLyrics, songAuthor, songId) {
-        try {
-            if (!songGenre || typeof songGenre !== "string") {
-                throw new Error("Invalid genre name provided.");
-            }
-            const genreId = await getGenreIdByName(songGenre);
-            const authorId = await getAuthorIdByAlias(songAuthor) // Translate genre name to ID
-            console.log("GENRE ID: " + genreId);
-            if (!songTitle || typeof songTitle !== "string") {
-                throw new Error("Invalid song title provided.");
-            }
-    
+    async editOnePlaylist(title, date_of_post, number_of_save, description, id_playlist) {
+        try {   
             let sql = `
-                UPDATE song SET id_genre=?, title=?, duration=?, number_of_streams=?,date_of_post = ? , lyrics=?, id_author=? WHERE id_song=?
+                UPDATE playlist SET title=?, date_of_post=?, number_of_save=?, number_of_streams=?,_description = ? WHERE id_playlist=?
             `;
             const [okPacket] = await pool.execute(sql, [
-                parseInt(genreId),
-                songTitle,
-                songDuration,
-                songNumberOfStream,
-                formatDate(dateOfPost),
-                songLyrics,
-                parseInt(authorId),
-                songId
+                title,
+                formatDate(date_of_post),
+                parseInt(number_of_save),
+                description,
+                id_playlist
             ]);
             console.log("UPDATE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
