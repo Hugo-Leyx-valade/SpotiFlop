@@ -5,13 +5,13 @@
 
     <div id="tables" style="margin-top: 13%;">
       <div v-if="action === 'show'" style="width: 50%; margin-left: 5%; margin-top: -3%; background-color: none; border-radius: 8px; padding: 10px;">
-        <div style="font-size: 400%; color: white; font-weight: 900; text-align: left;">
+        <div style="font-size: 400%; color: white; font-weight: 900; text-align: left; display: flex;">
             <span style="color: #4CAF50;"></span> {{oneAuthor.alias}}
+            <div v-if="oneAuthor.verified === 1" style="color: #73ffcc; font-size: 40%;">Verified</div>
+            <div v-if="oneAuthor.verified === 0" style="color: #73ffcc; font-size: 40%;">Not Verified</div>
         </div>
         <div style="text-align: left; margin-top: 0%; display: flex;">
           <div style="font-size: 200%; color: white; text-align: left; margin-top: 0%;">{{oneAuthor.first_name}} {{oneAuthor.last_name}}</div>
-          <div v-if="oneAuthor.verified === 1" style="color: green; font-size: 130%;">Verified</div>
-          <div v-if="oneAuthor.verified === 0" style="color: green; font-size: 130%;">Not Verified</div>
         </div>
         <div style="margin-bottom: 15px; font-size: 16px; color: white; text-align: left;">
             <span style="color: #4CAF50;"></span> {{oneAuthor.biography}}
@@ -41,44 +41,94 @@
 
     
     <div v-if="action === 'edit'" class="container2 ">
-      <div class=" input-group" style="padding-left: 30%; padding-right: 60%;">
-        <span class="input-group-text" style="margin-bottom: 5%;">Alias</span>
-        <input type="text" name="authors_alias" class="form-control" v-model="oneAuthor.alias" :placeholder="oneAuthor.alias" style="margin-bottom: 5%;">
+      <form class="song-form" @submit.prevent="sendEditRequest" 
+      style="margin: 2% auto; z-index: 1; display: flex; flex-direction: column; align-items: center; background-color: #f9f9f9; padding: 2%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 50%;">
+  
+  <!-- Alias Input -->
+  <div class="input-group" style="width: 100%; margin-bottom: 15px; display: flex; flex-direction: column;">
+    <label for="authors_alias" style="margin-bottom: 5px; font-weight: bold;">Alias</label>
+    <input type="text" id="authors_alias" name="authors_alias" aria-label="Alias" class="form-control" 
+           v-model="oneAuthor.alias" 
+           placeholder="Alias"
+           style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%; box-sizing: border-box;">
+  </div>
+  
+  <!-- First and Last Name -->
+  <div class="input-group" style="width: 100%; margin-bottom: 15px; display: flex; gap: 10px;">
+    <input type="text" aria-label="First name" class="form-control" v-model="oneAuthor.first_name" 
+           placeholder="First Name"
+           style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;">
+    <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthor.last_name" 
+           placeholder="Last Name"
+           style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; flex: 1;">
+  </div>
+  
+  <!-- Biography Textarea -->
+  <div class="input-group" style="width: 100%; margin-bottom: 15px;">
+    <label for="bio" style="margin-bottom: 5px; font-weight: bold;">Biography</label>
+    <textarea id="bio" role="textbox" v-model="oneAuthor.biography"
+              placeholder="Enter biography..." 
+              style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; height: 100px;"></textarea>
+  </div>
+  
+  <!-- Verified Dropdown -->
+  <div class="input-group" style="width: 100%; margin-bottom: 15px; display: flex; align-items: center;">
+    <label for="authors_verified" style="margin-right: 10px; font-weight: bold;">Verified:</label>
+    <select name="authors_verified" id="authors_verified" v-model="oneAuthor.verified" 
+            style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+      <option value="0">Not Verified</option>
+      <option value="1">Not Verified</option>
+    </select>
+  </div>
+  
+  <!-- Buttons -->
+  <div id="buttons_container" style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
+    <button class="btn btn-danger" 
+            style="padding: 10px 20px; border: none; border-radius: 5px; background-color: #dc3545; color: #fff; cursor: pointer;" 
+            @click="sendDeleteRequest(oneAuthor.id_author)">DELETE</button>
+    <input type="button" value="SEND" 
+        class="btn btn-success" 
+        style="padding: 10px 20px; border: none; border-radius: 5px; background-color: #28a745; color: #fff; cursor: pointer;" 
+        @click="sendEditRequest()" />
+  </div>
+</form>
+  </div>
+  
+    <!-- FOR List /authors/list/all -->
+    <a v-if="action === 'list'" 
+   :href="'/#/authors/edit/0'" 
+   style="display: inline-block; padding: 10px 20px; margin-left: 90%; background-color: white; color: black; font-weight: bold; text-decoration: none; border: 2px solid #7efca4; border-radius: 25px; transition: all 0.3s ease; cursor: pointer;" 
+   onMouseOver="this.style.background='#7efca4'; this.style.color='white';" 
+   onMouseLeave="this.style.background='white'; this.style.color='black';">
+   ADD
+</a>
+
+<!-- Authors List Container -->
+<div v-if="action === 'list'" class="container" style="margin-top: 20px; padding: 0 10px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+  
+  <!-- Author Card -->
+  <div class="author-card" 
+       v-for="a of authors" 
+       v-bind:key="a.authors_id" 
+       @click="$router.push('/authors/show/' + a.id_author)" 
+       style="width: 200px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; cursor: pointer;" 
+       onMouseOver="this.style.transform='scale(1.05)'" 
+       onMouseLeave="this.style.transform='scale(1)'">
+
+    <!-- Image Container -->
+    <div class="image-container" style="position: relative; height: 150px; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center;">
+      <!-- Placeholder for an image -->
+      <span style="font-size: 100px; color: #ccc;">👤</span>
+      
+      <!-- Overlay with Author Name -->
+      <div class="overlay" style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.6); color: white; padding: 10px; text-align: center; font-size: 1rem; font-weight: bold;">
+        {{ a.alias }}
       </div>
-      <div class=" input-group" style="padding-left: 30%; padding-right: 30%;">
-        <span class="input-group-text">First and last name</span>
-        <input type="text" aria-label="First name" class="form-control" v-model="oneAuthor.first_name" >
-        <input type="text" aria-label="Last name" class="form-control" v-model="oneAuthor.last_name">
-      </div>
-      <textarea id="bio" role="textbox" contenteditable v-model="oneAuthor.biography">{{ oneAuthor.biography }}</textarea>
-      <div class="p-2 g-col-6"><select name="authors_verified" v-model="oneAuthor.verified" style="padding:0.7% ; border-radius: 1000px;">
-            <option>
-              0
-            </option>
-            <option>
-              1
-            </option>
-          </select>
-      <div id="buttons_container" class="g-col-6 mt-5" >
-          <button class="btn btn-danger" style="margin-right: 0.2%;" @click="sendDeleteRequest(oneAuthor.id_author)">DELETE</button>
-          <input type="button" value="SEND" class="btn btn-success " style="margin-left: 0.3%;" @click="sendEditRequest()" />
-      </div>  
     </div>
   </div>
-    <!-- FOR List /authors/list/all -->
-    <a v-if="action === 'list'" :href="'/#/authors/edit/0'" style="padding:0.7% 1% ;margin-left: 90%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
-    <div v-if="action === 'list'" class="container"  >
-      <div class="row">
-        <div class="author-card" v-for="a of authors" v-bind:key="a.authors_id" @click="$router.push('/authors/show/' + a.id_author)">
-            <div class="image-container" style="background-color: white;" >
-              <div class="overlay">
-                <span class="author-name">{{ a.alias }}</span>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>  
+
+</div>
+  </div>
 </template>
 
 <script>
@@ -104,11 +154,11 @@ export default {
       song : [],
       oneAuthor : {
         author_id: 0,
-        author_alias:'X',
-        author_first_name: 'Y',
-        author_last_name:'z',
+        author_alias:'',
+        author_first_name: '',
+        author_last_name:'',
         author_biography:'',
-        author_verified:1,
+        author_verified:0,
         author_image: "",
       }
     }
@@ -133,11 +183,11 @@ async refreshOneAuthor() {
 if (this.$props.id === "all" || this.$props.id === "0") {
   this.oneAuthor = {
         author_id: 0,
-        alais:'X',
-        first_name: 'Y',
-        last_name:'z',
-        biography:'triks',
-        verified:1,
+        alais:'',
+        first_name: '',
+        last_name:'',
+        biography:'',
+        verified:0,
         image: "",
       };
       this.songAuthor = [];

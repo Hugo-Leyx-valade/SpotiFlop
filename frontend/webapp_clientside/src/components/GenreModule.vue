@@ -1,48 +1,62 @@
 <template>
     <div class="hello" onload="changeBodyBackgroundColor()">
       <BacktohomeModule></BacktohomeModule>
-      <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
-        Genres 
-        {{ action }} {{ id }}
+      <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;"> 
+        {{ oneGenre.name }}
       </p>
   
       <!-- FOR DATA SHEET /songs/show/42 -->
       <table v-if="action === 'show'" class="table table-striped table-hover table-bordered ">
-        <tr><td>ID</td><td>{{oneGenre.genre_id}}</td></tr>
-        <tr><td>Name</td><td>{{oneGenre.genre_name}}</td></tr>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Number Of Streams</th>
+            <th>Date Of Post</th>
+            <th>Duration</th>
+            <th>Author</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="s in songs" :key="s.id_song">
+            <td>{{ s.title }}</td>
+            <td>{{ s.number_of_streams }}</td>
+            <td>{{ formatDate(s.date_of_post) }}</td>
+            <td>{{ s.duration }}</td>
+            <td>{{ s.alias }}</td>
+            <td><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
+          </tr>
+        </tbody>
       </table>
   
-      <!-- FOR FORMS /songs/edit/42 -->
-      <table v-if="action === 'edit'" class="table table-striped table-hover table-bordered ">
-      <tr><td>Name</td><td><input type="text" name="genre_name" v-model="oneGenre.genre_name"/></td></tr>
-      <tr><td colspan="2">
-        <input type="button" value="SEND" @click="sendEditRequest()" />
-      </td></tr>
-    </table>
-  
+
+
+
       <!-- FOR List /songs/list/all -->
-      <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
-      <tr>
-        <td>Name</td>
-        <td>SHOW DETAILS</td>
-        <td>EDIT GENRE</td>
-        <td>DELETE GENRE</td>
-      </tr>
-      <tr v-for="g in genres" :key="g.genre_id">
-        <td>{{ g.genre_name }}</td>
-        <td><a :href="'/#/genres/show/' + g.genre_id" @click="oneGenreLoad(g)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">SHOW</a></td>
-        <td><a :href="'/#/genres/edit/' + g.genre_id" @click="oneGenreLoad(g)" style="color: black; font-weight: bold; text-decoration: none; border-radius: 25px;"onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'">EDIT</a></td>
-        <td><input type="button" value="DELETE" @click="sendDeleteRequest(g.genre_id)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#ff6600'" onMouseLeave="this.style.background='white'"/></td>
-      </tr>
-    </table>
+     <!-- Genre List Container -->
+     <div v-if="action === 'list'" class="container" style="margin-top: 20px; padding: 0 10px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+  
+  <!-- Genre Card -->
+      <div class="genre-card" 
+          v-for="g in genres" 
+          :key="g.id_genre" 
+          @click="$router.push('/genres/show/' + g.id_genre);" 
+          style="width: 250px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; cursor: pointer;" 
+          onMouseOver="this.style.transform='scale(1.05)'" 
+          onMouseLeave="this.style.transform='scale(1)'"> 
+    <!-- Genre Name -->
+    <div style="padding: 20px; text-align: center; font-size: 1.2rem; font-weight: bold; color: #333;">
+      {{ g.name }}
+    </div>
+  </div>
+
+</div>
   
     </div>
   </template>
   
   <script>
   import Home from './homeModulesAdmin.vue';
-  import genre from './genres.json'
-
   export default {
     name: 'Genres',
     components: {
@@ -51,6 +65,7 @@
     props:['action','id'],
     data () {
       return {
+        songs:[],
         genres : [],
         oneGenre : {
           genre_id: 0,
@@ -63,26 +78,45 @@
     this.changeBodyBackgroundColor();
     },
 
+
     methods:{
       async getALLData(){
-        /*
-        let responesAuthors = await this.$http.get("backend/url");
-        this.cars = responesAuthors.data;
-        let reponseSong = await this.$http.get('wxxx');
-        this.song = reponseSong.data;
-         */
-         try {
-      this.genres = genre;
-
+      try {
+        let allGenre = await fetch("http://localhost:9000/genresapi/list/");
+        this.genres = await allGenre.json();
+        console.log(JSON.stringify(this.genres));
+        this.refreshOneGenre();
     } catch (ex) {
         console.log(ex);
         }
     },
-      async refreshOneGenre(){
-        if(this.$props.id ==="all" || this.$props.id=="0") return;
-        try{
-          this.oneGenre = this.genres.find(genre=>genre.genre_id==this.$props.id);
-        }catch (ex){console.log(ex);}
+
+    formatDate(incomingDate) {
+      const date = new Date(incomingDate);
+  // Format the date (e.g., as 'YYYY-MM-DD')
+      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+      return formattedDate;
+},
+
+
+async refreshOneGenre(){
+      if (this.$props.id === "all" || this.$props.id === "0") {
+        this.oneGenre = {
+          id_genre: 0,
+          name: "",
+        };
+        this.songs = [];
+        return;
+    }
+    try {
+      let responseGenre = await fetch("http://localhost:9000/genresapi/show/" + this.$props.id);
+      responseGenre = await responseGenre.json();
+      this.oneGenre = responseGenre.genre[0];
+      this.songs = responseGenre.songs;
+      console.log("genre" + JSON.stringify(this.oneGenre) + "songs" + JSON.stringify(this.responseGenre.songs));
+      // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
+    }
+    catch (ex) { console.log(ex); }
       },
 
       changeBodyBackgroundColor() {
@@ -94,11 +128,6 @@
 
     },
 
-    oneGenreLoad(genre){
-      this.oneGenre.genre_id = genre.genre_id;
-      this.oneGenre.genre_name = genre.genre_name;
-    },
-  
     watch:{
       id: function(newVal, oldVAl){
         this.refreshOneGenre();
