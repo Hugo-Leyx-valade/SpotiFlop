@@ -523,4 +523,13 @@ select * from playlist where id_playlist = 1;
 select * from author where id_author = 2;
 select * from playlist inner join user on user.id_user=playlist.user_id where id_playlist = 2;
 select * from song;
-select song.title, song.number_of_streams, song.date_of_post from playlist_has_song inner join song on song.id_song = song_id_song inner join playlist on playlist.id_playlist = playlist_id_playlist where playlist_id_playlist = 10 ;
+select username from playlist_has_song inner join song on song.id_song = song_id_song inner join playlist on playlist.id_playlist = playlist_id_playlist where playlist_id_playlist = 10 ;
+select username from playlist inner join user on user.id_user = user_id where id_playlist = 7;
+select author.alias, song.title, song.number_of_streams, song.date_of_post from playlist_has_song 
+inner join song on song.id_song = song_id_song
+inner join author on song.id_author = author.id_author  
+inner join playlist on playlist.id_playlist = playlist_id_playlist 
+where playlist_id_playlist = 7;
+SELECT id_user,username,first_name,last_name,email,role,date_of_birth,genre,id_playlist,title,date_of_post,number_of_save,_description,state FROM user left join playlist on user.id_user = playlist.user_id WHERE user.id_user = 1;
+
+select * from user where id_user=1;

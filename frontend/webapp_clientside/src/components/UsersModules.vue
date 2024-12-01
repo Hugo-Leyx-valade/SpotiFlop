@@ -10,30 +10,30 @@
 
       <!-- FOR DATA SHEET /users/show/42 -->
       <div v-if="action === 'show'" style="display: flex; justify-content: center;">
-      <a :href="'/#/users/edit/' + user[0].id_user" class="button-33" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a>
+      <a :href="'/#/users/edit/' + user.id_user" class="button-33" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a>
 
     <!-- User Image -->
-    <img v-if="user[0].genre === 1" src='../assets/boy2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
-    <img v-if="user[0].genre === 0" src='../assets/girl2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
+    <img v-if="user.genre === 1" src='../assets/boy2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
+    <img v-if="user.genre === 0" src='../assets/girl2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
     
     <!-- User Info -->
     <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.9%; margin-left: 0%; font-size: 150%;">ID</p>   
-    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.3%; margin-left: 0%; font-size: 120%;">{{user[0].id_user}}</p>
+    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.3%; margin-left: 0%; font-size: 120%;">{{user.id_user}}</p>
 
     <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 6.4%; margin-left: -32%; font-size: 150%;">UserName</p>   
-    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 9%; margin-left: -32%; font-size: 120%;">{{user[0].username}}</p>
+    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 9%; margin-left: -32%; font-size: 120%;">{{user.username}}</p>
 
     <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8.4%; margin-left: 32%; font-size: 150%;">First Name</p>    
-    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 11%; margin-left: 32%; font-size: 120%;">{{user[0].first_name}}</p>
+    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 11%; margin-left: 32%; font-size: 120%;">{{user.first_name}}</p>
 
     <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 20.3%; margin-left: 32%; font-size: 150%;">Last Name</p>   
-    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 22.7%; margin-left: 32%; font-size: 120%;">{{user[0].last_name}}</p>
+    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 22.7%; margin-left: 32%; font-size: 120%;">{{user.last_name}}</p>
 
     <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 26%; margin-left: -25%; font-size: 150%;">Email</p>    
-    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: -25%; font-size: 120%;">{{user[0].email}}</p>
+    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: -25%; font-size: 120%;">{{user.email}}</p>
 
     <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 26%; margin-left: 25%; font-size: 150%;">Date of birth</p>    
-    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: 25%; font-size: 120%; width: 20%;">{{formatDate(user[0].date_of_birth)}}</p>
+    <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: 25%; font-size: 120%; width: 20%;">{{formatDate(user.date_of_birth)}}</p>
 </div>
 
 <!-- Playlist Header -->
@@ -50,26 +50,36 @@
     style="margin-bottom: 10px; padding: 6px; width: 15%; border-radius: 90px; border-color: transparent;         "
   />
 
+  <select v-model="selectedGenre" style="margin-left: 10px; padding: 10px; border-radius: 360px; text-align: center; border-color: transparent;">
+    <option value="">Statue</option>
+    <option value="public">Public</option>
+    <option value="private">Private</option>
+  </select>
+
 </div>
 <table v-if="action === 'show'" class="playlist-user table table-striped table-bordered table-hover" style="width: 50%; margin: 0% auto; border-radius: 10px;">
   <thead>
     <tr>  
-      <th>Username</th>
-      <th>Email</th>
-      <th>Show Information</th>
-      <th>Edit User</th>
-      <th>Delete User</th>
+      <th>Title</th>
+      <th>number of save</th>
+      <th>date of post</th>
+      <th>Statue</th>
+      <th>Show</th>
+      <th>Edit</th>
+      <th>Delete</th>
     </tr>
   </thead>
   <tbody>
-    <tr v-for="u in filteredUser" v-bind:key="u.id_user">
-      <td>{{ u.username }}</td>
-      <td>{{ u.email }}</td>
+    <tr v-for="p in searchPlaylist" v-bind:key="p.id_playlist">
+      <td>{{ p.title }}</td>
+      <td>{{ p.number_of_save }}</td>
+      <td>{{ formatDate(p.date_of_post) }}</td>
+      <td>{{ p.state }}</td>
       <td>
-        <a :href="'/#/users/show/'+u.id_user" class="action-button show">SHOW</a>
+        <a :href="'/#/playlist/show/' + p.id_playlist" class="action-button show">SHOW</a>
       </td>
       <td>
-        <a :href="`/#/users/edit/${u.user_id}`" class="action-button edit">EDIT</a>
+        <a :href="`/#/playlist/edit/${p.id_playlist}`" class="action-button edit">EDIT</a>
       </td>
       <td>
         <input type="button" value="DELETE" @click="sendDeleteRequest()" class="action-button delete" />
@@ -81,31 +91,31 @@
         
       <!-- FOR FORMS /users/edit/42 -->
 <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
-  <img v-if="user[0].genre === 1" src='../assets/boy2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
-  <img v-if="user[0].genre === 0" src='../assets/girl2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
+  <img v-if="user.genre === 1" src='../assets/boy2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
+  <img v-if="user.genre === 0" src='../assets/girl2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
   
   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.9%; margin-left: 0%; font-size: 150%;">ID</p>   
-  <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.3%; margin-left: 0%; font-size: 120%;">{{user[0].id_user}}</p> 
+  <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.3%; margin-left: 0%; font-size: 120%;">{{user.id_user}}</p> 
 
   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 6.4%; margin-left: -32%; font-size: 150%;" >UserName</p>   
-  <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 9%; margin-left: -32%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;text-align: center; border-color: white;"  v-model="user[0].username"/>
+  <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 9%; margin-left: -32%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;text-align: center; border-color: white;"  v-model="user.username"/>
 
   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 8.4%; margin-left: 32%; font-size: 150%;">First Name</p>    
-  <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 11%; margin-left: 32%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;text-align: center;border-color: white;" v-model="user[0].first_name"/>
+  <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 11%; margin-left: 32%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;text-align: center;border-color: white;" v-model="user.first_name"/>
 
   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 20.3%; margin-left: 32%; font-size: 150%;">Last Name</p>   
-  <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 22.7%; margin-left: 32%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;text-align: center;border-color: white;" v-model="user[0].last_name"/>
+  <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 22.7%; margin-left: 32%; font-size: 120%;background-color: transparent; border-radius: 20px;width:10%;text-align: center;border-color: white;" v-model="user.last_name"/>
 
   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 26%; margin-left: -25%; font-size: 150%;">Email</p>    
-  <input type="email" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: -25%; font-size: 120%;background-color: transparent; border-radius: 20px;width:20%;text-align: center;border-color: white;" v-model="user[0].email"/>
+  <input type="email" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: -25%; font-size: 120%;background-color: transparent; border-radius: 20px;width:20%;text-align: center;border-color: white;" v-model="user.email"/>
 
   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 26%; margin-left: 25%; font-size: 150%;">Date of birth</p>    
-  <input type="date" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: 25%; font-size: 120%; width: 20%;background-color: transparent; border-radius: 20px;width:10%;text-align: center;border-color: white;" v-model="user[0].date_of_birth"/>
+  <input type="date" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 28.8%; margin-left: 25%; font-size: 120%; width: 20%;background-color: transparent; border-radius: 20px;width:10%;text-align: center;border-color: white;" v-model="user.date_of_birth"/>
 
   <input type="button" value="CONFIRM CHANGES" @click="id === '0' ? addUser() : sendEditRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%; margin-left: 15%;" />
-  <input v-if="user[0].genre === 1" type="button" value="RESET PASSWORD " @click="id === '0' ? addUser() : sendResetPasswordRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%;  margin-left: -15%;"/>
+  <input v-if="user.genre === 1" type="button" value="RESET PASSWORD " @click="id === '0' ? addUser() : sendResetPasswordRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%;  margin-left: -15%;"/>
   <div>
-    <input v-if="user[0].genre === 0" type="text" value="SET PASSWORD" @click="id === '0' ? addUser() : sendResetPasswordRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%;  margin-left: -15%;"/>
+    <input v-if="user.genre === 0" type="text" value="SET PASSWORD" @click="id === '0' ? addUser() : sendResetPasswordRequest()" style="position: absolute; border-radius: 100px; margin-top: 35%;  margin-left: -15%;"/>
 
   </div>
 </div>
@@ -153,7 +163,9 @@
     </tr>
   </tbody>
 </table>
-<p style="margin-top: 5%; color: aliceblue;font-weight: 900;">SPOTIFLOP</p>
+<p v-if="action==='list'" style="margin-top: 5%; color: aliceblue;font-weight: 900;">SPOTIFLOP</p>
+<p v-if="action==='show'" style="margin-top: 5%; color: aliceblue;font-weight: 900;">SPOTIFLOP</p>
+<p v-if="action==='edit'" style="margin-top: 40%; color: aliceblue;font-weight: 900;">SPOTIFLOP</p>
 </div>
   </template>
   
@@ -175,6 +187,8 @@
         selectedGenre: "",
         users : [],
         user:[],
+        playlists: [],
+        userPlaylist: [],
         oneUser : {
           user_id: 0,
           user_username:'X',
@@ -231,12 +245,15 @@
           user_date_of_birth: 'K',
           user_genre:0,
         };
+        this.playlists = [];
         return;
         };
         try{
-          let response = await this.$http.get("http://localhost:9000/usersapi/show/" + this.$props.id);
-          this.user = response.data;
-          console.log(" user " + this.user[0].length);
+          let response = await fetch("http://localhost:9000/usersapi/show/" + this.$props.id);
+          response = await response.json();
+          this.user = response.user;
+          this.playlists = response.playlists;
+          console.log("user " + JSON.stringify('user :' + this.user + 'playlists :' + this.playlists));
         }catch (ex){console.log(ex);}
       },
 
@@ -276,24 +293,24 @@
   },
   
 
-        async sendEditRequest(){
-          try {
-            if(this.$props.id === "0"){
-              let response = await this.$http.post(
-                  "http://localhost:9000/usersapi/add/",this.user[0]);
-              alert("Added: " + response.data.rowsUpdated);
-              this.$router.push({ path: '/songs/list/all' });
-              this.getAllData();
-            }
-            let response = await this.$http.post(
-                  "http://localhost:9000/usersapi/update/" + this.user[0].id_song, this.user[0]);
-            alert("EDITED: " + response.data.rowsUpdated);
-            this.$router.push({ path: '/users/list/all' });
-            this.getAllData();
-          }
-        catch (ex) { console.log(ex); }
-      },
-    },
+    async sendEditRequest(){
+      try {
+        if(this.$props.id === "0"){
+          let response = await this.$http.post(
+              "http://localhost:9000/usersapi/add/",this.user[0]);
+          alert("Added: " + response.data.rowsUpdated);
+          this.$router.push({ path: '/songs/list/all' });
+          this.getAllData();
+        }
+        let response = await this.$http.post(
+              "http://localhost:9000/usersapi/update/" + this.user[0].id_song, this.user[0]);
+        alert("EDITED: " + response.data.rowsUpdated);
+        this.$router.push({ path: '/users/list/all' });
+        this.getAllData();
+      }
+    catch (ex) { console.log(ex); }
+  },
+},
     
     
     watch:{
@@ -324,6 +341,15 @@
       return matchesSearch && matchesGenre;
     });
   },
+
+  searchPlaylist() {
+    return this.playlists.filter(userPlaylist => {
+      const matchesSearch = userPlaylist.title.toLowerCase().includes(this.searchQuery.toLowerCase());
+      const matchesGenre = this.selectedGenre === "" || userPlaylist.state === (this.selectedGenre);
+      return matchesSearch && matchesGenre;
+    });
+  }
+
 },
   
 

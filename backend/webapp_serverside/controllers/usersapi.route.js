@@ -21,7 +21,9 @@ async function usersListAction(request, response) {
 }
 async function userShowAction(request, response) {
     var oneUser = await userRepo.getOneUser(request.params.userId);
-    response.send(JSON.stringify(oneUser));
+    var playlists = await userRepo.getPlaylistByUserId(request.params.userId);
+    console.log( "caca" + JSON.stringify({ "user": oneUser, "playlists": playlists}));
+    response.send(JSON.stringify({ "user": oneUser, "playlists": playlists}));
 }
 async function userDelAction(request, response) {
     // TODO: first remove extras for car, unless the car cannot be removed!!!
