@@ -1,188 +1,123 @@
 <template>
-  <div class="hello" onload="changeBodyBackgroundColor()">
-    <BacktohomeModule></BacktohomeModule>
+    <div class="hello" onload="changeBodyBackgroundColor()">
+      <BacktohomeModule></BacktohomeModule>
+      <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;"> 
+        {{ oneGenre.name }}
+      </p>
+  
+      <!-- FOR DATA SHEET /songs/show/42 -->
+      <table v-if="action === 'show'" class="table table-striped table-hover table-bordered ">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Number Of Streams</th>
+            <th>Date Of Post</th>
+            <th>Duration</th>
+            <th>Author</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="s in songs" :key="s.id_song">
+            <td>{{ s.title }}</td>
+            <td>{{ s.number_of_streams }}</td>
+            <td>{{ formatDate(s.date_of_post) }}</td>
+            <td>{{ s.duration }}</td>
+            <td>{{ s.alias }}</td>
+            <td><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
+          </tr>
+        </tbody>
+      </table>
+  
 
-    <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
-      Genres
-      {{ action }} {{ id }}
-    </p>
 
-    <div class="flex items-center justify-between"></div>
 
-    <!-- FOR DATA SHEET /genres/show/42 -->
-    <div v-if="action === 'show'" style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
-      <p style="color: aliceblue; font-weight: bold; font-size: 200%;">Name</p>   
-      <p style="color: aliceblue; font-weight: bold; font-size: 150%;">{{ oneGenre.name }}</p>
-      <p style="color: aliceblue; font-weight: bold; font-size: 200%;">Description</p>   
-      <p style="color: aliceblue; font-weight: bold; font-size: 120%; width: 30%;">{{ oneGenre.description }}</p>
-
-      <div v-if="songs.length > 0" style="margin-top: 20px; width: 50%; text-align: center;">
-        <h3 style="color: white;">Associated Songs</h3>
-        <table style="color: white; width: 100%; border: 1px solid white; text-align: center;">
-          <thead>
-            <tr>
-              <th style="padding: 10px; border-bottom: 1px solid white;">ID</th>
-              <th style="padding: 10px; border-bottom: 1px solid white;">Title</th>
-              <th style="padding: 10px; border-bottom: 1px solid white;">Artist</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="song in songs" :key="song.id_song">
-              <td style="padding: 10px;">{{ song.id_song }}</td>
-              <td style="padding: 10px;">{{ song.title }}</td>
-              <td style="padding: 10px;">{{ song.artist }}</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- FOR List /songs/list/all -->
+     <!-- Genre List Container -->
+     <div v-if="action === 'list'" class="container" style="margin-top: 20px; padding: 0 10px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+  
+  <!-- Genre Card -->
+      <div class="genre-card" 
+          v-for="g in genres" 
+          :key="g.id_genre" 
+          @click="$router.push('/genres/show/' + g.id_genre);" 
+          style="width: 250px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; cursor: pointer;" 
+          onMouseOver="this.style.transform='scale(1.05)'" 
+          onMouseLeave="this.style.transform='scale(1)'"> 
+    <!-- Genre Name -->
+    <div style="padding: 20px; text-align: center; font-size: 1.2rem; font-weight: bold; color: #333;">
+      {{ g.name }}
     </div>
-
-  <div v-else style="margin-top: 20px; color: white;">
-    <p>No songs associated with this genre.</p>
   </div>
+
 </div>
-
-
-    <!-- FOR EDIT /genres/edit/42 -->
-    <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; font-size: 200%;">Name</p>   
-      <input type="text" style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; font-size: 120%; background-color: transparent; border-radius: 20px; width:20%; border-color: white; text-align: center;" v-model="oneGenre.name"/>
-      
-      <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 10%; font-size: 200%;">Description</p>   
-      <textarea style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 14%; font-size: 120%; background-color: transparent; border-radius: 20px; width:30%; border-color: white; text-align: left;" v-model="oneGenre.description"></textarea>
-
-      <input type="button" value="Save Changes" @click="sendEditRequest()" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'"/>
+  
     </div>
-
-    <!-- FOR List /genres/list/all -->
-    <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
-      <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
-        <td>ID</td><td>Name</td><td>Description</td><td>SHOW DETAILS</td><td>EDIT GENRE</td><td>DELETE GENRE</td>
-        <a :href="'/#/genres/edit/0'" style="background:white;padding: 15% 25%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
-      </tr>
-      <tr v-for="g of genres" v-bind:key="g.id_genre">
-        <td style="color: aliceblue; font-weight: bold;">{{ g.id_genre }}</td>
-        <td style="color: aliceblue; font-weight: bold;">{{ g.name }}</td>
-        <td style="color: aliceblue; font-weight: bold;">{{ g.description }}</td>
-        <td><a :href="'/#/genres/show/' + g.id_genre" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
-        <td><a :href="'/#/genres/edit/' + g.id_genre" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
-        <td><input type="button" value="DELETE" @click="sendDeleteRequest(g.id_genre)" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#fa8c8c'" onMouseLeave="this.style.background='white'"  /></td>
-      </tr>
-    </table>
-    <div style="margin-top: 16%;"></div>
-    <footer>
-      <p style="color: white; font-weight: bold; font-size: 20px; position: absolute; top: 120%; left: 46%;">Spotiflop</p>
-    </footer>  
-  </div>
-</template>
-
-<script>
-// Import
-import BacktohomeModule from './BacktohomeModule.vue';
-
-
-export default {
-  name: 'Genres',
-  components: {
-    BacktohomeModule
-  },
-  props:['action','id'],
-  data () {
-    return {
-      genres: [],
-      oneGenre: {
-        id_genre: 0,
-        name: '',
-        description: ''
-      },
-    songs: []
-    };
-  },
+  </template>
+  
+  <script>
+  import Home from './homeModulesAdmin.vue';
+  export default {
+    name: 'Genres',
+    components: {
+      Home
+    },
+    props:['action','id'],
+    data () {
+      return {
+        songs:[],
+        genres : [],
+        oneGenre : {
+          genre_id: 0,
+          genre_name:'',
+        }
+      }
+    },
 
   mounted() {
     this.changeBodyBackgroundColor();
-    this.getSongsByGenre();
-  },
+    },
 
-  methods: {
-    async getAllData() {
+
+    methods:{
+      async getALLData(){
       try {
-        let responseGenre = await fetch("http://localhost:9000/genresapi/list");
-        this.genres = await responseGenre.json();
+        let allGenre = await fetch("http://localhost:9000/genresapi/list/");
+        this.genres = await allGenre.json();
+        console.log(JSON.stringify(this.genres));
         this.refreshOneGenre();
-      } catch (ex) { console.log(ex); }
+    } catch (ex) {
+        console.log(ex);
+        }
     },
 
     formatDate(incomingDate) {
       const date = new Date(incomingDate);
-      return `${date.getFullYear()}`-`${(date.getMonth() + 1).toString().padStart(2, '0')}`-`${date.getDate().toString().padStart(2, '0')}`;
-    },
-
-    async getSongsByGenre(genreId) {
-      try {
-        if (!genreId) {
-          console.error('Genre ID is undefined or null');
-          return;
-        }
-        let response = await fetch("http://localhost:9000/genresapi/show/" + this.songs.genreIds);
-        if (response.ok) {
-          this.songs = await response.json();
-        } else {
-          console.error('Failed to fetch songs for this genre');
-          this.songs = [];
-        }
-      } catch (error) {
-        console.error("Error while fetching songs: ", error);
-        this.songs = [];
-      }
-    },
-
-async refreshOneGenre() {
-    try {
-        let responseGenre = await fetch(`http://localhost:9000/genresapi/show/${this.$props.id}`);
-        if (responseGenre.ok) {
-            this.oneGenre = await responseGenre.json();
-            await this.getSongsByGenre(this.$props.id); // Récupérer les chansons associées
-        } else {
-            console.error("Failed to fetch genre");
-        }
-    } catch (ex) {
-        console.log(ex);
-    }
+  // Format the date (e.g., as 'YYYY-MM-DD')
+      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+      return formattedDate;
 },
 
 
-    async sendDeleteRequest(genreId) {
-      try {
-        alert("DELETING... " + genreId);
-        let response = await this.$http.get("http://localhost:9000/genresapi/del/" + genreId);
-        alert("DELETED: " + response.data.rowsDeleted);
-        this.getAllData();
-      } catch (ex) { console.log(ex); }
-    },
-
-    async sendAddRequest() {
-      try {
-        alert("ADDING... " + this.oneGenre.name);
-        let response = await this.$http.post("http://localhost:9000/genresapi/add", this.oneGenre);
-        alert("ADDED: " + response.data.rowsAdded);
-        this.$router.push({ path: '/genres/list/all' });
-        this.getAllData();
-      } catch (ex) { console.log(ex); }
-    },
-
-    async sendEditRequest() {
-      try {
-        if (this.$props.id === "0") {
-          let response = await this.$http.post("http://localhost:9000/genresapi/add", this.oneGenre);
-          alert("Added: " + response.data.rowsUpdated);
-        } else {
-          let response = await this.$http.post("http://localhost:9000/genresapi/update/" + this.oneGenre.id_genre, this.oneGenre);
-          alert("EDITED: " + response.data.rowsUpdated);
-        }
-        this.$router.push({ path: '/genres/list/all' });
-        this.getAllData();
-      } catch (ex) { console.log(ex); }
-    },
+async refreshOneGenre(){
+      if (this.$props.id === "all" || this.$props.id === "0") {
+        this.oneGenre = {
+          id_genre: 0,
+          name: "",
+        };
+        this.songs = [];
+        return;
+    }
+    try {
+      let responseGenre = await fetch("http://localhost:9000/genresapi/show/" + this.$props.id);
+      responseGenre = await responseGenre.json();
+      this.oneGenre = responseGenre.genre[0];
+      this.songs = responseGenre.songs;
+      console.log("genre" + JSON.stringify(this.oneGenre) + "songs" + JSON.stringify(this.responseGenre.songs));
+      // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
+    }
+    catch (ex) { console.log(ex); }
+      },
 
     changeBodyBackgroundColor() {
       document.body.style.background = 'linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat';
@@ -190,27 +125,60 @@ async refreshOneGenre() {
       document.body.style.height = '100%';
       document.body.style.backgroundColor = 'rgb(0,0,0)';
     }
-  },
 
-  watch: {
-    id: function(newVal, oldVAl) {
-      this.refreshOneGenre();
+    },
+
+    watch:{
+      id: function(newVal, oldVAl){
+        this.refreshOneGenre();
+      }
+    },
+  
+    created(){
+      this.getALLData();
     }
-  },
-
-  created() {
-    this.getAllData();
+  
   }
-}
-</script>
+  </script>
+  
+  <!-- Add "scoped" attribute to limit CSS to this component only -->
+  <style scoped>
+  h1, h2 {
+    font-weight: normal;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+  a {
+    color: #42b983;
+  }
+  
+  #app table {
+    width: 95%; 
+    margin: 20px;
+    color: white;
+    background-color: #33333300;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'LilGrotesk', sans-serif;
+  }
+  
+  #app table tr{
+    background-color: #f1eeee00;
+  }
 
-<style scoped>
-h1, h2, h3, h4 {
-  color: white;
-}
-table {
-  font-size: 1.2em;
-  color: white;
-}
+  #app td, #app th{
+    padding: 10px;
+    border: 2px solid #cfcfcf;
+    text-align: center;
+    font-weight: bold;
 
-</style>
+  }
+  
+  </style>
+  

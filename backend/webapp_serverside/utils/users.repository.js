@@ -2,8 +2,10 @@
 pool = require(__dirname + "\\db.include.js"); // use same folder as the current file
 
 async function deleteInPlaylist(userId){
-    let sql = " DELETE FROM playlist WHERE user_id = ?";
+    let sql = " DELETE playlist_has_song FROM playlist_has_song INNER JOIN playlist ON playlist_id_playlist = id_playlist WHERE playlist.user_id = ?;";
+    let sql2 = " DELETE FROM playlist WHERE user_id = ?;";
     await pool.execute(sql,[userId]);
+    await pool.execute(sql2,[userId]);
 }
 
 function formatDate(dateString) {
@@ -70,7 +72,28 @@ module.exports = {
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
             
-            let sql = "SELECT id_user,username,first_name,last_name,email,role,date_of_birth,genre,id_playlist,title,date_of_post,number_of_save,_description,state FROM user left join playlist on user.id_user = playlist.user_id WHERE user.id_user = ?;";
+            let sql = "select * from user where id_user=?;";
+            const [rows, fields] = await pool.execute(sql, [ userId ]);
+            console.log("user : "+rows.values);
+            if (rows.length >= 0) {
+                return rows[0];
+            } else {
+                return false;
+            }
+        }
+        catch (err) {
+            console.log(err);
+            throw err; 
+        }
+    },
+
+    async getPlaylistByUserId(userId){
+        try {
+            // sql = "SELECT * FROM songs INNER JOIN genres ON song_genre=genre_id WHERE song_id = "+songId; 
+            // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
+            // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
+            
+            let sql = "select * from playlist where user_id=?;";
             const [rows, fields] = await pool.execute(sql, [ userId ]);
             console.log("user : "+rows.values);
             if (rows.length >= 0) {
@@ -86,10 +109,9 @@ module.exports = {
     },
 
 
-
     async delOneUser(userId){ 
         try {
-            deleteInPlaylist(userId)
+            deleteInPlaylist(userId);
             let sql = "DELETE FROM user WHERE id_user = ?";
             const [okPacket, fields] = await pool.execute(sql, [ userId ]);
             console.log("DELETE " + JSON.stringify(okPacket));

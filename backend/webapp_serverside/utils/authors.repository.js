@@ -66,11 +66,11 @@ module.exports = {
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
             
-            let sql = "SELECT * FROM author left join song on author.id_author = song.id_author left join genre on genre.id_genre = song.id_genre WHERE author.id_author = ?;";
+            let sql = "SELECT * FROM author WHERE author.id_author = ?;";
             const [rows, fields] = await pool.execute(sql, [ authorId ]);
-            console.log("author du truc "+rows.length);
+            console.log("author "+JSON.stringify(rows));
             if (rows.length > 0) {
-                return rows;
+                return rows[0];
             } else {
                 return false;
             }
@@ -132,6 +132,7 @@ module.exports = {
         try {
             let sql = "SELECT * FROM song WHERE id_author = ?";
             const [rows, fields] = await pool.execute(sql, [ authorId ]);
+            /*console.log("songs author "+JSON.stringify(rows));*/
             return rows;
         }
         catch (err) {

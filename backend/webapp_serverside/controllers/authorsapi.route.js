@@ -21,7 +21,9 @@ async function authorListAction(request, response) {
 async function authorShowAction(request, response) {
     try {
         var oneAuthor = await authorRepo.getOneAuthor(request.params.authorId);
-        response.send(JSON.stringify(oneAuthor));
+        var songs = await authorRepo.getSongByAuthor(request.params.authorId);
+        console.log( "caca" + JSON.stringify({ "author": oneAuthor, "songs": songs }));
+        response.send(JSON.stringify({ "author": oneAuthor, "songs": songs }));
     } catch (error) {
         response.status(500).send({ error: 'Failed to retrieve the author.' });
     }
