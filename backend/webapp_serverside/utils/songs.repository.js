@@ -56,7 +56,7 @@ module.exports = {
             let sql = "SELECT * FROM genres";
 			// .execute() does: getConnection() + prepare() + query() + releaseConnection()
             const [rows, fields] = await pool.execute(sql); 
-            console.log("BRANDS FETCHED: "+rows.length);
+            console.log("GENRE FETCHED: "+rows.length);
             return rows;
         }
         catch (err) {
@@ -141,7 +141,7 @@ module.exports = {
                 (title, duration, number_of_streams, date_of_post, lyrics, id_author, id_genre) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             `;
-            const [okPacket, fields] = await pool.execute(sql, [
+            const [okPacket, fields] = await pool.execute(sql,[
                 songTitle,
                 songDuration,
                 parseInt(songNumberOfStream),
@@ -155,7 +155,7 @@ module.exports = {
             return okPacket.insertId; // Return the new song's ID
         } catch (err) {
             console.log(err);
-            throw err;
+            throw(err);
         }
     },
 
