@@ -92,7 +92,7 @@
         <td>ID</td><td>Title</td><td>Duration</td><td>Number Of Streams</td><td>Date Of Post</td><td>Author</td><td>Genre</td><td>SHOW DETAILS</td><td>EDIT SONG</td><td>DELETE SONG</td>
         <a :href="'/#/songs/edit/0'" style="background:white;padding: 15% 25%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
       </tr>
-      <tr v-for="s of song" v-bind:key="s.song_id">
+      <tr v-for="s of song" v-bind:key="s.id_song">
         <td style="color: aliceblue; font-weight: bold;">{{ s.id_song }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ s.title }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ s.duration }}</td>
@@ -151,8 +151,9 @@ export default {
 
     async getAllData() {
     try {
-      let responseSong = await fetch("http://localhost:9000/songsapi/list");
-      this.song = await responseSong.json();
+      let responseSong = await this.$http.get("http://localhost:9000/songsapi/list");
+      this.song = JSON.stringify(responseSong.data);
+      console.log(" songs " + this.song);
       console.log(" songs " + this.song[1].song_title );
       /*
       this.brands = [ { brand_id: 1, brand_name: "BMW" }, { brand_id: 2, brand_name: "Audi" }, { brand_id: 3, brand_name: "Citroen" } ];
