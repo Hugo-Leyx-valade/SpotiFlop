@@ -8,6 +8,7 @@ import $ from 'jquery';
 import axios from 'axios'
 Vue.prototype.$http = axios
 
+
 $(document).ready(function(){
     $("h1").click(function(){
         alert("Hello, jQuery!");

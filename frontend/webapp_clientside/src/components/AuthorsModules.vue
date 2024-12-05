@@ -77,7 +77,7 @@
     <select name="authors_verified" id="authors_verified" v-model="oneAuthor.verified" 
             style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
       <option value="0">Not Verified</option>
-      <option value="1">Not Verified</option>
+      <option value="1">Verified</option>
     </select>
   </div>
   
@@ -194,14 +194,19 @@ if (this.$props.id === "all" || this.$props.id === "0") {
   return;
 }
 try {
-  let responseAuthor = await fetch("http://localhost:9000/authorsapi/show/" + this.$props.id);
-  var result = await responseAuthor.json();
-  for (var i = 1; i < result.songs.length; i++) {
-    this.songAuthor.push(result.songs[i]);
+  let responseAuthor = await this.$http.get("http://localhost:9000/authorsapi/show/" + this.$props.id);
+  var result = responseAuthor.data;
+  console.log( "la balade    " + result.object.songs.length);
+  if(result.error === 0){
+    for (var i = 1; i < result.object.songs.length; i++) {
+      this.songAuthor.push(result.object.songs[i]);
+    }
+    this.oneAuthor = result.object.author;
+    console.log("hugo" + JSON.stringify(this.oneAuthor));
+    // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
+  }else{
+    alert("Can't resolve ! ")
   }
-  this.oneAuthor = result.author;
-  console.log("hugo" + JSON.stringify(this.oneAuthor));
-  // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
 }
 catch (ex) { console.log(ex); }
 },
@@ -209,44 +214,40 @@ catch (ex) { console.log(ex); }
 
 
 async sendDeleteRequest(authorsId) {
-try {
   alert("DELETING... " + authorsId);
   let response = await this.$http.get("http://localhost:9000/authorsapi/del/" + authorsId);
+  if(response.data === false){
+    alert("This song look to not exist")
+  }else{
   alert("DELETED: " + response.data.rowsDeleted);
   this.$router.push({ path: '/authors/list/all' });
   this.getAllData();
-}
-catch (ex) { console.log(ex); }
+  }
 },
-
-
-async sendAddRequest() {
-        try {
-          alert("ADDING... " + this.oneAuthor.alias);
-          let response = await this.$http.post("http://localhost:9000/authorsapi/add", this.oneAuthor);
-          alert("ADDED: " + response.data.rowsAdded);
-          this.$router.push({ path: '/authors/list/all' });
-          this.getAllData();
-        }
-        catch (ex) { console.log(ex); }
-      },
 
 
 async sendEditRequest() {
 try {
   if(this.$props.id === "0"){
-    let response = await this.$http.post(
-              "http://localhost:9000/authorsapi/add/",this.oneAuthor);
-          alert("Added: " + response.data.rowsUpdated);
-          this.$router.push({ path: '/authors/list/all' });
-          this.getAllData();
-  }
-  else{
+      let response = await this.$http.post(
+                "http://localhost:9000/authorsapi/add/",this.oneAuthor);
+  if(response.data === false){
+      alert("There is no alias bro")
+  }else{
+            alert("Added: " + response.data.rowsUpdated);
+            this.$router.push({ path: '/authors/list/all' });
+            this.getAllData();
+    }
+  }else{
       let response = await this.$http.post(
             "http://localhost:9000/authorsapi/update/" + this.oneAuthor.id_author, this.oneAuthor);
+      if(response.data === false){
+        alert("Error in one of the input field.")
+      }else{
       alert("EDITED: " + response.data.rowsUpdated);
       this.$router.push({ path: '/authors/list/all' });
       this.getAllData();
+      }
     }
   }
 catch (ex) { console.log(ex); }
