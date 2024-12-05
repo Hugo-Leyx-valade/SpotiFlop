@@ -77,7 +77,7 @@
     <select name="authors_verified" id="authors_verified" v-model="oneAuthor.verified" 
             style="padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
       <option value="0">Not Verified</option>
-      <option value="1">Not Verified</option>
+      <option value="1">Verified</option>
     </select>
   </div>
   
@@ -169,8 +169,8 @@ export default {
 
 async getAllData() {
 try {
-  let responseAuthor = await fetch("http://localhost:9000/authorsapi/list");
-  this.authors = await responseAuthor.json();
+  let responseAuthor = await this.$http.get("http://localhost:9000/authorsapi/list");
+  this.authors = await responseAuthor.data;
   /*
   this.brands = [ { brand_id: 1, brand_name: "BMW" }, { brand_id: 2, brand_name: "Audi" }, { brand_id: 3, brand_name: "Citroen" } ];
   this.cars = [ { car_id: 1, car_brand: 2, car_name: "Audi S4", car_baseprice: 40000, car_isfancy: 0, car_realprice: 45000 }, { car_id: 2, car_brand: 1, car_name: "BMW i8", car_baseprice: 80000, car_isfancy: 1, car_realprice: 90000 } ];
@@ -195,14 +195,18 @@ if (this.$props.id === "all" || this.$props.id === "0") {
   return;
 }
 try {
-  let responseAuthor = await fetch("http://localhost:9000/authorsapi/show/" + this.$props.id);
-  var result = await responseAuthor.json();
-  for (var i = 1; i < result.songs.length; i++) {
-    this.songAuthor.push(result.songs[i]);
+  let responseAuthor = await this.$http.get("http://localhost:9000/authorsapi/show/" + this.$props.id);
+  var result = responseAuthor.data;
+  if(result.error === 0){
+    for (var i = 1; i < result.object.songs.length; i++) {
+      this.songAuthor.push(result.object.songs[i]);
+    }
+    this.oneAuthor = result.object.author;
+    console.log("hugo" + JSON.stringify(this.oneAuthor));
+    // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
+  }else{
+    alert("Can't resolve ! ")
   }
-  this.oneAuthor = result.author;
-  console.log("hugo" + JSON.stringify(this.oneAuthor));
-  // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
 }
 catch (ex) { console.log(ex); }
 },
@@ -210,44 +214,40 @@ catch (ex) { console.log(ex); }
 
 
 async sendDeleteRequest(authorsId) {
-try {
   alert("DELETING... " + authorsId);
   let response = await this.$http.get("http://localhost:9000/authorsapi/del/" + authorsId);
+  if(response.data === false){
+    alert("This author look to not exist")
+  }else{
   alert("DELETED: " + response.data.rowsDeleted);
   this.$router.push({ path: '/authors/list/all' });
   this.getAllData();
-}
-catch (ex) { console.log(ex); }
+  }
 },
-
-
-async sendAddRequest() {
-        try {
-          alert("ADDING... " + this.oneAuthor.alias);
-          let response = await this.$http.post("http://localhost:9000/authorsapi/add", this.oneAuthor);
-          alert("ADDED: " + response.data.rowsAdded);
-          this.$router.push({ path: '/authors/list/all' });
-          this.getAllData();
-        }
-        catch (ex) { console.log(ex); }
-      },
 
 
 async sendEditRequest() {
 try {
   if(this.$props.id === "0"){
-    let response = await this.$http.post(
-              "http://localhost:9000/authorsapi/add/",this.oneAuthor);
-          alert("Added: " + response.data.rowsUpdated);
-          this.$router.push({ path: '/authors/list/all' });
-          this.getAllData();
-  }
-  else{
+      let response = await this.$http.post(
+                "http://localhost:9000/authorsapi/add/",this.oneAuthor);
+  if(response.data === false){
+      alert("There is no alias bro")
+  }else{
+            alert("Added: " + response.data.rowsUpdated);
+            this.$router.push({ path: '/authors/list/all' });
+            this.getAllData();
+    }
+  }else{
       let response = await this.$http.post(
             "http://localhost:9000/authorsapi/update/" + this.oneAuthor.id_author, this.oneAuthor);
+      if(response.data === false){
+        alert("Error in one of the input field.")
+      }else{
       alert("EDITED: " + response.data.rowsUpdated);
       this.$router.push({ path: '/authors/list/all' });
       this.getAllData();
+      }
     }
   }
 catch (ex) { console.log(ex); }

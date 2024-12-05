@@ -1,8 +1,13 @@
 // utils/songs.repository.js
 pool = require(__dirname + "\\db.include.js"); // use same folder as the current file
 
-async function deleteSongRelation(authorId){
+async function deleteAuthorRelation(authorId){
     let sql = " DELETE FROM song WHERE id_author = ?";
+    await pool.execute(sql,[authorId]);
+}
+
+async function deleteSongRelation(authorId){
+    let sql = " DELETE playlist_has_song FROM playlist_has_song inner join song on song.id_song = playlist_has_song.song_id_song where song.id_author = ?;";
     await pool.execute(sql,[authorId]);
 }
 
@@ -84,7 +89,8 @@ module.exports = {
 
     async delOneAuthor(authorId){ 
         try {
-            deleteSongRelation(authorId)
+            deleteSongRelation(authorId);
+            deleteAuthorRelation(authorId);
             let sql = "DELETE FROM author WHERE id_author = ?";
             const [okPacket, fields] = await pool.execute(sql, [ authorId ]); 
             console.log("DELETE " + JSON.stringify(okPacket));
@@ -117,7 +123,7 @@ module.exports = {
         try {
             let sql = "UPDATE author SET alias=?, first_name=?, last_name=?, biography=?, verified=? WHERE id_author=? "; // positional parameters
             const [okPacket, fields] = await pool.execute(sql, 
-                  [authorAlias ?? " ",authorFirstName ?? " ",authorLastName ?? " ",authorBiography ?? " ",authorVeified ?? 0 ,authorsId]); // positional parameters
+                  [authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified,authorsId]); // positional parameters
             console.log("UPDATE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
         }
