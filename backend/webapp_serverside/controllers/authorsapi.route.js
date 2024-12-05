@@ -30,7 +30,7 @@ async function authorShowAction(request, response) {
         console.log( "caca" + JSON.stringify({"error": 0 , "object":{ "author": oneAuthor, "songs": songs }}.object.songs.length));
         response.send(JSON.stringify({"error": errorState , "object":{ "author": oneAuthor, "songs": songs }}));
     } catch (error) {
-        response.send(JSON.stringify({"error": errorState , "object":null}));
+        response.send(JSON.stringify({"error": 1 , "object":null}));
     }
 }
 
