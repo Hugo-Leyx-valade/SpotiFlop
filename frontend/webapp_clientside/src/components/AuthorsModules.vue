@@ -133,6 +133,7 @@
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
+import { images, defaultImage } from '../images.js';
 
 export default {
   name: 'Authors',
@@ -293,6 +294,41 @@ body{
 }
 
 
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.search-container{
+    margin-top: 150px;
+    /*position: relative;*/
+}
+
+.search-container input{
+    width: 350px;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.search-container input:focus{
+    width: 500px;
+}
+
+.search-container i {
+
+    /*position: absolute;*/
+    top: 50%;
+    right: 20px;
+    transform: translate(-50%);
+    color: #555;
+
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -360,7 +396,6 @@ td{
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
-  border: 2px solid rgba(236, 68, 68, 0.685);
   transition: transform 0.7s ease; /* ajout de la transi sur transform*/
 }
 

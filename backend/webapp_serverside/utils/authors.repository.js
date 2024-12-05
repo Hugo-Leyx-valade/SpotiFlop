@@ -26,14 +26,27 @@ module.exports = {
     
     async getAllAuthors(){ 
         try {
-            let sql = "SELECT * FROM author";
+            let sql = `
+            SELECT author.*, 
+                CASE
+                    WHEN author.alias = 'Earth, Wind & Fire' THEN '@/assets/EarthWindAndFire.jpg'
+                    WHEN author.alias = 'MJ' THEN '@/assets/MichaelJackson.jpg'
+                    WHEN author.alias = 'Imagine Dragons' THEN '@/assets/ImagineDragons.jpeg'
+                    WHEN author.alias = 'Eminem' THEN '@/assets/Eminem.jpg'
+                    WHEN author.alias = 'FEMTOGO' THEN '@/assets/Femt0go.jpg'
+                    WHEN author.alias = 'Daft Punk' THEN '@/assets/Daft_Punk.jpg'
+                    WHEN author.alias = 'Adele' THEN '@/assets/Adele.jpg'
+                    WHEN author.alias = 'Beyoncé' THEN '@/assets/Beyonce.png'
+                    ELSE '@/assets//default.jpg'
+                END AS image 
+            FROM author;
+            `;
             const [rows, fields] = await pool.execute(sql);
-            console.log(rows[1])
-            console.log("Author FETCHED: "+rows.length);       
+            console.log("Authors FETCHED: " + rows.length);
             return rows;
         }
         catch (err) {
-            console.log(err + "hugo");
+            console.log(err);
             throw err; 
         }
     },
@@ -88,12 +101,6 @@ module.exports = {
             throw err; 
         }
     },
-
-
-
-
-
-
 
 
     async addOneAuthor(authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified){ 
