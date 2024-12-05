@@ -13,11 +13,17 @@ async function allGenresAction(request, response) {
 
 async function songFromGenreIdAction(request, response) {
     try{
-    var genre = await genreRepo.getGenreById(request.params.id);
-    var songs = await genreRepo.getSongsFromGenreId(request.params.id);
-    response.send(JSON.stringify({genre: genre, songs : songs}));
+        var errorState = 0;
+        var genre = await genreRepo.getGenreById(request.params.id);
+        console.log(genre.length===0);
+        if(genre.length===0){
+            errorState = 1;
+        }
+        console.log("error : " + JSON.stringify(errorState));
+        var songs = await genreRepo.getSongsFromGenreId(request.params.id);
+        response.send(JSON.stringify({"error":errorState,"object":{"genre": genre, "songs" : songs}}));
     } catch (error) {
-        response.status(500).send({ error: 'Failed to retrieve the genre.' });
+        response.send(JSON.stringify({"error":1,"object":null}));
     }
 }
 

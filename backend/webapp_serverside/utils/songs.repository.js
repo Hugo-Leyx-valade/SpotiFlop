@@ -6,6 +6,15 @@ async function deleteInPlaylist(songId){
     await pool.execute(sql,[songId]);
 }
 
+
+async function isTimeFormated(time){
+    // Regular expression for "mm:ss" format
+    const timeRegex = /^[0-5]\d:[0-5]\d$/;
+
+    // Test the string against the regex
+    return timeRegex.test(time);
+}
+
 function formatDate(dateString) {
     const date = new Date(dateString); // Parse the input date string
     const year = date.getFullYear();
@@ -23,7 +32,7 @@ async function getGenreIdByName(genreName) {
     if (rows.length > 0) {
         return rows[0].id_genre; // Return the genre's ID
     } else {
-        throw new Error(`Genre with name '${genreName}' not found.`);
+        return false;
     }
 }
 
@@ -35,7 +44,7 @@ async function getAuthorIdByAlias(authorAlias) {
     if (rows.length > 0) {
         return rows[0].id_author; // Return the author's ID
     } else {
-        alert("Author with alias"+ rows[0] +"not found.");
+        return false;
     }
 }
 
@@ -130,12 +139,24 @@ module.exports = {
 
     async addOneSong(songTitle, songDuration, songNumberOfStream, songDateOfPost, songLyrics, songAuthor, songGenre) {
         try {
-            // Fetch author ID based on the alias
-            var authorId = await getAuthorIdByAlias(songAuthor);
-
-            // Fetch genre ID based on the genre name
-            var genreId = await getGenreIdByName(songGenre);
-
+            if (!songGenre || typeof songGenre !== "string") {
+                throw new Error("Invalid genre name provided.");
+            }
+            if (!songTitle || typeof songTitle !== "string") {
+                throw new Error("Invalid song title provided.");
+            }
+            const genreId = await getGenreIdByName(songGenre);
+            if(!genreId){
+                return false;
+            }
+            const authorId = await getAuthorIdByAlias(songAuthor) // Translate genre name to ID
+            if(!authorId){
+                return false;
+            }
+            const time = await isTimeFormated(songDuration);
+            if(time===false){
+                return false;
+            }
             let sql = `
                 INSERT INTO song 
                 (title, duration, number_of_streams, date_of_post, lyrics, id_author, id_genre) 
@@ -150,12 +171,10 @@ module.exports = {
                 authorId, // Use the fetched author ID
                 genreId   // Use the fetched genre ID
             ]);
-
             console.log("INSERT " + JSON.stringify(okPacket));
             return okPacket.insertId; // Return the new song's ID
         } catch (err) {
-            console.log(err);
-            throw(err);
+            return false;
         }
     },
 
@@ -166,13 +185,21 @@ module.exports = {
             if (!songGenre || typeof songGenre !== "string") {
                 throw new Error("Invalid genre name provided.");
             }
-            const genreId = await getGenreIdByName(songGenre);
-            const authorId = await getAuthorIdByAlias(songAuthor) // Translate genre name to ID
-            console.log("GENRE ID: " + genreId);
             if (!songTitle || typeof songTitle !== "string") {
                 throw new Error("Invalid song title provided.");
             }
-    
+            const genreId = await getGenreIdByName(songGenre);
+            if(!genreId){
+                return false;
+            }
+            const authorId = await getAuthorIdByAlias(songAuthor) // Translate genre name to ID
+            if(!authorId){
+                return false;
+            }
+            const time = await isTimeFormated(songDuration);
+            if(time===false){
+                return false;
+            }
             let sql = `
                 UPDATE song SET id_genre=?, title=?, duration=?, number_of_streams=?,date_of_post = ? , lyrics=?, id_author=? WHERE id_song=?
             `;
@@ -186,11 +213,9 @@ module.exports = {
                 parseInt(authorId),
                 songId
             ]);
-            console.log("UPDATE " + JSON.stringify(okPacket));
             return okPacket.affectedRows;
         } catch (err) {
-            console.error(err);
-            throw err;
+            return false;
         }
     },
 

@@ -37,9 +37,13 @@
         </svg>
         <span>{{onePlaylist.state}}</span>
       </span>
+      <p id="date of post" style="color: aliceblue; font-size: 100%; text-align: center; margin-top: 2%;">
+        {{formatDate(onePlaylist.date_of_post)}}
+      </p>
       <p id="description" style="color: aliceblue; font-size: 120%; text-align: center; margin-top: 2%;">
         {{onePlaylist._description}}
       </p>
+      
     </div>
   
     <table v-if="action === 'show'" class="table table-striped table-bordered table-hover">
@@ -97,6 +101,9 @@
         <option value="private" style="color: black;">private</option>
       </select>
     </span>
+    <p id="date of post" style="color: aliceblue; font-size: 100%; text-align: center; margin-top: 2%;">
+        {{formatDate(onePlaylist.date_of_post)}}
+      </p>
     <textarea id="description" style="color: aliceblue; font-size: 120%; text-align: center; margin-top: 2%; background-color: transparent; border-radius: 90px; width: 40%; height: 1%; font-size: 90%;" v-model="onePlaylist._description">
       {{onePlaylist._description}}
     </textarea>
@@ -186,10 +193,10 @@
         this.song = reponseSong.data;
          */
        try  {
-        let responseSong = await fetch("http://localhost:9000/playlist/list");
-      this.playlists = await responseSong.json();
-      console.log(" songs " + JSON.stringify(this.playlists));
-      this.refreshOnePlaylist();
+        let responseSong = await this.$http.get("http://localhost:9000/playlist/list");
+        this.playlists = await responseSong.data;
+        console.log(" songs " + JSON.stringify(this.playlists));
+        this.refreshOnePlaylist();
 
         }
         catch (ex) {console.log(ex);}
@@ -199,7 +206,7 @@
         if (this.$props.id === "all" || this.$props.id === "0") {
           this.onePlaylist = {
           id_playlist: 0,
-          title:'X',
+          title:'Playlist name',
           date_of_post: new Date(),
           number_of_save:0,
           _description:'ouio',
@@ -210,13 +217,15 @@
   return;
     }else{ 
           try{
-            let response = await fetch("http://localhost:9000/playlist/show/" + this.$props.id);
-            response = await response.json();
-            this.onePlaylist = response.playlist;
-            console.log("playlist " + this.onePlaylist);
-            this.playlist = response.songs;
-            console.log("songs " + JSON.stringify(this.playlist));
-
+            let response = await this.$http.get("http://localhost:9000/playlist/show/" + this.$props.id);
+            var result = await response.data;
+            if(result.error === 0){
+              this.onePlaylist = result.object.playlist;
+              this.onePlaylist.date_of_post = this.formatDate(this.onePlaylist.date_of_post);
+              this.playlist = result.object.songs;
+            }else{
+              alert("Unknow playlist ...");
+            }
           }catch (ex){console.log(ex);}
         }
       },
@@ -226,15 +235,23 @@
           if(this.$props.id === "0"){
             let response = await this.$http.post(
                 "http://localhost:9000/playlist/add/",this.onePlaylist);
-            alert("Added: " + response.data.rowsUpdated);
-            this.$router.push({ path: '/playlist/list/all' });
-            this.getAllData();
+            if(response.data === false){
+              alert("Fild are not correct");
+            }else{
+              alert("Added: " + response.data.rowsUpdated);
+              this.$router.push({ path: '/playlist/list/all' });
+              this.getAllData();
+            }
           }else{
             let response = await this.$http.post(
                   "http://localhost:9000/playlist/update/" + this.onePlaylist.id_playlist, this.onePlaylist);
-            alert("EDITED: " + response.data.rowsUpdated);
-            this.$router.push({ path: '/playlist/list/all' });
-            this.getAllData();
+            if(response.data === false){
+              alert("Fild are not correct");
+            }else{
+              alert("EDITED: " + response.data.rowsUpdated);
+              this.$router.push({ path: '/playlist/list/all' });
+              this.getAllData();
+            }
         }
       }catch (ex) { console.log(ex); }
   },
