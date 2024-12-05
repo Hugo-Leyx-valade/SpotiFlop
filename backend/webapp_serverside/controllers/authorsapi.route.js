@@ -58,7 +58,8 @@ async function authorUpdateAction(request, response) {
             request.body.first_name,
             request.body.last_name,
             request.body.biography,
-            request.body.verified);
+            request.body.verified
+        );
         let result = { rowsUpdated: numRows };
         response.send(JSON.stringify(result));
         }

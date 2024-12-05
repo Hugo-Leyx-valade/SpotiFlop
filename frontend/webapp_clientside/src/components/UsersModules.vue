@@ -251,11 +251,14 @@
         return;
         };
         try{
-          let response = await fetch("http://localhost:9000/usersapi/show/" + this.$props.id);
-          response = await response.json();
-          this.user = response.user;
-          this.playlists = response.playlists;
-          console.log("user " + JSON.stringify('user :' + this.user + 'playlists :' + this.playlists));
+          let response = await this.$http.get("http://localhost:9000/usersapi/show/" + this.$props.id);
+          var result = await response.data;
+          if(result.error === 0){
+            this.user = result.object.user;
+            this.playlists = result.object.playlists;
+          }else{
+            alert("Can't find this user ... ");
+          }
         }catch (ex){console.log(ex);}
       },
 
@@ -285,57 +288,57 @@
     },
 
     async sendDeleteRequest(user_id){
-      try {
       alert("DELETING... " + user_id);
       let response = await this.$http.get("http://localhost:9000/usersapi/del/" + user_id);
-      alert("DELETED: " + response.data.rowsDeleted);
-      this.getALLData();
-    }
-    catch (ex) { console.log(ex); }
-  },
+      if(response.data === false){
+        alert("Can't delete this user ... ");
+      }else{
+        alert("DELETED: " + response.data.rowsDeleted);
+        this.$router.push({ path: '/users/list/all' });
+        this.getALLData();
+      }
+    },
 
 
   async playlistDelete(playlistId){
-    try {
       alert("DELETING... " + playlistId);
       let response = await this.$http.get("http://localhost:9000/playlist/del/" + playlistId);
-      alert("DELETED: " + response.data.rowsDeleted);
-      this.refreshOneUser();
-    }
-    catch (ex) { console.log(ex); }
-  },
-  
+      if(response.data === false){
+        alert("Can't delete this playlist ... ");
+      }else{
+        alert("DELETED: " + response.data.rowsDeleted);
+        this.refreshOneUser();
+      }
+    },
 
     async sendEditRequest(){
       try {
         if(this.$props.id === "0"){
           let response = await this.$http.post(
               "http://localhost:9000/usersapi/add/",this.user);
-          alert("Added: " + response.data.rowsUpdated);
-          this.$router.push({ path: '/songs/list/all' });
-          this.getAllData();
-        }
+          if(response.data === false){
+            alert("Field error");
+          }else{
+            alert("Added: " + response.data.rowsUpdated);
+            this.$router.push({ path: '/users/list/all' });
+            this.getAllData();
+          }
+        }else{
         let response = await this.$http.post(
               "http://localhost:9000/usersapi/update/" + this.user.id_song, this.user);
-        alert("EDITED: " + response.data.rowsUpdated);
-        this.$router.push({ path: '/users/list/all' });
-        this.refreshOneUser();
+          if(response.data === false){
+            alert("Field error");
+        }else{
+          alert("EDITED: " + response.data.rowsUpdated);
+          this.$router.push({ path: '/users/show/'+ this.user.id_user });
+          this.refreshOneUser();
+          }
+        }
       }
     catch (ex) { console.log(ex); }
   },
 },
 
-async playlistEdit(playlistId){
-  try {
-    alert("EDITING... " + playlistId);
-    let response = await this.$http.get("http://localhost:9000/playlist/edit/" + playlistId);
-    alert("EDITED: " + response.data.rowsUpdated);
-    this.refreshOneUser();
-  }
-  catch (ex) { console.log(ex); }
-},
-    
-    
     watch:{
       id: function(newVal, oldVAl){
         this.refreshOneUser();

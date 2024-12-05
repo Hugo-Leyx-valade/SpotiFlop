@@ -80,18 +80,20 @@ async function songUpdateAction(request, response) {
 async function songAddAction(request, response) {
     // var json = JSON.stringify(request.body); // bodyParser can process json in body + regular POST form input too
     // console.log(json);    var songId = request.params.songId; 
+
     var numRows = await songRepo.addOneSong(
-            request.body.title ?? "Unknown", 
-            request.body.duration ?? 0, 
-            request.body.number_of_streams ?? 0,
-            formatDate(request.body.date_of_post) ?? formatDate(new Date()), 
-            request.body.lyrics ?? "Unknown",
-            request.body.alias ?? "Unknown",
-            request.body.name  ?? "Unknown"
+            request.body.title, 
+            request.body.duration,
+            request.body.number_of_streams,
+            formatDate(request.body.date_of_post), 
+            request.body.lyrics,
+            request.body.alias,
+            request.body.name,
         );
         let result = { rowsUpdated: numRows };
         response.send(JSON.stringify(result));
     }
+
 
 
 module.exports = router;
