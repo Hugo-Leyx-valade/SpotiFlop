@@ -186,10 +186,10 @@
         this.song = reponseSong.data;
          */
        try  {
-        let responseSong = await fetch("http://localhost:9000/playlist/list");
-      this.playlists = await responseSong.json();
-      console.log(" songs " + JSON.stringify(this.playlists));
-      this.refreshOnePlaylist();
+        let responseSong = await this.$http.get("http://localhost:9000/playlist/list");
+        this.playlists = await responseSong.data;
+        console.log(" songs " + this.playlists);
+        this.refreshOnePlaylist();
 
         }
         catch (ex) {console.log(ex);}
@@ -207,18 +207,19 @@
           id_user: 0,
         };
       this.playlist = [];
-  return;
+      return;
     }else{ 
-          try{
-            let response = await fetch("http://localhost:9000/playlist/show/" + this.$props.id);
-            response = await response.json();
-            this.onePlaylist = response.playlist;
-            console.log("playlist " + this.onePlaylist);
-            this.playlist = response.songs;
-            console.log("songs " + JSON.stringify(this.playlist));
-
-          }catch (ex){console.log(ex);}
-        }
+      try {
+        let response = await this.$http.get("http://localhost:9000/playlist/show/" + this.$props.id);
+        console.log("response: ", response.data);
+        this.onePlaylist = response.data.playlist;
+        this.playlist = response.data.songs;
+        console.log("Playlist details:", this.onePlaylist); 
+        console.log("Associated songs:", this.playlist); 
+      } catch (ex) {
+        console.error("Error fetching playlist details: ", ex);
+      }
+    }
       },
 
       async sendEditRequest(){

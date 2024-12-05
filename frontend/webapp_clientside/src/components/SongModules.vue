@@ -152,8 +152,7 @@ export default {
     async getAllData() {
     try {
       let responseSong = await this.$http.get("http://localhost:9000/songsapi/list");
-      this.song = JSON.stringify(responseSong.data);
-      console.log(" songs " + this.song);
+      this.song = responseSong.data;
       console.log(" songs " + this.song[1].song_title );
       /*
       this.brands = [ { brand_id: 1, brand_name: "BMW" }, { brand_id: 2, brand_name: "Audi" }, { brand_id: 3, brand_name: "Citroen" } ];
