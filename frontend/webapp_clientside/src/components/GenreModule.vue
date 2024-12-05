@@ -82,8 +82,8 @@
     methods:{
       async getALLData(){
       try {
-        let allGenre = await fetch("http://localhost:9000/genresapi/list/");
-        this.genres = await allGenre.json();
+        let allGenre = await this.$http.get("http://localhost:9000/genresapi/list/");
+        this.genres = await allGenre.data;
         console.log(JSON.stringify(this.genres));
         this.refreshOneGenre();
     } catch (ex) {
@@ -109,12 +109,14 @@ async refreshOneGenre(){
         return;
     }
     try {
-      let responseGenre = await fetch("http://localhost:9000/genresapi/show/" + this.$props.id);
-      responseGenre = await responseGenre.json();
-      this.oneGenre = responseGenre.genre[0];
-      this.songs = responseGenre.songs;
-      console.log("genre" + JSON.stringify(this.oneGenre) + "songs" + JSON.stringify(this.responseGenre.songs));
-      // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
+      let responseGenre = await this.$http.get("http://localhost:9000/genresapi/show/" + this.$props.id);
+      var result = responseGenre.data;
+      if(result.error === 0){
+        this.oneGenre = result.object.genre[0];
+        this.songs = result.object.songs;
+      }else{
+    alert("Can't resolve ! ")
+  }
     }
     catch (ex) { console.log(ex); }
       },
