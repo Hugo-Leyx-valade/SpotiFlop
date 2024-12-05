@@ -21,15 +21,28 @@ async function songListAction(request, response) {
     response.send(JSON.stringify(songs));
 }
 async function songShowAction(request, response) {
-    var oneSong = await songRepo.getOneSong(request.params.songId);
-    console.log(oneSong);
-    response.send(JSON.stringify(oneSong));
+    try{
+        var errorState = 0;
+        var oneSong = await songRepo.getOneSong(request.params.songId);
+        if(oneSong === false){
+            errorState = 1;
+        };
+        response.send(JSON.stringify({"error":errorState, "object":oneSong}));
+    }catch(error){
+        response.send(JSON.stringify({"error":errorState, "object":null}));
+    }
 }
+
+
 async function songDelAction(request, response) {
     // TODO: first remove extras for car, unless the car cannot be removed!!!
+    try{
     var numRows = await songRepo.delOneSong(request.params.songId);
     let result = { rowsDeleted: numRows };
     response.send(JSON.stringify(result));
+    }catch(error){
+        response.send(JSON.stringify(false));
+    }
 }
 
 
@@ -43,27 +56,23 @@ function formatDate(dateString) {
 
 }
 
-
 async function songUpdateAction(request, response) {
     var songID = request.params.songId;
-    console.log(request.body);
-
-    /*if (songID === "0") {
-        songID = await songRepo.addOneSong(
-            request.body.song_genre
-        );
-    }*/
-
+    if(request.body.title.length === 0 || request.body.title.length === 0){
+        response.send(JSON.stringify(false));
+    }
+    else{
     var numRows = await songRepo.editOneSong(songID, 
             request.body.title, 
             request.body.duration, 
             request.body.number_of_streams, 
             request.body.lyrics,
-            request.body.id_author, 
+            request.body.id_author,
             formatDate(request.body.date_of_post),);
 
-    let result = { rowsUpdated: numRows };
-    response.send(JSON.stringify(result));
+        let result = { rowsUpdated: numRows };
+        response.send(JSON.stringify(result));
+    }
 }
 
 
@@ -84,30 +93,5 @@ async function songAddAction(request, response) {
         response.send(JSON.stringify(result));
     }
 
-
-async function songUpdateAction(request, response) {
-        try {
-            const { name, title, duration, number_of_streams,date_of_post, lyrics, alias, id_song } = request.body;
-    
-            if (!name || !title || !alias || !id_song) {
-                throw new Error("Missing required fields in the request.");
-            }
-    
-            const numRows = await songRepo.editOneSong(
-                name, // Should be a valid genre name, not NaN
-                title,
-                duration,
-                number_of_streams,
-                date_of_post,
-                lyrics,
-                alias,
-                id_song
-            );
-            response.send({ rowsUpdated: numRows });
-        } catch (err) {
-            console.error(err);
-            response.status(400).send({ error: err.message });
-        }
-    }
 
 module.exports = router;

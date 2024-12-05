@@ -39,7 +39,7 @@
 <!-- Duration -->
 <div style="margin-top: 18.5%;margin-left:11.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
   <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Duration</p>
-  <input type="text" class="input" v-model="oneSong.duration" pattern="^([0-9][0-9]):([0-9][0-9])$" 
+  <input type="text" class="input" v-model="oneSong.duration" pattern="^([0-9][0-9]):([0-9][0-9])$"
   title="Enter a valid time in mm:ss format (e.g., 25:06 or 5:06)" 
   required style="width: 100%; margin-top: 40%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;" />
 </div> 
@@ -193,9 +193,15 @@ formatDate2(incomingDate){
     }
     try {
       let responseSong = await this.$http.get("http://localhost:9000/songsapi/show/" + this.$props.id);
-      this.oneSong = responseSong.data;
-      this.oneSong.date_of_post = this.formatDate(this.oneSong.date_of_post);
-      console.log("oneSong: " + this.oneSong.title+" "+ this.oneSong.duration+" "+ this.oneSong.number_of_streams+" "+ this.oneSong.date_of_post+" "+ this.oneSong.lyrics+" "+ this.oneSong.id_author+" "+ this.oneSong.id_genre);
+      if(responseSong.data.error === 0){
+        this.oneSong = responseSong.data.object;
+        this.oneSong.date_of_post = this.formatDate(this.oneSong.date_of_post);
+      // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
+      }else{
+        alert("Can't resolve this song ! ")
+        this.$router.push({ path: '/songs/list/all' });
+        this.getAllData();
+      }
       // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
     }
     catch (ex) { console.log(ex); }
@@ -214,31 +220,41 @@ formatDate2(incomingDate){
   },
 
 async sendAddRequest() {
-      try {
-        alert("ADDING... " + this.oneSong.title);
-        let response = await this.$http.post("http://localhost:9000/songsapi/add", this.oneSong);
-        alert("ADDED: " + response.data.rowsAdded);
-        this.$router.push({ path: '/songs/list/all' });
-        this.getAllData();
-      }
-      catch (ex) { console.log(ex); }
-    },
+      alert("ADDING... " + this.oneSong.title);
+      let response = await this.$http.post("http://localhost:9000/songsapi/add", this.oneSong);
+      if(response.data === false){
+    alert("This song look to not exist")
+  }else{
+      alert("ADDED: " + response.data.rowsAdded);
+      this.$router.push({ path: '/songs/list/all' });
+      this.getAllData();
+  }
+},
 
   async sendEditRequest() {
     try {
       if(this.$props.id === "0"){
         let response = await this.$http.post(
             "http://localhost:9000/songsapi/add/",this.oneSong);
-        alert("Added: " + response.data.rowsUpdated);
-        this.$router.push({ path: '/songs/list/all' });
-        this.getAllData();
+      if(response.data.rowsUpdated === false){
+          alert("A field is not correct.")
+      }else{
+          alert("Added: " + response.data.rowsUpdated);
+          this.$router.push({ path: '/songs/list/all' });
+          this.getAllData();
       }
+    }else{
       let response = await this.$http.post(
             "http://localhost:9000/songsapi/update/" + this.oneSong.id_song, this.oneSong);
-      alert("EDITED: " + response.data.rowsUpdated);
-      this.$router.push({ path: '/songs/list/all' });
-      this.getAllData();
+      if(response.data.rowsUpdated === false){
+        alert("Error in one of the input field.")
+      }else{
+            alert("EDITED: " + response.data.rowsUpdated);
+            this.$router.push({ path: '/songs/list/all' });
+            this.getAllData();
+      }
     }
+  }
     catch (ex) { console.log(ex); }
   },
 

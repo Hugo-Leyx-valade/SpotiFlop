@@ -168,8 +168,8 @@ export default {
 
 async getAllData() {
 try {
-  let responseAuthor = await fetch("http://localhost:9000/authorsapi/list");
-  this.authors = await responseAuthor.json();
+  let responseAuthor = await this.$http.get("http://localhost:9000/authorsapi/list");
+  this.authors = await responseAuthor.data;
   /*
   this.brands = [ { brand_id: 1, brand_name: "BMW" }, { brand_id: 2, brand_name: "Audi" }, { brand_id: 3, brand_name: "Citroen" } ];
   this.cars = [ { car_id: 1, car_brand: 2, car_name: "Audi S4", car_baseprice: 40000, car_isfancy: 0, car_realprice: 45000 }, { car_id: 2, car_brand: 1, car_name: "BMW i8", car_baseprice: 80000, car_isfancy: 1, car_realprice: 90000 } ];
@@ -196,7 +196,6 @@ if (this.$props.id === "all" || this.$props.id === "0") {
 try {
   let responseAuthor = await this.$http.get("http://localhost:9000/authorsapi/show/" + this.$props.id);
   var result = responseAuthor.data;
-  console.log( "la balade    " + result.object.songs.length);
   if(result.error === 0){
     for (var i = 1; i < result.object.songs.length; i++) {
       this.songAuthor.push(result.object.songs[i]);
@@ -217,7 +216,7 @@ async sendDeleteRequest(authorsId) {
   alert("DELETING... " + authorsId);
   let response = await this.$http.get("http://localhost:9000/authorsapi/del/" + authorsId);
   if(response.data === false){
-    alert("This song look to not exist")
+    alert("This author look to not exist")
   }else{
   alert("DELETED: " + response.data.rowsDeleted);
   this.$router.push({ path: '/authors/list/all' });
