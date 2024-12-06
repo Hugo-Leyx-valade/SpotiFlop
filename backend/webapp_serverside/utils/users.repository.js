@@ -13,7 +13,6 @@ function formatDate(dateString) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
     const day = String(date.getDate()).padStart(2, '0');
-
     return `${year}-${month}-${day}`;
 }
 
@@ -66,14 +65,14 @@ module.exports = {
             throw err; 
         }
     },
-    async getOneUser(userId){ 
+    async getOneUser(userName){ 
         try {
             // sql = "SELECT * FROM songs INNER JOIN genres ON song_genre=genre_id WHERE song_id = "+songId; 
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
-            
-            let sql = "select * from user where id_user=?;";
-            const [rows, fields] = await pool.execute(sql, [ userId ]);
+            let conn = await pool.getConnection();
+            let sql = "SELECT user_id,user_name,user_email,user_role FROM users WHERE user_name = ? ";
+            const [rows, fields] = await pool.execute(sql, [ userName ]);
             console.log("user : "+rows.values);
             if (rows.length >= 0) {
                 return rows[0];
@@ -86,6 +85,24 @@ module.exports = {
             throw err; 
         }
     },
+
+    async areValidCredentials(username, password) {
+        try {
+          let sql = "SELECT * FROM USERS WHERE user_name = ? AND user_pass COLLATE utf8mb4_general_ci  = sha2(concat(user_created, ?), 224) COLLATE utf8mb4_general_ci "; 
+          // TODO: better salt + pw hash (bcrypt, pbkdf2, argon2)
+          // COLLATE usually not needed (mariaDb compatibility)
+          const [rows, fields] = await pool.execute(sql, [username, password]); 
+          console.log(rows);
+          if (rows.length == 1 && rows[0].user_name === username) {
+            return true;
+          } else {
+            return false;
+          }
+        } catch (err) {
+          console.log(err);
+          throw err;
+        }
+      },
 
     async getPlaylistByUserId(userId){
         try {
