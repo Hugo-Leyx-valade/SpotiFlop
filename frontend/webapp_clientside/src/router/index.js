@@ -90,12 +90,7 @@ export default new Router({
     {
       path :'/authentication',
       redirect: '/authentication/option',
-      component: Authentication,
-    },
-    {
-      path:"/authentication/:action",
-      component: Authentication,
-      props: true,
+      component: Authentication
     },
     {
       path :'/adminPanel',

@@ -1,7 +1,7 @@
 // controllers/auth.route.js
 const express = require('express');
 const router = express.Router();
-const auth = require("../utils/users.auth");
+const auth = require("../utils/users.auth.js");
 const userRepo = require("../utils/users.repository");
 
 // http://localhost:9000/auth

@@ -36,7 +36,7 @@ app.use(cors({ origin: "http://localhost:8080", credentials: true, methods: [ 'G
 // configure passport
 const auth = require("./utils/users.auth");
 auth.initializeAuthentications(app);
-app.use("/auth", require("./controllers/auth.route"));
+app.use("/auth", require("./controllers/authentication.route"));
 
 // *** ROUTES/CONTROLLERS ***
 

@@ -14,10 +14,20 @@
             <div style="display: flex; position: fixed; align-self: center; justify-content: center;">
                 <a href="/#/authentication/register" style="margin-top: 350%; margin-left: 180%; border-radius: 100px;"><input type="button" value="Register" style="padding-left: 150%; padding-right: 150%; border-radius: 100px; color: whitesmoke; background-color: grey;"/></a>
             </div>
+        </div>
 
-            
+        <!-- Boutons pour Tester l'API -->
+        <div class="api-test-buttons" style="margin-top: 50px;">
+            <input type="button" @click="sendRequest('post', 'login', { username: 'joeuser', userpass: 'joeXXX' })" value="LOGIN BAD" />
+            <input type="button" @click="sendRequest('post', 'login', { username: 'joeuser', userpass: 'joepass' })" value="LOGIN USER" />
+            <input type="button" @click="sendRequest('post', 'login', { username: 'joeadmin', userpass: 'joepass' })" value="LOGIN ADMIN" />
+            <input type="button" @click="sendRequest('get', 'user')" value="ACCESS /user" />
+            <input type="button" @click="sendRequest('get', 'admin')" value="ACCESS /admin" />
+            <input type="button" @click="sendRequest('get', 'protected')" value="ACCESS /protected" />
+            <input type="button" @click="sendRequest('get', 'logout')" value="LOGOUT" />
         </div>
         
+        <!-- LOGIN -->
         <div v-if="action === 'login'" class="login">
             <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%; color: white;" >Authentication</span>
             <form @submit.prevent="submitForm" style="margin-top: 20%;">
@@ -27,7 +37,8 @@
             </form>
             <div id='text'></div>
         </div>
-
+        
+        <!-- REGISTER -->
         <div v-if="action === 'register'" id="register" >
             <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%; color: white;" >Authentication</span>
             <form @submit.prevent="submitForm" style="margin-top: 20%;">
@@ -64,13 +75,19 @@ data() {
     return {
     username: '',
     password: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    date: '',
     myJson: json,
     greetingMessage: '',
+    msg : '',
+
     };
 },
 
 methods: {
-    submitForm : function () {
+    /*submitForm : function () {
         const myJson = this.myJson;
         console.log(myJson);
         const user = myJson.find(user => user.user_username === this.username && user.user_password === this.password);
@@ -84,6 +101,20 @@ methods: {
             }
         } else {
             console.log("submit Login failed");
+        }
+    },
+    */
+
+    async sendRequest(method, endpoint, params) {
+        try {
+            let response = null;
+            if(method === 'post')
+                response = await this.$http.post("http://localhost:9000/auth/" + endpoint, params);
+            else
+                response = await this.$http.get("http://localhost:9000/auth/" + endpoint);
+            this.msg = JSON.stringify(response.data);
+        } catch (error) {
+            console.error(error);
         }
     },
 
@@ -151,8 +182,6 @@ methods: {
             alert("Please fill all fields");
     }
 },
-
-
 
     changeBodyBackgroundColor() {
         document.body.style.background ='linear-gradient(180deg, rgba(255,255,250,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
