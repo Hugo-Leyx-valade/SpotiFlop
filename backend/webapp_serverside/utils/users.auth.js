@@ -21,7 +21,7 @@ module.exports = {
     passport.serializeUser(function (userFromDb, doneFunction) { 
       console.log("SERIALIZING...");
       console.log(userFromDb);
-      const userObj = { "id": userFromDb.user_id, "name": userFromDb.user_name, "role": userFromDb.user_role }; // only the ID would be enough...
+      const userObj = { "id": userFromDb.id_user, "name": userFromDb.username, "role": userFromDb.role }; // only the ID would be enough...
       console.log(userObj);
       doneFunction(null, userObj);
     });
@@ -31,7 +31,7 @@ module.exports = {
     passport.deserializeUser(async function (userObj, doneFunction) { 
       console.log("DE - SERIALIZING... ");
       console.log(userObj);
-      let userFromDb = await usersRepo.getOneUser(userObj.name);
+      let userFromDb = await usersRepo.getOneUser(userObj.username);
       console.log(userFromDb);
       doneFunction(null, userFromDb);
     });
@@ -41,7 +41,7 @@ module.exports = {
     return function (request, response, next) {
       if (request.isAuthenticated()) { // Do we have an authenticated user?
         if (requiredRole) { // No special role needed for page -> check if current user has the SAME role (todo: hierarchy?)
-          if (requiredRole === request.user.user_role) { 
+          if (requiredRole === request.user.role) { 
             return next();
           } else {
             return response.end("401 Unautorized (bad user level)"); 

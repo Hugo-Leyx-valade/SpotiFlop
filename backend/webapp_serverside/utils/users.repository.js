@@ -71,7 +71,7 @@ module.exports = {
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
             let conn = await pool.getConnection();
-            let sql = "SELECT user_id,user_name,user_email,user_role FROM users WHERE user_name = ? ";
+            let sql = "SELECT id_user,username,email,role FROM user WHERE username = ? ";
             const [rows, fields] = await pool.execute(sql, [ userName ]);
             console.log("user : "+rows.values);
             if (rows.length >= 0) {
@@ -88,7 +88,7 @@ module.exports = {
 
     async areValidCredentials(username, password) {
         try {
-          let sql = "SELECT * FROM USERS WHERE user_name = ? AND user_pass COLLATE utf8mb4_general_ci  = sha2(concat(user_created, ?), 224) COLLATE utf8mb4_general_ci "; 
+          let sql = "SELECT * FROM USER WHERE username = ? AND password COLLATE utf8mb4_general_ci  = sha2(concat(user_created, ?), 224) COLLATE utf8mb4_general_ci "; 
           // TODO: better salt + pw hash (bcrypt, pbkdf2, argon2)
           // COLLATE usually not needed (mariaDb compatibility)
           const [rows, fields] = await pool.execute(sql, [username, password]); 

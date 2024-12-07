@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import json from "../components/users.json";
+/*import json from "../components/users.json";*/
 import BacktohomeModule from './BacktohomeModule.vue';
 
 export default {
