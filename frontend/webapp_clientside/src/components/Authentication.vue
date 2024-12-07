@@ -6,13 +6,21 @@
             <div class="content d-flex justify-content-center" id="txt" style="display: flex; align-content: center;">
                 <p id="txt1" style="font-family: 'LilGrotesk-bold'; color: #22d05d ; font-size: 100px; position:fixed; top: 40%; left: 38.9%;">SpotiFlop</p>
             </div>
-            
+
             <div style="display: flex; position: fixed; align-self: center; justify-content: center;">
                 <a href="/#/authentication/login" style="margin-top: 300%; margin-left: 200%;  border-radius: 100px; padding-bottom: 0%;"><input type="button" value=" Login  " style="padding-left: 180%; padding-right: 180%; border-radius: 100px; color: white; background-color: #22d05d;"/></a>
+                <input type="button" @click="sendRequest('post', 'login', { username: 'joeuser', userpass: 'joeXXX' })" value="LOGIN BAD" />
+                <input type="button" @click="sendRequest('post', 'login', { username: 'joeuser', userpass: 'joepass' })" value="LOGIN USER" />
+                <input type="button" @click="sendRequest('post', 'login', { username: 'joeadmin', userpass: 'joepass' })" value="LOGIN ADMIN" />    
+                <input type="button" @click="sendRequest('get', 'logout')" value="LOGOUT" />
             </div>
 
             <div style="display: flex; position: fixed; align-self: center; justify-content: center;">
                 <a href="/#/authentication/register" style="margin-top: 350%; margin-left: 180%; border-radius: 100px;"><input type="button" value="Register" style="padding-left: 150%; padding-right: 150%; border-radius: 100px; color: whitesmoke; background-color: grey;"/></a>
+                <input type="button" @click="sendRequest('get', 'user')" value="ACCESS /user" />
+                <input type="button" @click="sendRequest('get', 'admin')" value="ACCESS /admin" />
+                <input type="button" @click="sendRequest('get', 'protected')" value="ACCESS /protected" />
+                <input type="button" @click="sendRequest('get', 'logout')" value="LOGOUT" />
             </div>
 
             
@@ -65,17 +73,24 @@ data() {
     username: '',
     password: '',
     myJson: json,
-    greetingMessage: '',
+    greetingMessage: 'WELCOME ! ',
     };
 },
 
 methods: {
-    submitForm : function () {
-        const myJson = this.myJson;
-        console.log(myJson);
-        const user = myJson.find(user => user.user_username === this.username && user.user_password === this.password);
-        if (user) {
-            if(user.user_role === "admin"){
+    async submitForm(method, endpoint, parameters) {
+        try{
+            let response = null;
+            if (method === "post")
+                response = await this.$http.post("http://localhost:9000/auth/"+endpoint, parameters);
+            else
+                response = await this.$http.get("http://localhost:9000/auth/"+endpoint, parameters);
+            this.greetingMessage = JSON.stringify(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+        /*if (user) {
+            if(user.role === "admin"){
                 console.log("Login successful");
                 this.$router.push('/adminPanel');
             } else {
@@ -84,7 +99,7 @@ methods: {
             }
         } else {
             console.log("submit Login failed");
-        }
+        }*/
     },
 
 

@@ -54,8 +54,8 @@ module.exports = {
             throw err; 
         }
     },
-    async getUserbyName(name){ 
-        try {
+    async getUserbyName(userName){ 
+        /*try {
             let sql = "SELECT * FROM user where upper(name) like upper(?)";
             const [rows, fields] = await pool.execute(sql, [ `%${name}%` ]);
             console.log("songs FILTERED: "+rows.length);
@@ -64,7 +64,22 @@ module.exports = {
         catch (err) {
             console.log(err);
             throw err; 
-        }
+        }*/
+
+        try {
+            let conn = await pool.getConnection();
+            let sql = "SELECT id_user,username,email,role FROM users WHERE username = ? "; 
+            // must leave out the password+hash info from result!
+            const [rows, fields] = await pool.execute(sql, [ userName ]);
+            if (rows.length == 1) {
+                return rows[0];
+            } else {
+                return false;
+            }
+            } catch (err) {
+                console.log(err);
+                throw err;
+            }
     },
     async getOneUser(userId){ 
         try {
@@ -84,6 +99,24 @@ module.exports = {
         catch (err) {
             console.log(err);
             throw err; 
+        }
+    },
+
+    async areValidCredentials(username, password) {
+        try {
+          let sql = "SELECT * FROM USER WHERE username = ? AND password = sha2(?, 256)"; 
+          // TODO: better salt + pw hash (bcrypt, pbkdf2, argon2)
+          // COLLATE usually not needed (mariaDb compatibility)
+          const [rows, fields] = await pool.execute(sql, [username, password]); 
+          console.log(rows);
+          if (rows.length == 1 && rows[0].username === username) {
+            return true;
+          } else {
+            return false;
+          }
+        } catch (err) {
+          console.log(err);
+          throw err;
         }
     },
 

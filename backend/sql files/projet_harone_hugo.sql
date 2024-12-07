@@ -1,5 +1,4 @@
-DROP SCHEMA projet_harone_hugo;
-
+drop schema projet_harone_hugo;
 -- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
@@ -37,6 +36,7 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.user (
   password VARCHAR(100) NOT NULL,
   role VARCHAR(45) NOT NULL DEFAULT 'user',
   date_of_birth DATE NOT NULL,
+    genre INT,
   PRIMARY KEY (id_user),
   UNIQUE INDEX id_user_UNIQUE (id_user ASC) VISIBLE,
   UNIQUE INDEX username_UNIQUE (username ASC) VISIBLE
@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.user (
 CREATE TABLE IF NOT EXISTS projet_harone_hugo.song (
   id_song INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(45) NOT NULL,
-  duration INT,
-  number_of_streams BIGINT,
+  duration VARCHAR(50),
+  number_of_streams bigint,
   date_of_post DATE NOT NULL,
   lyrics VARCHAR(1000),
   id_author INT NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.playlist (
   id_playlist INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(45) NOT NULL,
   date_of_post DATE NOT NULL,
-  number_of_save INT,
+  number_of_save INT DEFAULT 0,
   _description VARCHAR(500),
   state VARCHAR(45) DEFAULT 'private',
   user_id INT NOT NULL,
@@ -148,27 +148,29 @@ INSERT INTO author (alias, first_name, last_name, biography, verified) VALUES
 ('Billie Eilish', 'Billie', 'Connell', NULL, 1);
 
 -- Insert data into the user table
-INSERT INTO user (username, first_name, last_name, email, password, role, date_of_birth) VALUES
-('kallan93', 'Kallan', 'Giraud', 'kallan.giraud@gmail.com', 'aZ4@pQr7nDgR', 'user', '1992-11-15'),
-('mila86', 'Mila', 'Rochefort', 'mila.rochefort@yahoo.fr', '8Fg&kH%JxE12', 'admin', '1995-06-21'),
-('levan_12', 'Levan', 'Aubert', 'levan.aubert@orange.fr', 'Vh!3fWq$97T', 'user', '1989-03-03'),
-('camille92', 'Camille', 'Perret', 'camille.perret@gmail.com', 'jP7!9hR6cOpM2', 'user', '1996-09-12'),
-('zoe74', 'Zoe', 'Fontaine', 'zoe.fontaine@sfr.fr', 'Nf3#bP9kYl8', 'admin', '1993-07-19'),
-('jules23', 'Jules', 'Bernard', 'jules.bernard@hotmail.fr', 'xP2&aM4nT7qJ9', 'user', '2001-04-27'),
-('mathis41', 'Mathis', 'Lemoine', 'mathis.lemoine@laposte.net', 'D4s$F7gA3vC6', 'user', '1997-02-11'),
-('lea59', 'Lea', 'Renard', 'lea.renard@gmail.com', 'eB9&zW5rC3yK8', 'admin', '1998-08-30'),
-('lucie84', 'Lucie', 'Descamps', 'lucie.descamps@yahoo.com', 'Qj6@pL8nF4dT2', 'user', '1994-11-05'),
-('mael37', 'Mael', 'Dumont', 'mael.dumont@orange.fr', 'K7l!R2mB3vG5', 'user', '1990-05-23'),
-('nina66', 'Nina', 'Gautier', 'nina.gautier@sfr.fr', 'Hj9*E3mW8xL6', 'admin', '1991-12-14'),
-('axel49', 'Axel', 'Fleury', 'axel.fleury@gmail.com', 'uT2&gV7nL5pC4', 'user', '1999-03-18'),
-('lola77', 'Lola', 'Collet', 'lola.collet@hotmail.fr', 'Rf3#D9bY2vG1', 'user', '1992-10-09'),
-('ethan63', 'Ethan', 'Poulain', 'ethan.poulain@laposte.net', 'M6l@cR8zY3pG5', 'admin', '1996-12-28'),
-('emma52', 'Emma', 'Blanc', 'emma.blanc@yahoo.fr', 'Xf8*V3jL2qR9', 'user', '1995-07-17'),
-('leo88', 'Leo', 'Morel', 'leo.morel@orange.fr', 'T4k!P2jG5mC7', 'user', '2000-04-02'),
-('alice38', 'Alice', 'Noir', 'alice.noir@sfr.fr', 'Bp7#T9kD3wV6', 'admin', '1997-05-13'),
-('adam25', 'Adam', 'Girard', 'adam.girard@gmail.com', 'Hj5&L3qP9vT4', 'user', '1993-11-27'),
-('ines53', 'Ines', 'Durand', 'ines.durand@hotmail.fr', 'F2m@K7pL8zT6', 'admin', '1994-06-02'),
-('nathan44', 'Nathan', 'Martin', 'nathan.martin@laposte.net', 'J3q&F5kW9lT8', 'user', '1989-01-15');
+INSERT INTO user (id_user, username, first_name, last_name, email, password, role, date_of_birth, genre) VALUES
+(1, 'kallan93', 'Kallan', 'Giraud', 'kallan.giraud@gmail.com', 'aZ4@pQr7nDgR', 'user', '1992-11-15', 1),
+(2, 'mila86', 'Mila', 'Rochefort', 'mila.rochefort@yahoo.fr', '8Fg&kH%JxE12', 'admin', '1995-06-21', 0),
+(3, 'levan_12', 'Levan', 'Aubert', 'levan.aubert@orange.fr', 'Vh!3fWq$97T', 'user', '1989-03-03', 1),
+(4, 'camille92', 'Camille', 'Perret', 'camille.perret@gmail.com', 'jP7!9hR6cOpM2', 'user', '1996-09-12', 0),
+(5, 'zoe74', 'Zoe', 'Fontaine', 'zoe.fontaine@sfr.fr', 'Nf3#bP9kYl8', 'admin', '1993-07-19', 0),
+(6, 'jules23', 'Jules', 'Bernard', 'jules.bernard@hotmail.fr', 'xP2&aM4nT7qJ9', 'user', '2001-04-27', 1),
+(7, 'mathis41', 'Mathis', 'Lemoine', 'mathis.lemoine@laposte.net', 'D4s$F7gA3vC6', 'user', '1997-02-11', 1),
+(8, 'lea59', 'Lea', 'Renard', 'lea.renard@gmail.com', 'eB9&zW5rC3yK8', 'admin', '1998-08-30', 0),
+(9, 'lucie84', 'Lucie', 'Descamps', 'lucie.descamps@yahoo.com', 'Qj6@pL8nF4dT2', 'user', '1994-11-05', 0),
+(10, 'mael37', 'Mael', 'Dumont', 'mael.dumont@orange.fr', 'K7l!R2mB3vG5', 'user', '1990-05-23', 1),
+(11, 'nina66', 'Nina', 'Gautier', 'nina.gautier@sfr.fr', 'Hj9*E3mW8xL6', 'admin', '1991-12-14', 0),
+(12, 'axel49', 'Axel', 'Fleury', 'axel.fleury@gmail.com', 'uT2&gV7nL5pC4', 'user', '1999-03-18', 1),
+(13, 'lola77', 'Lola', 'Collet', 'lola.collet@hotmail.fr', 'Rf3#D9bY2vG1', 'user', '1992-10-09', 0),
+(14, 'ethan63', 'Ethan', 'Poulain', 'ethan.poulain@laposte.net', 'M6l@cR8zY3pG5', 'admin', '1996-12-28', 1),
+(15, 'emma52', 'Emma', 'Blanc', 'emma.blanc@yahoo.fr', 'Xf8*V3jL2qR9', 'user', '1995-07-17', 0),
+(16, 'leo88', 'Leo', 'Morel', 'leo.morel@orange.fr', 'T4k!P2jG5mC7', 'user', '2000-04-02', 1),
+(17, 'alice38', 'Alice', 'Noir', 'alice.noir@sfr.fr', 'Bp7#T9kD3wV6', 'admin', '1997-05-13', 0),
+(18, 'adam25', 'Adam', 'Girard', 'adam.girard@gmail.com', 'Hj5&L3qP9vT4', 'user', '1993-11-27', 1),
+(19, 'ines53', 'Ines', 'Durand', 'ines.durand@hotmail.fr', 'F2m@K7pL8zT6', 'admin', '1994-06-02', 0),
+(20, 'nathan44', 'Nathan', 'Martin', 'nathan.martin@laposte.net', 'G5v!T3wP7kD', 'user', '1991-09-19', 1),
+(21, 'admin', 'admin', 'admin', 'admin.example@model.com', 'admin', 'admin', '1989-01-15', 1),
+(22, 'user', 'user', 'user', 'user.example@model.com', 'user', 'user', '1989-01-15', 1);
 
 UPDATE user
 SET password = SHA2(password, 256);
@@ -348,9 +350,6 @@ INSERT INTO song (title, duration, number_of_streams, date_of_post, lyrics, id_a
 ('Everything I Wanted', 4.05, 1802345678, '2019-11-13', NULL, 19, 13);
 
 
-
-
-
 INSERT INTO playlist (title, date_of_post, number_of_save, _description, state, user_id) VALUES
     ('Chill Vibes', '2021-06-15', 482, 'A playlist with relaxing tracks to wind down your day.', 'public', 1),
     ('Workout Hits', '2020-03-12', 1728, 'The perfect playlist to pump up your workout sessions.', 'public', 2),
@@ -382,26 +381,138 @@ INSERT INTO playlist (title, date_of_post, number_of_save, _description, state, 
     ('Soulful Sunday', '2021-12-05', 412, 'A soulful collection for a laid-back Sunday.', 'private', 8),
     ('Techno Underground', '2022-04-14', 1951, 'Dark and driving techno for the underground scene lovers.', 'public', 9),
     ('Blues Legends', '2020-11-08', 764, 'A playlist featuring the greatest blues legends of all time.', 'private', 10),
-    ('Mes chansons du matin', '2021-09-10', 512, 'Les chansons qui me donnent de l’énergie chaque matin.', 'private', 11),
-    ('Souvenirs d’été 2019', '2019-09-01', 348, 'Les morceaux qui ont marqué mon été 2019.', 'private', 12),
+    ('Mes chansons du matin', '2021-09-10', 512, 'Les chansons qui me donnent de l\'énergie chaque matin.', 'private', 11),
+    ('Souvenirs d\'été 2019', '2019-09-01', 348, 'Les morceaux qui ont marqué mon été 2019.', 'private', 12),
     ('Road Trip Bretagne', '2022-07-18', 134, 'Ma playlist spéciale pour mon road trip en Bretagne.', 'private', 13),
-    ('Chansons de ma jeunesse', '2020-03-04', 891, 'Les chansons que j’écoutais en grandissant, pleine de nostalgie.', 'public', 14),
+    ('Chansons de ma jeunesse', '2020-03-04', 891, 'Les chansons que j\'écoutais en grandissant, pleine de nostalgie.', 'public', 14),
     ('Playlist du Dimanche Matin', '2021-12-19', 243, 'Des chansons calmes et relaxantes pour mes dimanches matins tranquilles.', 'private', 15),
     ('Ma playlist motivation', '2022-05-11', 1231, 'Les morceaux qui me motivent à fond pour mes objectifs.', 'public', 16),
     ('Best of soirées avec les potes', '2021-04-23', 1879, 'Les titres qui font bouger lors de nos soirées entre amis.', 'public', 17),
-    ('Les sons de mes vacances 2020', '2020-08-12', 602, 'La bande sonore de mes vacances d’été 2020.', 'private', 18),
-    ('Mélancolie du soir', '2020-11-26', 431, 'Les morceaux que j’écoute lorsque je me sens mélancolique en soirée.', 'private', 19),
-    ('Les classiques de ma vie', '2019-06-30', 1029, 'Les chansons intemporelles qui m’ont toujours accompagné.', 'public', 20),
+    ('Les sons de mes vacances 2020', '2020-08-12', 602, 'La bande sonore de mes vacances d\'été 2020.', 'private', 18),
+    ('Mélancolie du soir', '2020-11-26', 431, 'Les morceaux que j\'écoute lorsque je me sens mélancolique en soirée.', 'private', 19),
+    ('Les classiques de ma vie', '2019-06-30', 1029, 'Les chansons intemporelles qui m\'ont toujours accompagné.', 'public', 20),
     ('Mon top rap français', '2021-01-22', 1247, 'Ma sélection personnelle des meilleurs titres du rap français.', 'public', 1),
-    ('Ma zone de confort', '2022-03-14', 698, 'Les chansons qui me mettent à l’aise et me réconfortent.', 'private', 2),
+    ('Ma zone de confort', '2022-03-14', 698, 'Les chansons qui me mettent à l\'aise et me réconfortent.', 'private', 2),
     ('Soirées chill entre amis', '2020-07-28', 1368, 'Les morceaux parfaits pour une soirée détente entre amis.', 'public', 3),
     ('Moments inoubliables', '2019-10-17', 921, 'Les chansons qui accompagnent les moments inoubliables de ma vie.', 'private', 4),
-    ('Ambiance travail', '2022-06-20', 510, 'Les sons qui m’aident à me concentrer et à travailler efficacement.', 'private', 5);
+    ('Ambiance travail', '2022-06-20', 510, 'Les sons qui m\'aident à me concentrer et à travailler efficacement.', 'private', 5),
+	('Ambiance', '2022-06-10', 40, 'Les sons qui m\'aident à me concentrer et à travailler efficacement.', 'public', 5);
 
 
 INSERT INTO playlist_has_song VALUES 
     (1, 1),
     (2, 2);
+    
+    
+    ALTER TABLE song ADD COLUMN formatted_duration VARCHAR(5);
 
---ajout img dans authors
-ALTER TABLE author ADD COLUMN image VARCHAR(300);
+UPDATE song
+SET formatted_duration = CONCAT(
+    LPAD(FLOOR(duration), 2, '0'), ':',
+    LPAD(ROUND((duration - FLOOR(duration)) * 60), 2, '0')
+);
+
+ALTER TABLE song DROP COLUMN duration;
+
+ALTER TABLE song CHANGE COLUMN formatted_duration duration VARCHAR(5);
+
+select * from song;
+
+select * from playlist_has_song;
+
+
+select author.id_author, author.alias, count(author.id_author) as quantity from author inner join song on author.id_author = song.id_author group by author.id_author;
+
+select id_playlist, title, date_of_post, number_of_save,_description, username from playlist inner join user on playlist.user_id = user.id_user where state='public' order by number_of_save desc;
+
+INSERT INTO playlist_has_song (playlist_id_playlist, song_id_song) VALUES
+-- Chill Vibes
+(1, 31), (1, 45), (1, 48), (1, 49), (1, 50),
+
+-- Workout Hits
+(2, 7), (2, 8), (2, 13), (2, 23), (2, 44),
+
+-- Soirée Electro
+(3, 71), (3, 74), (3, 76), (3, 82), (3, 91),
+
+-- Rock Classics
+(4, 56), (4, 57), (4, 58), (4, 59), (4, 60),
+
+-- Road Trip Tunes
+(5, 14), (5, 24), (5, 33), (5, 42), (5, 65),
+
+-- Jazz & Chill
+(6, 90), (6, 92), (6, 94), (6, 96), (6, 98),
+
+-- Summer Hits 2022
+(7, 15), (7, 18), (7, 19), (7, 21), (7, 26),
+
+-- Indie Discovery
+(8, 32), (8, 41), (8, 43), (8, 46), (8, 66),
+
+-- Party Bangers
+(9, 73), (9, 78), (9, 80), (9, 83), (9, 85),
+
+-- Acoustic Moods
+(10, 67), (10, 69), (10, 71), (10, 75), (10, 77),
+
+-- Deep House Grooves
+(11, 12), (11, 17), (11, 19), (11, 25), (11, 33),
+
+-- Throwback Jams
+(12, 1), (12, 3), (12, 5), (12, 7), (12, 9),
+
+-- Rap Français
+(13, 56), (13, 58), (13, 62), (13, 64), (13, 66),
+
+-- Classical Piano
+(14, 91), (14, 93), (14, 95), (14, 97), (14, 99),
+
+-- Afrobeats Vibes
+(15, 27), (15, 29), (15, 31), (15, 33), (15, 35),
+
+-- Feel Good Songs
+(16, 4), (16, 8), (16, 10), (16, 12), (16, 14),
+
+-- Late Night Jazz
+(17, 87), (17, 88), (17, 89), (17, 90), (17, 92),
+
+-- Lofi Study Beats
+(18, 94), (18, 96), (18, 97), (18, 99), (18, 100),
+
+-- Metal Mayhem
+(19, 51), (19, 52), (19, 53), (19, 54), (19, 55),
+
+-- Romantic Evening
+(20, 40), (20, 42), (20, 44), (20, 46), (20, 48),
+
+-- Festival Anthems
+(1, 21), (1, 23), (1, 25), (1, 27), (1, 29),
+
+-- Funky Grooves
+(2, 63), (2, 65), (2, 67), (2, 69), (2, 71),
+
+-- Latin Heat
+(3, 15), (3, 17), (3, 19), (3, 21), (3, 23),
+
+-- Ambient Soundscapes
+(4, 91), (4, 93), (4, 95), (4, 97), (4, 99),
+
+-- R&B Throwbacks
+(5, 48), (5, 50), (5, 52), (5, 54), (5, 56),
+
+-- Pop Hits 2020
+(6, 21), (6, 23), (6, 25), (6, 27), (6, 29),
+
+-- Psytrance Journey
+(7, 84), (7, 86), (7, 88), (7, 90), (7, 92),
+
+-- Soulful Sunday
+(8, 67), (8, 69), (8, 71), (8, 73), (8, 75),
+
+-- Techno Underground
+(9, 75), (9, 77), (9, 79), (9, 81),
+
+-- Blues Legends
+(10, 56), (10, 58), (10, 60), (10, 62), (10, 64);
+

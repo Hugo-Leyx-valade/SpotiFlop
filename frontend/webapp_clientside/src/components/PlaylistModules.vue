@@ -223,6 +223,7 @@
               this.onePlaylist = result.object.playlist;
               this.onePlaylist.date_of_post = this.formatDate(this.onePlaylist.date_of_post);
               this.playlist = result.object.songs;
+              console.log("playlist: " + JSON.stringify(this.playlist));
             }else{
               alert("Unknow playlist ...");
             }
