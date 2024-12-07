@@ -170,6 +170,10 @@ INSERT INTO user (username, first_name, last_name, email, password, role, date_o
 ('ines53', 'Ines', 'Durand', 'ines.durand@hotmail.fr', 'F2m@K7pL8zT6', 'admin', '1994-06-02'),
 ('nathan44', 'Nathan', 'Martin', 'nathan.martin@laposte.net', 'J3q&F5kW9lT8', 'user', '1989-01-15');
 
+UPDATE user
+SET password = SHA2(password, 256);
+
+
 INSERT INTO genre (name) VALUES
     ('Rock'),
     ('Jazz'),
