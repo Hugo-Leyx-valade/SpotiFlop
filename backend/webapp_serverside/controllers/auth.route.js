@@ -11,7 +11,9 @@ router.get("/user", auth.authorizeRequest("USER"), userdataAction); // expose fu
 router.get("/admin", auth.authorizeRequest("ADMIN"), userdataAction); // expose function only for ADMIN roles
 router.get("/protected", protectedGetAction); // execute authorization in action method: needed for resource-based auth
 router.post("/login", loginPostAction);
+//router.post("/register", registerPostAction);
 router.get("/logout", logoutAction);
+
 
 // use same endpoints for both roles
 async function userdataAction(request, response) {
@@ -33,26 +35,100 @@ async function protectedGetAction(request, response) {
 }
 
 async function loginPostAction(request, response) {
-  // passport.authenticate('local', { successRedirect: '/' }));
-  let areValid = await userRepo.areValidCredentials(request.body.username, request.body.userpass);
+  const { username, userpass } = request.body;
+  console.log("Nom d'utilisateur : AUTH.ROUTE", username);
+  console.log("Mot de passe : AUTH.ROUTE", userpass);
 
-  if (areValid) {
-    user = await userRepo.getOneUser(request.body.username);
-    request.login(user, function (err) { 
-      if (err) { 
-        console.log("LOGINERROR");
-        console.log(err); 
-        areValid = false;
-        // return next(err);
-      }
-      let resultObject = { "loginResult": areValid, "timestamp": new Date().toLocaleString() };
-      response.send(JSON.stringify(resultObject));
+  if (!username || !userpass) {
+    console.log("Nom d'utilisateur ou mot de passe manquant.");
+    return response.status(400).json({
+      error: "Le nom d'utilisateur et le mot de passe sont obligatoires.",
     });
-  } else {
-    let resultObject = { "loginResult": areValid, "timestamp": new Date().toLocaleString() };
-    response.send(JSON.stringify(resultObject));
+  }
+
+  try {
+    const user = await userRepo.areValidCredentials(username, userpass);
+
+    if (user) {
+      console.log("Utilisateur trouvé :", user);
+      request.login(user, function (err) {
+        if (err) {
+          console.log("Erreur lors de la connexion :", err);
+          return response.status(500).json({ error: "Erreur interne du serveur." });
+        }
+        response.json({
+          loginResult: true,
+          timestamp: new Date().toLocaleString(),
+        });
+      });
+    } else {
+      console.log("Utilisateur non trouvé ou identifiants incorrects.");
+      response.json({
+        loginResult: false,
+        timestamp: new Date().toLocaleString(),
+      });
+    }
+  } catch (error) {
+    console.error("Erreur dans loginPostAction :", error);
+    response.status(500).json({ error: "Erreur interne du serveur." });
   }
 }
+
+router.post("/register", async (req, res) => {
+  const {
+    username,
+    first_name,
+    last_name,
+    email,
+    password,
+    date_of_birth,
+    genre,
+  } = req.body;
+
+  // Vérifiez que tous les champs requis sont fournis
+  if (!username || !first_name || !last_name || !email || !password || !date_of_birth || !genre) {
+    return res.status(400).send({
+      success: false,
+      message: "Tous les champs sont obligatoires.",
+    });
+  }
+
+  try {
+    // Appeler la fonction `createUser` pour insérer l'utilisateur dans la base de données
+    const result = await userRepo.createUser(
+      username,
+      first_name,
+      last_name,
+      email,
+      password,
+      date_of_birth,
+      genre
+    );
+
+    if (result.success) {
+      return res.status(201).send({
+        success: true,
+        message: "Inscription réussie ! Vous pouvez maintenant vous connecter.",
+      });
+    } else {
+      return res.status(400).send({
+        success: false,
+        message: result.message || "Erreur lors de la création de l'utilisateur.",
+      });
+    }
+  } catch (error) {
+    console.error("Erreur dans registerPostAction :", error);
+    return res.status(500).send({
+      success: false,
+      message: "Erreur interne du serveur. Veuillez réessayer plus tard.",
+    });
+  }
+});
+
+
+
+
+
 
 function logoutAction(request, response) {
   request.logout(function(err){

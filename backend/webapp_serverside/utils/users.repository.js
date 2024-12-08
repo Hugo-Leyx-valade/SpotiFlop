@@ -1,5 +1,6 @@
 // utils/songs.repository.js
 pool = require(__dirname + "\\db.include.js"); // use same folder as the current file
+const crypto = require('crypto');
 
 async function deleteInPlaylist(userId){
     let sql = " DELETE playlist_has_song FROM playlist_has_song INNER JOIN playlist ON playlist_id_playlist = id_playlist WHERE playlist.user_id = ?;";
@@ -68,7 +69,7 @@ module.exports = {
 
         try {
             let conn = await pool.getConnection();
-            let sql = "SELECT id_user,username,email,role FROM users WHERE username = ? "; 
+            let sql = "SELECT id_user,username,email,role FROM user WHERE username = ? "; 
             // must leave out the password+hash info from result!
             const [rows, fields] = await pool.execute(sql, [ userName ]);
             if (rows.length == 1) {
@@ -86,7 +87,9 @@ module.exports = {
             // sql = "SELECT * FROM songs INNER JOIN genres ON song_genre=genre_id WHERE song_id = "+songId; 
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
-            
+            if (!userId) {
+                throw new Error("userId is undefined or null");
+            }
             let sql = "select * from user where id_user=?;";
             const [rows, fields] = await pool.execute(sql, [ userId ]);
             console.log("user : "+rows.values);
@@ -97,26 +100,47 @@ module.exports = {
             }
         }
         catch (err) {
-            console.log(err);
+            console.log("Error in getOneUser", err);
             throw err; 
         }
     },
 
     async areValidCredentials(username, password) {
+        if (!username || !password) {
+          throw new Error("Missing username or password for login.");
+        }
         try {
-          let sql = "SELECT * FROM USER WHERE username = ? AND password = sha2(?, 256)"; 
-          // TODO: better salt + pw hash (bcrypt, pbkdf2, argon2)
-          // COLLATE usually not needed (mariaDb compatibility)
-          const [rows, fields] = await pool.execute(sql, [username, password]); 
-          console.log(rows);
-          if (rows.length == 1 && rows[0].username === username) {
-            return true;
+          console.log("Vérification des identifiants :", { username, password });
+          let sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+          const [rows] = await pool.execute(sql, [username, password]);
+          console.log("Résultats de la requête :", rows);
+      
+          if (rows.length === 1) {
+            return rows[0]; // Retourne l'utilisateur
           } else {
-            return false;
+            console.log("Aucune correspondance trouvée pour les identifiants.");
+            return null;
           }
         } catch (err) {
-          console.log(err);
+          console.error("Erreur dans areValidCredentials :", err);
           throw err;
+        }
+      },
+
+    async createUser(username, first_name, last_name, email, password, date_of_birth, genre) {
+        if (!username || !email || !password) {
+            throw new Error("Le nom d'utilisateur, l'email et le mot de passe sont obligatoires.");
+        }
+
+        try {
+            const hashedPassword = crypto.createHash('sha256').update(password + username).digest('hex'); // Hash du mot de passe
+            const sql = `INSERT INTO user (username, first_name, last_name, email, password, role, date_of_birth, genre) VALUES (?, ?, ?, ?, ?, 'user', ?, ?)`;
+            await pool.execute(sql, [username, first_name, last_name, email, hashedPassword, formatDate(date_of_birth), genre]);
+
+            return {success:true};
+        } catch (err) {
+            console.error("Erreur dans createUser :", err);
+            return { success: false, message: err.message };
         }
     },
 
@@ -179,8 +203,6 @@ module.exports = {
             throw err;
         }
     },
-
-
     
     async editOneUser(username, first_name, last_name, email, password, role, date_of_birth,genre,id_user) {
         try {

@@ -31,7 +31,7 @@ module.exports = {
     passport.deserializeUser(async function (userObj, doneFunction) { 
       console.log("DE - SERIALIZING... ");
       console.log(userObj);
-      let userFromDb = await usersRepo.getOneUser(userObj.username);
+      let userFromDb = await usersRepo.getUserbyName(userObj.username);
       console.log(userFromDb);
       doneFunction(null, userFromDb);
     });
