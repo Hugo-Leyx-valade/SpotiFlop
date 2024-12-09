@@ -36,11 +36,8 @@ async function protectedGetAction(request, response) {
 
 async function loginPostAction(request, response) {
   const { username, userpass } = request.body;
-  console.log("Nom d'utilisateur : AUTH.ROUTE", username);
-  console.log("Mot de passe : AUTH.ROUTE", userpass);
 
   if (!username || !userpass) {
-    console.log("Nom d'utilisateur ou mot de passe manquant.");
     return response.status(400).json({
       error: "Le nom d'utilisateur et le mot de passe sont obligatoires.",
     });
@@ -50,19 +47,17 @@ async function loginPostAction(request, response) {
     const user = await userRepo.areValidCredentials(username, userpass);
 
     if (user) {
-      console.log("Utilisateur trouvé :", user);
       request.login(user, function (err) {
         if (err) {
-          console.log("Erreur lors de la connexion :", err);
           return response.status(500).json({ error: "Erreur interne du serveur." });
         }
         response.json({
           loginResult: true,
+          role: user.role, // Inclure le rôle dans la réponse
           timestamp: new Date().toLocaleString(),
         });
       });
     } else {
-      console.log("Utilisateur non trouvé ou identifiants incorrects.");
       response.json({
         loginResult: false,
         timestamp: new Date().toLocaleString(),
@@ -73,6 +68,7 @@ async function loginPostAction(request, response) {
     response.status(500).json({ error: "Erreur interne du serveur." });
   }
 }
+
 
 router.post("/register", async (req, res) => {
   const {

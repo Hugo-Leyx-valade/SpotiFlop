@@ -5,6 +5,9 @@ May be add graph on the frequency of the site and on the number of music added -
 <template>
     <div class="admin-panel" onload="changeBodyBackgroundColor()">
         <BacktohomeModule></BacktohomeModule>
+        <div class="logoutContainer">
+            <button @click="logout" class="logoutButton">Logout</button>
+        </div>
         <div class="search-container">
             <input type="text" placeholder="Search...">
             <i class="fa fa-search"></i>
@@ -71,7 +74,7 @@ May be add graph on the frequency of the site and on the number of music added -
                 <p id="texts1" style="color: #f2f2f2; font-size: 300%;">Playlists</p>
             </label> 
             
-            <label for="s5" id="slide5">
+            <label v-if="isAdmin" for="s5" id="slide5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-people-fill" viewBox="0 0 16 16" style="margin-top:25% ;"  onclick="window.location.href = '/#/users/list/all'">
                     <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                 </svg>
@@ -85,12 +88,18 @@ May be add graph on the frequency of the site and on the number of music added -
 </template>
 
 <script>
+import { logoutUser } from './Authentication.vue';
 import BacktohomeModule from './BacktohomeModule.vue';
 
 export default {
     name: 'AdminPanel',
     components:{
         BacktohomeModule
+    },
+    data() {
+        return {
+            isAdmin: false,
+        };
     },
 
     methods: {
@@ -99,16 +108,46 @@ export default {
             document.body.style.backgroundSize = 'cover';
             document.body.style.height = '100%';
             document.body.style.backgroundColor = 'rgb(0,0,0)';
-        }
+        },
+
+        async logout() {
+            try {
+                // Appeler la fonction logoutUser
+                await logoutUser.call(this);
+            } catch (error) {
+                console.error("Erreur lors de la déconnexion :", error);
+            }
+        },
     },
 
     mounted() {
         this.changeBodyBackgroundColor();
+
+        const userRole = localStorage.getItem('userRole');
+
+        this.isAdmin = userRole === 'admin';
     }
 };
 </script>
 
 <style scoped>
+
+.logoutContainer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+
+}
+
+.logoutContainer:hover {
+    background-color: #ff6666;
+}
 
 h1 {
     font-size: 80px;

@@ -77,12 +77,14 @@
 import BacktohomeModule from './BacktohomeModule.vue';
 import CryptoJS from 'crypto-js';
 
+export {logoutUser}
 export default {
   name: 'Authentication',
   props: ['action'],
   components: {
     BacktohomeModule,
   },
+
 
   mounted() {
     this.changeBodyBackgroundColor();
@@ -118,7 +120,7 @@ export default {
     async loginUser() {
     console.log("Données envoyées :", {
       username: this.username,
-      userpass: this.password, // Assurez-vous que cette clé correspond à celle utilisée dans le backend
+      userpass: this.password,
     });
 
     if (!this.username || !this.password) {
@@ -132,14 +134,26 @@ export default {
     try {
       const response = await this.submitForm("post", "login", {
         username: this.username,
-        userpass: hashedPassword, 
+        userpass: hashedPassword,
       });
 
       if (response.loginResult) {
+        // Stocker le rôle dans le local storage
+        if (response.role) {
+          localStorage.setItem("userRole", response.role);
+        }
+
         this.successMessage = "Connexion réussie !";
         alert(this.successMessage);
+
         setTimeout(() => {
-          this.$router.push("/adminPanel");
+          // Rediriger en fonction du rôle
+          const role = response.role || "user";
+          if (role === "admin") {
+            this.$router.push("/adminPanel");
+          } else {
+            this.$router.push("/adminPanel"); // Remplacez par votre route utilisateur
+          }
         }, 1000);
       } else {
         this.errorMessage = "Nom d'utilisateur ou mot de passe incorrect.";
@@ -149,7 +163,30 @@ export default {
       console.error("Erreur lors de la connexion :", error);
       this.errorMessage = "Une erreur est survenue. Veuillez réessayer.";
     }
-  },
+},
+
+async logoutUser() {
+    try {
+      const response = await this.submitForm("get", "logout", null);
+
+      // Si le logout est réussi
+      if (response.data.logoutResult) {
+      // Supprimer les données du local storage
+        localStorage.removeItem("userRole");
+
+        alert("Vous avez été déconnecté.");
+        // Rediriger vers la page d'accueil ou de connexion
+        this.$router.push("/authentication/login");
+      } else {
+        alert("Erreur lors de la déconnexion.");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion :", error);
+      alert("Une erreur est survenue. Veuillez réessayer.");
+    }
+},
+  // Créez une méthode statique indépendante
+
 
     // Gestion de l'inscription
     async registerUser() {
@@ -225,7 +262,9 @@ export default {
       document.body.style.backgroundColor = 'rgb(0,0,0)';
     },
   },
+
 }
+
 </script>  
 
   <style scoped>
