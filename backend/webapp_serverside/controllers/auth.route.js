@@ -122,10 +122,6 @@ router.post("/register", async (req, res) => {
 });
 
 
-
-
-
-
 function logoutAction(request, response) {
   request.logout(function(err){
     let resultObject = { "logoutResult": true, "timestamp": new Date().toLocaleString() };
