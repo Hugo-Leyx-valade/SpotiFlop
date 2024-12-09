@@ -1,3 +1,24 @@
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const uploadDir = path.join(__dirname, '../../webapp_clientside/src/assets');
+
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+});
+
+const upload = multer({ storage: storage });
+
 // controllers/authorsapi.route.js
 const express = require('express');
 const router = express.Router();
@@ -86,12 +107,16 @@ async function authorAddAction(request, response) {
         response.send(JSON.stringify(false));
     }
     else{
-    var numRows = await authorRepo.addOneAuthor(
+        if(request.body.image === null){
+            request.body.image = "";
+        }
+        var numRows = await authorRepo.addOneAuthor(
             capitalizeFirstLetter(request.body.alias), 
             capitalizeFirstLetter(request.body.first_name) ?? "", 
             capitalizeFirstLetter(request.body.last_name) ?? "",
             request.body.biography ?? "J'ai une histoire... j'ai un background...",
             request.body.verified,
+            request.body.image ?? "",
         );
         let result = { rowsUpdated: numRows };
         response.send(JSON.stringify(result));

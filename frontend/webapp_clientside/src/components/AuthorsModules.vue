@@ -41,7 +41,7 @@
 
     
     <div v-if="action === 'edit'" class="container2 ">
-      <form class="song-form" @submit.prevent="sendEditRequest" 
+      <form class="song-form" @submit.prevent="sendEditRequest" enctype="multipart/form-data" 
       style="margin: 2% auto; z-index: 1; display: flex; flex-direction: column; align-items: center; background-color: #f9f9f9; padding: 2%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 50%;">
   
   <!-- Alias Input -->
@@ -116,16 +116,25 @@
        onMouseLeave="this.style.transform='scale(1)'">
 
     <!-- Image Container -->
-    <div class="image-container" style="position: relative; height: 150px; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center;">
-      <!-- Placeholder for an image -->
-      <span style="font-size: 100px; color: #ccc;">👤</span>
-      
-      <!-- Overlay with Author Name -->
-      <div class="overlay" style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.6); color: white; padding: 10px; text-align: center; font-size: 1rem; font-weight: bold;">
-        {{ a.alias }}
-      </div>
-    </div>
+    <div 
+  class="image-container" 
+  style="position: relative; height: 150px; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center;"
+>
+  <!-- Image Element -->
+  <img 
+  id="image" 
+  :src="require('@/assets/' + a.image)" 
+  alt="Author Image" 
+  style="height: 100%; object-fit: cover;" 
+/>
+  <!-- Overlay with Author Name -->
+  <div 
+    class="overlay" 
+    style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.6); color: white; padding: 10px; text-align: center; font-size: 1rem; font-weight: bold;"
+  >
+    {{ a.alias }}
   </div>
+</div></div>
 
 </div>
   </div>
@@ -133,7 +142,7 @@
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
-import { images, defaultImage } from '../images.js';
+
 
 export default {
   name: 'Authors',
@@ -150,6 +159,7 @@ export default {
 
   data () {
     return {
+      file: "",
       authors : [],
       songAuthor : [],
       song : [],
@@ -202,7 +212,7 @@ try {
       this.songAuthor.push(result.object.songs[i]);
     }
     this.oneAuthor = result.object.author;
-    console.log("hugo" + JSON.stringify(this.oneAuthor));
+    console.log("hugo" + JSON.stringify(this.oneAuthor.image));
     // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
   }else{
     alert("Can't resolve ! ")
@@ -228,6 +238,7 @@ async sendDeleteRequest(authorsId) {
 
 async sendEditRequest() {
 try {
+  this.oneAuthor.image="default.png";
   if(this.$props.id === "0"){
       let response = await this.$http.post(
                 "http://localhost:9000/authorsapi/add/",this.oneAuthor);

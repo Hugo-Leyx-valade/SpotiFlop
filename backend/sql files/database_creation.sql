@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.author (
   last_name VARCHAR(45),
   biography VARCHAR(1000),
   verified BOOLEAN NOT NULL DEFAULT FALSE,
+  image VARCHAR(50),
   PRIMARY KEY (id_author)
 ) ENGINE = InnoDB;
 
@@ -126,27 +127,27 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-INSERT INTO author (alias, first_name, last_name, biography, verified) VALUES
-('Earth, Wind & Fire', NULL, NULL, NULL, 1),
-('MJ', 'Michael', 'Jackson', NULL, 1),
-('Imagine Dragons', NULL, NULL, NULL, 1),
-('The Weeknd', NULL, NULL, NULL, 1),
-('Lady Gaga', 'Stefani', 'Germanotta', NULL, 1),
-('Eminem', 'Marshall Bruce', 'Mathers', NULL, 1),
-('FEMTOGO', NULL, NULL, NULL, 0),
-('Daft Punk', NULL, NULL, NULL, 1),
-('Kenrick Lamar', 'Kendrick', 'Lamar', NULL, 1),
-('David Guetta', 'David', 'Guetta', NULL, 1),
-('Adele', 'Adele', 'Adkins', NULL, 1),
-('Beyoncé', 'Beyoncé', 'Knowles', NULL, 1),
-('Ed Sheeran', 'Ed', 'Sheeran', NULL, 1),
-('Justin Bieber', 'Justin', 'Bieber', NULL, 1),
-('Bruno Mars', 'Bruno', 'Mars', NULL, 1),
-('Coldplay', NULL, NULL, NULL, 1),
-('Post Malone', 'Austin', 'Post', NULL, 1),
-('Rihanna', 'Robyn', 'Fenty', NULL, 1),
-('Drake', 'Aubrey', 'Graham', NULL, 1),
-('Billie Eilish', 'Billie', 'Connell', NULL, 1);
+INSERT INTO author (alias, first_name, last_name, biography, verified, image) VALUES
+('Earth, Wind & Fire', NULL, NULL, NULL, 1, "EarthWindAndFire.jpg"),
+('MJ', 'Michael', 'Jackson', NULL, 1, "MichaelJackson.jpg"),
+('Imagine Dragons', NULL, NULL, NULL, 1,"ImagineDragons.jpeg"),
+('The Weeknd', NULL, NULL, NULL, 1,"EarthWindAndFire.jpg"),
+('Lady Gaga', 'Stefani', 'Germanotta', NULL, 1,"EarthWindAndFire.jpg"),
+('Eminem', 'Marshall Bruce', 'Mathers', NULL, 1,"EarthWindAndFire.jpg"),
+('FEMTOGO', NULL, NULL, NULL, 0,"EarthWindAndFire.jpg"),
+('Daft Punk', NULL, NULL, NULL, 1,"EarthWindAndFire.jpg"),
+('Kenrick Lamar', 'Kendrick', 'Lamar', NULL, 1,"EarthWindAndFire.jpg"),
+('David Guetta', 'David', 'Guetta', NULL, 1,"EarthWindAndFire.jpg"),
+('Adele', 'Adele', 'Adkins', NULL, 1,"EarthWindAndFire.jpg"),
+('Beyoncé', 'Beyoncé', 'Knowles', NULL, 1,"EarthWindAndFire.jpg"),
+('Ed Sheeran', 'Ed', 'Sheeran', NULL, 1,"EarthWindAndFire.jpg"),
+('Justin Bieber', 'Justin', 'Bieber', NULL, 1,"EarthWindAndFire.jpg"),
+('Bruno Mars', 'Bruno', 'Mars', NULL, 1,"EarthWindAndFire.jpg"),
+('Coldplay', NULL, NULL, NULL, 1,"EarthWindAndFire.jpg"),
+('Post Malone', 'Austin', 'Post', NULL, 1,"EarthWindAndFire.jpg"),
+('Rihanna', 'Robyn', 'Fenty', NULL, 1,"EarthWindAndFire.jpg"),
+('Drake', 'Aubrey', 'Graham', NULL, 1,"EarthWindAndFire.jpg"),
+('Billie Eilish', 'Billie', 'Connell', NULL, 1,"EarthWindAndFire.jpg");
 
 -- Insert data into the user table
 INSERT INTO user (id_user, username, first_name, last_name, email, password, role, date_of_birth, genre) VALUES
@@ -550,10 +551,15 @@ FROM song;
 SELECT
     FLOOR(SUM(SUBSTRING_INDEX(duration, ':', 1))  + SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) / 60) AS total_minutes,
     SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) % 60 AS remaining_seconds
-FROM song	;
+FROM song;
 
 select * from playlist;
 
 INSERT INTO playlist 
                 (title, state,date_of_post, _description, user_id) 
                 VALUES ("triks", "public","2024-10-12", "uoi", 1);
+
+
+select * from song;
+DELETE playlist_has_song FROM playlist_has_song inner join song on song.id_song = playlist_has_song.song_id_song where song.id_author = 1;
+select * from user;
