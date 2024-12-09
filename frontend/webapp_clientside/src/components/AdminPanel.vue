@@ -88,8 +88,8 @@ May be add graph on the frequency of the site and on the number of music added -
 </template>
 
 <script>
-import { logoutUser } from './Authentication.vue';
 import BacktohomeModule from './BacktohomeModule.vue';
+import { logoutUser } from '../../authentication.js';
 
 export default {
     name: 'AdminPanel',
@@ -101,8 +101,17 @@ export default {
             isAdmin: false,
         };
     },
+    
 
     methods: {
+        async logout() {
+            try {
+                await logoutUser();
+            } catch (error) {
+                console.error('Failed to logout:', error);
+            }
+        },
+        
         changeBodyBackgroundColor() {
             document.body.style.background ='linear-gradient(180deg, rgba(51, 204, 51,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
             document.body.style.backgroundSize = 'cover';
@@ -110,22 +119,14 @@ export default {
             document.body.style.backgroundColor = 'rgb(0,0,0)';
         },
 
-        async logout() {
-            try {
-                // Appeler la fonction logoutUser
-                await logoutUser.call(this);
-            } catch (error) {
-                console.error("Erreur lors de la déconnexion :", error);
-            }
-        },
+        
     },
 
     mounted() {
         this.changeBodyBackgroundColor();
 
-        const userRole = localStorage.getItem('userRole');
-
-        this.isAdmin = userRole === 'admin';
+        //let userdataResponse = await this.$http.get("http://localhost:9000/auth/userdata");
+        //this.userdata = await userdataResponse.data;//send request to appropriate endpoint
     }
 };
 </script>
@@ -279,5 +280,3 @@ h1 {
 
 
 </style>
-
-

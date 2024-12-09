@@ -7,8 +7,8 @@ const userRepo = require("../utils/users.repository");
 // http://localhost:9000/auth
 // USE AUTHORIZATION HERE (the method does not know if authorization is present)
 // MAC/DAC/RBAC, Claims-based authorization, Policy-based authorization, Resource-based authorization
-router.get("/user", auth.authorizeRequest("USER"), userdataAction); // expose function only for USER roles
-router.get("/admin", auth.authorizeRequest("ADMIN"), userdataAction); // expose function only for ADMIN roles
+router.get("/user", auth.authorizeRequest("user"), userdataAction); // expose function only for USER roles
+router.get("/admin", auth.authorizeRequest("admin"), userdataAction); // expose function only for ADMIN roles
 router.get("/protected", protectedGetAction); // execute authorization in action method: needed for resource-based auth
 router.post("/login", loginPostAction);
 //router.post("/register", registerPostAction);
@@ -23,49 +23,36 @@ async function userdataAction(request, response) {
 
 async function protectedGetAction(request, response) {
   // TODO: authorize using all factors (resource / context / environment) ...
-  let userRole = "GUEST CONTENT";
+  let userRole = "";
   if (request.isAuthenticated()) {
-    if (request.user.user_role === "ADMIN") {
-      userRole = "ADMIN CONTENT";
+    if (request.user.user_role === "admin") {
+      userRole = "admin";
     } else {
-      userRole = "USER CONTENT";
+      userRole = "user";
     }
   } 
   response.send(userRole);
 }
 
 async function loginPostAction(request, response) {
-  const { username, userpass } = request.body;
+  // passport.authenticate('local', { successRedirect: '/' }));
+  let areValid = await userRepo.areValidCredentials(request.body.username, request.body.userpass);
 
-  if (!username || !userpass) {
-    return response.status(400).json({
-      error: "Le nom d'utilisateur et le mot de passe sont obligatoires.",
+  if (areValid) {
+    user = await userRepo.getUserbyName(request.body.username);
+    request.login(user, function (err) { 
+      if (err) { 
+        console.log("LOGINERROR");
+        console.log(err); 
+        areValid = false;
+        // return next(err);
+      }
+      let resultObject = { "loginResult": areValid, "timestamp": new Date().toLocaleString() };
+      response.send(JSON.stringify(resultObject));
     });
-  }
-
-  try {
-    const user = await userRepo.areValidCredentials(username, userpass);
-
-    if (user) {
-      request.login(user, function (err) {
-        if (err) {
-          return response.status(500).json({ error: "Erreur interne du serveur." });
-        }
-        response.json({
-          loginResult: true,
-          role: user.role, // Inclure le rôle dans la réponse
-          timestamp: new Date().toLocaleString(),
-        });
-      });
-    } else {
-      response.json({
-        loginResult: false,
-        timestamp: new Date().toLocaleString(),
-      });
-    }
-  } catch (error) {
-    console.error("Erreur dans loginPostAction :", error);
-    response.status(500).json({ error: "Erreur interne du serveur." });
+  } else {
+    let resultObject = { "loginResult": areValid, "timestamp": new Date().toLocaleString() };
+    response.send(JSON.stringify(resultObject));
   }
 }
 
