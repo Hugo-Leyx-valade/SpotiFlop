@@ -81,7 +81,7 @@ module.exports = {
                 console.log(err);
                 throw err;
             }
-    },
+        },
     async getOneUser(userId){ 
         try {
             // sql = "SELECT * FROM songs INNER JOIN genres ON song_genre=genre_id WHERE song_id = "+songId; 

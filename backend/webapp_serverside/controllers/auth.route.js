@@ -25,7 +25,7 @@ async function protectedGetAction(request, response) {
   // TODO: authorize using all factors (resource / context / environment) ...
   let userRole = "";
   if (request.isAuthenticated()) {
-    if (request.user.user_role === "admin") {
+    if (request.user.role === "admin") {
       userRole = "admin";
     } else {
       userRole = "user";
@@ -39,7 +39,9 @@ async function loginPostAction(request, response) {
   let areValid = await userRepo.areValidCredentials(request.body.username, request.body.userpass);
 
   if (areValid) {
+    console.log(request.body.username + " is authenticated");
     user = await userRepo.getUserbyName(request.body.username);
+    console.log("Request body username:", request.body.username);
     request.login(user, function (err) { 
       if (err) { 
         console.log("LOGINERROR");
@@ -48,11 +50,11 @@ async function loginPostAction(request, response) {
         // return next(err);
       }
       let resultObject = { "loginResult": areValid, "timestamp": new Date().toLocaleString() };
-      response.send(JSON.stringify(resultObject));
+      response.send(resultObject);
     });
   } else {
     let resultObject = { "loginResult": areValid, "timestamp": new Date().toLocaleString() };
-    response.send(JSON.stringify(resultObject));
+    response.send(resultObject);
   }
 }
 

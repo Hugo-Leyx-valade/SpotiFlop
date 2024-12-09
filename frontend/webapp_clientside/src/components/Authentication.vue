@@ -74,8 +74,9 @@
     
 
     <script>
-    import BacktohomeModule from './BacktohomeModule.vue';
-    import CryptoJS from 'crypto-js';
+import authentication from '../../authentication';
+import BacktohomeModule from './BacktohomeModule.vue';
+import CryptoJS from 'crypto-js';
     
     export default {
         name: 'Authentication',
@@ -141,7 +142,7 @@
                     });
                     
                     console.log(response); // Log the response to check its structure
-                    this.userdata = response.loginResult;
+                    this.userdata = await response.loginResult;
                     console.log("userdata : ",this.userdata);
                     if (response && this.userdata) {
                         this.successMessage = "Connexion réussie !";
@@ -168,13 +169,12 @@
             // Gestion de la déconnexion
             async logoutUser() {
                 try {
-                    const response = await this.submitForm("get", "logout", null);
+                    const response = await authentication.submitForm("get", "logout", null);
                     console.log("response", response); // Log the response to check its structure
-                    this.userdata = response.data;
-                    console
+                    this.userdata = response.logoutResult;
+                    console.log("userdata : ",this.userdata);
 
-
-                    if (response.logoutResult) {
+                    if (response && this.userdata) {
                         this.userdata = null; // Supprimer les données utilisateur
                         alert("Vous avez été déconnecté.");
                         this.$router.push("/authentication/login");

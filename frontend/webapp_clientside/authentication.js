@@ -1,6 +1,30 @@
 import CryptoJS from 'crypto-js';
 
 export default {
+
+    data() {
+        return {
+            // Champs pour le formulaire de connexion
+            username: '',
+            password: '',
+
+            // Champs pour le formulaire d'inscription
+            newUsername: '',
+            newFirstname: '',
+            newLastname: '',
+            email: '',
+            newPassword: '',
+            confirmPassword: '',
+            date_of_birth: '',
+            genderSelection: '',
+
+            // Messages d'erreur et de succès
+            errorMessage: '',
+            successMessage: '',
+            registerError: '',
+            registerSuccess: '',
+        };
+    },
         // Fonction générique pour soumettre des formulaires
         async submitForm(method, endpoint, params) {
             console.log("Requête envoyée :", params); // Affichez les données envoyées
@@ -26,6 +50,8 @@ export default {
             }
 
             const hashedPassword = CryptoJS.SHA256(this.password).toString(CryptoJS.enc.Hex);
+            console.log("Username sent to backend:", this.username);
+
 
             try {
                 const response = await this.submitForm("post", "login", {
@@ -56,9 +82,38 @@ export default {
             }
         },
 
-        // Gestion de la déconnexion
-        
+        async getUserRole() {
+            try{
+                const response = await this.submitForm("get", "role", null);
+                if (response) {
+                    this.role = response.role;
+                }else{
+                    console.error("Impossible to fetch user role");
+                }
 
+            }catch(error){
+                console.error("Error while fetching user role", error);
+            }
+        },
+
+        // Gestion de la déconnexion
+        async logoutUser() {
+            try {
+                const response = await this.submitForm("get", "logout", null);
+                console.log("Response from server:", response); // Log pour vérifier la structure
+        
+                if (response && response.logoutResult) {
+                    alert("Vous avez été déconnecté.");
+                    this.$router.push("/authentication/login");
+                } else {
+                    alert("Erreur lors de la déconnexion.");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la déconnexion :", error);
+                alert("Une erreur est survenue. Veuillez réessayer.");
+            }
+        },
+        
         // Gestion de l'inscription
         async registerUser() {
             if (!this.newUsername || !this.newPassword || !this.confirmPassword || !this.email || !this.newFirstname || !this.newLastname || !this.date_of_birth) {
@@ -101,21 +156,3 @@ export default {
     };
 
 
-export async function logoutUser() {
-    try {
-        const response = await this.submitForm("get", "logout", null);
-        console.log("response", response); // Log the response to check its structure
-        this.userdata = response.data;
-        console.log("userdata", this.userdata); // Log the userdata to check its structure
-
-
-        if (response.data.logoutResult) {
-            return { success: true };
-        } else {
-            throw new Error("Erreur lors de la déconnexion.");
-        }
-    } catch (error) {
-        console.error("Erreur lors de la déconnexion :", error);
-        throw error;
-    }
-}

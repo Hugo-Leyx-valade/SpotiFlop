@@ -5,9 +5,6 @@ May be add graph on the frequency of the site and on the number of music added -
 <template>
     <div class="admin-panel" onload="changeBodyBackgroundColor()">
         <BacktohomeModule></BacktohomeModule>
-        <div class="logoutContainer">
-            <button @click="logout" class="logoutButton">Logout</button>
-        </div>
         <div class="search-container">
             <input type="text" placeholder="Search...">
             <i class="fa fa-search"></i>
@@ -74,7 +71,7 @@ May be add graph on the frequency of the site and on the number of music added -
                 <p id="texts1" style="color: #f2f2f2; font-size: 300%;">Playlists</p>
             </label> 
             
-            <label v-if="isAdmin" for="s5" id="slide5">
+            <label for="s5" id="slide5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" fill="white" class="bi bi-people-fill" viewBox="0 0 16 16" style="margin-top:25% ;"  onclick="window.location.href = '/#/users/list/all'">
                     <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
                 </svg>
@@ -89,66 +86,29 @@ May be add graph on the frequency of the site and on the number of music added -
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
-import { logoutUser } from '../../authentication.js';
 
 export default {
     name: 'AdminPanel',
     components:{
         BacktohomeModule
     },
-    data() {
-        return {
-            isAdmin: false,
-        };
-    },
-    
 
     methods: {
-        async logout() {
-            try {
-                await logoutUser();
-            } catch (error) {
-                console.error('Failed to logout:', error);
-            }
-        },
-        
         changeBodyBackgroundColor() {
             document.body.style.background ='linear-gradient(180deg, rgba(51, 204, 51,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
             document.body.style.backgroundSize = 'cover';
             document.body.style.height = '100%';
             document.body.style.backgroundColor = 'rgb(0,0,0)';
-        },
-
-        
+        }
     },
 
     mounted() {
         this.changeBodyBackgroundColor();
-
-        //let userdataResponse = await this.$http.get("http://localhost:9000/auth/userdata");
-        //this.userdata = await userdataResponse.data;//send request to appropriate endpoint
     }
 };
 </script>
 
 <style scoped>
-
-.logoutContainer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    padding: 10px 20px;
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-
-}
-
-.logoutContainer:hover {
-    background-color: #ff6666;
-}
 
 h1 {
     font-size: 80px;
