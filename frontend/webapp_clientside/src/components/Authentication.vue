@@ -76,7 +76,6 @@
     <script>
 import authentication from '../../authentication';
 import BacktohomeModule from './BacktohomeModule.vue';
-import CryptoJS from 'crypto-js';
     
     export default {
         name: 'Authentication',

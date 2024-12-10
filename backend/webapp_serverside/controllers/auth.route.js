@@ -21,11 +21,12 @@ async function userdataAction(request, response) {
   response.send(userJson);
 }
 
+//changing the function to have all the informations about the user
 async function protectedGetAction(request, response) {
   // TODO: authorize using all factors (resource / context / environment) ...
   let userRole = "";
   if (request.isAuthenticated()) {
-    if (request.user.role === "admin") {
+    if (request.user.user_role === "admin") {
       userRole = "admin";
     } else {
       userRole = "user";

@@ -1,5 +1,3 @@
-import CryptoJS from 'crypto-js';
-
 
 export default {
 
@@ -80,18 +78,8 @@ export default {
             }
         },
 
-        async getUserRole() {
-            try{
-                const response = await this.submitForm("get", "role", null);
-                if (response) {
-                    this.role = response.role;
-                }else{
-                    console.error("Impossible to fetch user role");
-                }
-
-            }catch(error){
-                console.error("Error while fetching user role", error);
-            }
+        async getUserInfo() {
+            
         },
 
         // Gestion de la déconnexion
