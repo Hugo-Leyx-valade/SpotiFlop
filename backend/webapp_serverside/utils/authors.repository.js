@@ -27,20 +27,7 @@ module.exports = {
     async getAllAuthors(){ 
         try {
             let sql = `
-            SELECT author.*, 
-                CASE
-                    WHEN author.alias = 'Earth, Wind & Fire' THEN '@/assets/EarthWindAndFire.jpg'
-                    WHEN author.alias = 'MJ' THEN '@/assets/MichaelJackson.jpg'
-                    WHEN author.alias = 'Imagine Dragons' THEN '@/assets/ImagineDragons.jpeg'
-                    WHEN author.alias = 'Eminem' THEN '@/assets/Eminem.jpg'
-                    WHEN author.alias = 'FEMTOGO' THEN '@/assets/Femt0go.jpg'
-                    WHEN author.alias = 'Daft Punk' THEN '@/assets/Daft_Punk.jpg'
-                    WHEN author.alias = 'Adele' THEN '@/assets/Adele.jpg'
-                    WHEN author.alias = 'Beyoncé' THEN '@/assets/Beyonce.png'
-                    ELSE '@/assets//default.jpg'
-                END AS image 
-            FROM author;
-            `;
+            SELECT author.* FROM author;`;
             const [rows, fields] = await pool.execute(sql);
             console.log("Authors FETCHED: " + rows.length);
             return rows;
@@ -103,11 +90,11 @@ module.exports = {
     },
 
 
-    async addOneAuthor(authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified){ 
+    async addOneAuthor(authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified,authorImage){ 
         try {
-
-            let sql = "INSERT INTO author (alias,first_name,last_name,biography,verified) VALUES (?,?,?,?,?) ";
-            const [okPacket, fields] = await pool.execute(sql, [ authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified ]); 
+            
+            let sql = "INSERT INTO author (alias,first_name,last_name,biography,verified,image) VALUES (?,?,?,?,?,?) ";
+            const [okPacket, fields] = await pool.execute(sql, [ authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified,authorImage ]); 
             console.log("INSERT " + JSON.stringify(okPacket));
             return okPacket.insertId;
         }

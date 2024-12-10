@@ -28,7 +28,7 @@ module.exports = {
 
     // This will be login when serialized user is in the session
     // Result will be saved into request.user
-    passport.deserializeUser(async function (userObj, doneFunction) { 
+    passport.deserializeUser(async function (userObj, doneFunction) {
       console.log("DE - SERIALIZING... ");
       console.log(userObj);
       let userFromDb = await usersRepo.getUserbyName(userObj.username);

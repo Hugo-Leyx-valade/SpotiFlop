@@ -258,7 +258,14 @@ async sendAddRequest() {
     catch (ex) { console.log(ex); }
   },
 
-
+  async retrieveUser() {
+    try {
+      var response = await this.$http.get("http://localhost:9000/auth/user");
+      var result = response.data;
+      console.log("user " + result.username);
+    }
+    catch (ex) { console.log(ex); }
+  },
 
     changeBodyBackgroundColor() {
       document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
@@ -276,10 +283,10 @@ async sendAddRequest() {
 
   created(){
   this.getAllData();
-}
+  this.retrieveUser();
+},
 
 }
-
 const handleSearch = (value) => {
   searchfilter.value = value;
 }

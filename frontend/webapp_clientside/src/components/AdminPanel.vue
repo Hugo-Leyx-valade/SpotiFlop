@@ -4,7 +4,6 @@ May be add graph on the frequency of the site and on the number of music added -
 
 <template>
     <div class="admin-panel" onload="changeBodyBackgroundColor()">
-        <BacktohomeModule></BacktohomeModule>
 
         <div class="logout_container">
             <button @click="logoutUser" class="logoutButton">Logout</button>
@@ -22,6 +21,8 @@ May be add graph on the frequency of the site and on the number of music added -
             <input type="radio" name="slider" id="s3" checked>
             <input type="radio" name="slider" id="s4">
             <input type="radio" name="slider" id="s5">
+            <input type="radio" name="slider" id="s6">
+
             <label for="s1" id="slide1">
                 
                 <svg xmlns="http://www.w3.org/2000/svg" width="300px" height="300px" viewBox="0 0 24 24" fill="none" style="margin-top: 25%;" onclick="window.location.href = '/#/genres/list/all'">
@@ -81,6 +82,14 @@ May be add graph on the frequency of the site and on the number of music added -
                 </svg>
                 <p id="texts1" style="color: #f2f2f2; font-size: 300%;">Users</p>
             </label>
+
+            <label for="s6" id="slide6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="290" height="290" fill="white" class="bi bi-people-fill" viewBox="0 0 16 16" style="margin-top:23% ; margin-bottom: 5%;" onclick="window.location.href = '/#/panel'">
+                    <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07"/>
+                </svg>
+                <p id="texts1" style="color: #f2f2f2; font-size: 300%;">Dashboard</p>
+            </label> 
+
         </section>
 
 
@@ -99,10 +108,11 @@ export default {
     },
 
     methods: {
-        logoutUser() {
+        async logoutUser() {
             try{
-                const response = authentication.logoutUser();
-                if(response && response.logoutResult) {
+                const response = await this.$http.get("http://localhost:9000/auth/logout");
+                var result = response.data;
+                if(result.logoutResult === true) {
                     this.$router.push('/authentication/login');
                 }else{
                     alert('An error occured while logging out');
@@ -112,6 +122,7 @@ export default {
 
             }
         },
+
         changeBodyBackgroundColor() {
             document.body.style.background ='linear-gradient(180deg, rgba(51, 204, 51,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
             document.body.style.backgroundSize = 'cover';
@@ -218,62 +229,76 @@ h1 {
     transition: transform 0.4s ease;
 }
 
-#s1:checked ~ #slide5, #s2:checked ~ #slide1,
+#s1:checked ~ #slide6, #s2:checked ~ #slide1,
 #s3:checked ~ #slide2, #s4:checked ~ #slide3, 
-#s5:checked ~ #slide4
-{
+#s5:checked ~ #slide4, #s6:checked ~ #slide5 {
     box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
     transform: translate3d(-30%,13%,-150px);
 }
 
-
 #s1:checked ~ #slide1, #s2:checked ~ #slide2,
 #s3:checked ~ #slide3, #s4:checked ~ #slide4,
-#s5:checked ~ #slide5
-{
+#s5:checked ~ #slide5, #s6:checked ~ #slide6 {
     box-shadow: 0 13px 25px 0 rgba(0,0,0,.3), 0 11px 7px 0 rgba(0,0,0,.19);
     transform: translate3d(0,10%,0);
 }
 
 #s1:checked ~ #slide2, #s2:checked ~ #slide3,
 #s3:checked ~ #slide4, #s4:checked ~ #slide5,
-#s5:checked ~ #slide1
- {
+#s5:checked ~ #slide6, #s6:checked ~ #slide1 {
     box-shadow: 0 6px 10px 0 rgba(0,0,0,.3), 0 2px 2px 0 rgba(0,0,0,.2);
     transform: translate3d(30%,13%,-150px);
 }
 
 #s1:checked ~ #slide3, #s2:checked ~ #slide4,
-#s3:checked ~ #slide5, #s4:checked ~ #slide1,
-#s5:checked ~ #slide2
-{
+#s3:checked ~ #slide5, #s4:checked ~ #slide6,
+#s5:checked ~ #slide1, #s6:checked ~ #slide2 {
     box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
     transform: translate3d(-25%,10%,-450px);
-    }
+}
 
 #s1:checked ~ #slide4, #s2:checked ~ #slide5,
-#s3:checked ~ #slide1, #s4:checked ~ #slide2,
-#s5:checked ~ #slide3
-{
+#s3:checked ~ #slide6, #s4:checked ~ #slide1,
+#s5:checked ~ #slide2, #s6:checked ~ #slide3 {
     box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
-    transform: translate3d(25%,10%,-450px); 
+    transform: translate3d(25%,10%,-450px);
 }
 
-#slide1 {background: rgb(60,43,117);
-        background: linear-gradient(138deg, rgba(60,43,117,1) 0%, rgba(237,212,193,1) 83%); 
-    }
-#slide2 { background: rgb(63,94,251);
-        background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
-    }
-#slide3 { background: rgb(0,255,128);
+#s1:checked ~ #slide5, #s2:checked ~ #slide6,
+#s3:checked ~ #slide1, #s4:checked ~ #slide2,
+#s5:checked ~ #slide3, #s6:checked ~ #slide4 {
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
+    transform: translate3d(-30%,13%,-300px);
+}
+
+#slide1 {
+    background: rgb(60,43,117);
+    background: linear-gradient(138deg, rgba(60,43,117,1) 0%, rgba(237,212,193,1) 83%);
+}
+
+#slide2 {
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+}
+
+#slide3 {
+    background: rgb(0,255,128);
     background: linear-gradient(135deg, rgba(0,255,128,1) 0%, rgba(255,255,255,1) 100%);
 }
-#slide4 { background: rgb(34,193,195);
-        background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(192,120,213,1) 50%, rgba(253,233,45,1) 100%);
+
+#slide4 {
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(192,120,213,1) 50%, rgba(253,233,45,1) 100%);
 }
-#slide5 { background: rgb(28,54,200);
-    background: linear-gradient(135deg, rgba(28,54,200,1) 0%, rgba(195,44,44,1) 39%, rgba(186,133,40,1) 63%, rgba(171,34,191,1) 98%); }
 
+#slide5 {
+    background: rgb(255, 206, 255);
+    background: linear-gradient(130deg, rgb(233, 143, 60) 0%, rgb(202, 153, 218) 50%, rgb(86, 124, 136) 100%);
+}
 
+#slide6 {
+    background: rgb(82, 88, 124);
+    background: linear-gradient(135deg, rgba(28,54,200,1) 0%, rgba(195,44,44,1) 39%, rgba(186,133));
+}
 
 </style>
