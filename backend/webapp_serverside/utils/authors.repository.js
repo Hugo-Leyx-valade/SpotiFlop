@@ -92,7 +92,7 @@ module.exports = {
 
     async addOneAuthor(authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified,authorImage){ 
         try {
-
+            
             let sql = "INSERT INTO author (alias,first_name,last_name,biography,verified,image) VALUES (?,?,?,?,?,?) ";
             const [okPacket, fields] = await pool.execute(sql, [ authorAlias,authorFirstName,authorLastName,authorBiography,authorVeified,authorImage ]); 
             console.log("INSERT " + JSON.stringify(okPacket));

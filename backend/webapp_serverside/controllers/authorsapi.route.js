@@ -69,7 +69,7 @@ async function authorDelAction(request, response) {
 async function authorUpdateAction(request, response) {
         // Validate input data if necessary
         var authorId = request.params.authorId;
-        if(request.body.alias.length === 0 || (parseInt(request.body.verified)!==0 && parseInt(request.body.verified)!==1)){
+        if(request.body.alias.length === 0 || (parseInt(request.body.verified)!==0 && parseInt(request.body.verified)!==1) || await authorRepo.getAuthorByAlias(request.body.alias).length > 0){
             response.send(JSON.stringify(false));
         }
         else{
@@ -102,16 +102,19 @@ function capitalizeFirstLetter(word) {
 async function authorAddAction(request, response) {
     // var json = JSON.stringify(request.body); // bodyParser can process json in body + regular POST form input too
     // console.log(json);    var songId = request.params.songId; 
-    console.log("the alias" + request.body.alias);
-    if(request.body.alias === undefined || (parseInt(request.body.verified)!==0 && parseInt(request.body.verified)!==1)){
-        response.send(JSON.stringify(false));
+    var value = await authorRepo.getAuthorByAlias(request.body.alias);
+    if(request.body.alias === undefined || (parseInt(request.body.verified)!==0 && parseInt(request.body.verified)!==1) || request.body.alias.length === 0 || request.body.verified.length === 0){
+        response.send(JSON.stringify({"state":false, "message":"Alias or verified is not valid"}));
+    }
+    else if(value.length > 0){
+        response.send(JSON.stringify({"state":false, "message":"Alias already exists"}));
     }
     else{
         if(request.body.image === null){
             request.body.image = "";
         }
         var numRows = await authorRepo.addOneAuthor(
-            capitalizeFirstLetter(request.body.alias), 
+            capitalizeFirstLetter(request.body.alias) ?? "undefined", 
             capitalizeFirstLetter(request.body.first_name) ?? "", 
             capitalizeFirstLetter(request.body.last_name) ?? "",
             request.body.biography ?? "J'ai une histoire... j'ai un background...",

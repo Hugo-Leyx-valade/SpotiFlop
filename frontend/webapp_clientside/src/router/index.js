@@ -103,13 +103,8 @@ export default new Router({
     },
     {
       path: '/panel',
-      redirect: '/adminDashboard/list/all'
-    },
-    {
-      path: '/adminDashboard/:action/:id',
-      name: 'songs',
+      name: 'panel',
       component: AdminDashboard,
-      props:  true,
     },
   ]
 })

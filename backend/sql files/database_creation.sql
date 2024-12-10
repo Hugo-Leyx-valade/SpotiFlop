@@ -131,23 +131,23 @@ INSERT INTO author (alias, first_name, last_name, biography, verified, image) VA
 ('Earth, Wind & Fire', NULL, NULL, NULL, 1, "EarthWindAndFire.jpg"),
 ('MJ', 'Michael', 'Jackson', NULL, 1, "MichaelJackson.jpg"),
 ('Imagine Dragons', NULL, NULL, NULL, 1,"ImagineDragons.jpeg"),
-('The Weeknd', NULL, NULL, NULL, 1,"EarthWindAndFire.jpg"),
-('Lady Gaga', 'Stefani', 'Germanotta', NULL, 1,"EarthWindAndFire.jpg"),
-('Eminem', 'Marshall Bruce', 'Mathers', NULL, 1,"EarthWindAndFire.jpg"),
-('FEMTOGO', NULL, NULL, NULL, 0,"EarthWindAndFire.jpg"),
-('Daft Punk', NULL, NULL, NULL, 1,"EarthWindAndFire.jpg"),
-('Kenrick Lamar', 'Kendrick', 'Lamar', NULL, 1,"EarthWindAndFire.jpg"),
-('David Guetta', 'David', 'Guetta', NULL, 1,"EarthWindAndFire.jpg"),
-('Adele', 'Adele', 'Adkins', NULL, 1,"EarthWindAndFire.jpg"),
-('Beyoncé', 'Beyoncé', 'Knowles', NULL, 1,"EarthWindAndFire.jpg"),
-('Ed Sheeran', 'Ed', 'Sheeran', NULL, 1,"EarthWindAndFire.jpg"),
-('Justin Bieber', 'Justin', 'Bieber', NULL, 1,"EarthWindAndFire.jpg"),
-('Bruno Mars', 'Bruno', 'Mars', NULL, 1,"EarthWindAndFire.jpg"),
-('Coldplay', NULL, NULL, NULL, 1,"EarthWindAndFire.jpg"),
-('Post Malone', 'Austin', 'Post', NULL, 1,"EarthWindAndFire.jpg"),
-('Rihanna', 'Robyn', 'Fenty', NULL, 1,"EarthWindAndFire.jpg"),
-('Drake', 'Aubrey', 'Graham', NULL, 1,"EarthWindAndFire.jpg"),
-('Billie Eilish', 'Billie', 'Connell', NULL, 1,"EarthWindAndFire.jpg");
+('The Weeknd', NULL, NULL, NULL, 1,"TheWeeknd.jpg"),
+('Lady Gaga', 'Stefani', 'Germanotta', NULL, 1,"LadyGaga.jpg"),
+('Eminem', 'Marshall Bruce', 'Mathers', NULL, 1,"eminem.jpg"),
+('FEMTOGO', NULL, NULL, NULL, 0,"Femt0go.jpg"),
+('Daft Punk', NULL, NULL, NULL, 1,"Daft_Punk.jpg"),
+('Kenrick Lamar', 'Kendrick', 'Lamar', NULL, 1,"KendrickLamar.jpg"),
+('David Guetta', 'David', 'Guetta', NULL, 1,"David_Guetta.jpg"),
+('Adele', 'Adele', 'Adkins', NULL, 1,"Adele.jpg"),
+('Beyoncé', 'Beyoncé', 'Knowles', NULL, 1,"Beyonce.png"),
+('Ed Sheeran', 'Ed', 'Sheeran', NULL, 1,"EdSheeran.jpg"),
+('Justin Bieber', 'Justin', 'Bieber', NULL, 1,"JustinBieber.jpg"),
+('Bruno Mars', 'Bruno', 'Mars', NULL, 1,"BrunoMars.jpg"),
+('Coldplay', NULL, NULL, NULL, 1,"ColdPlay.jpg"),
+('Post Malone', 'Austin', 'Post', NULL, 1,"PostMalone.jpg"),
+('Rihanna', 'Robyn', 'Fenty', NULL, 1,"Rihanna.jpg"),
+('Drake', 'Aubrey', 'Graham', NULL, 1,"Drake.jpg"),
+('Billie Eilish', 'Billie', 'Connell', NULL, 1,"BillieEilish.jpg");
 
 -- Insert data into the user table
 INSERT INTO user (id_user, username, first_name, last_name, email, password, role, date_of_birth, genre) VALUES
@@ -563,3 +563,13 @@ INSERT INTO playlist
 select * from song;
 DELETE playlist_has_song FROM playlist_has_song inner join song on song.id_song = playlist_has_song.song_id_song where song.id_author = 1;
 select * from user;
+
+SELECT genre, role, COUNT(id_user) AS number_of_users FROM projet_harone_hugo.user GROUP BY genre, role ORDER BY genre ASC, role ASC;
+
+SELECT genre, role, COUNT(id_user) AS number_of_users
+FROM projet_harone_hugo.user
+GROUP BY genre, role
+UNION ALL
+(SELECT 'Total' AS genre, 'All' AS role, COUNT(id_user) AS number_of_users
+FROM projet_harone_hugo.user)
+ORDER BY genre ASC, role ASC;

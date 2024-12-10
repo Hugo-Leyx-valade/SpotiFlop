@@ -242,8 +242,8 @@ try {
   if(this.$props.id === "0"){
       let response = await this.$http.post(
                 "http://localhost:9000/authorsapi/add/",this.oneAuthor);
-  if(response.data === false){
-      alert("There is no alias bro")
+  if(response.data.state === false){
+      alert(response.data.message);
   }else{
             alert("Added: " + response.data.rowsUpdated);
             this.$router.push({ path: '/authors/list/all' });
