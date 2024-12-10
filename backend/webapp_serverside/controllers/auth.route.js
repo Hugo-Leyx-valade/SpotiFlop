@@ -19,6 +19,23 @@ router.get("/logout", logoutAction);
 async function userdataAction(request, response) {
   let userJson = JSON.stringify(request.user); 
   response.send(userJson);
+  try{
+    const user = request.user;
+    if(!user){
+      response.status(401).send({success: false, message: "Unauthorized"});
+    }
+
+    const userFromDb = await userRepo.getUserbyName(user.username);
+    if(!userFromDb){
+      response.status(401).send({success: false, message: "Can't found user's data"});
+    }
+    response.status(200).send({success: true, data: userFromDb});
+
+
+  }catch(error){
+    console.error("Erreur dans userdataAction :", error);
+    response.status(500).send({success: false, message: "Internal server error"});
+  }
 }
 
 //changing the function to have all the informations about the user

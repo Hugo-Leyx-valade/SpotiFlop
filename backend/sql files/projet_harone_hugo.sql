@@ -173,6 +173,9 @@ INSERT INTO user (id_user, username, first_name, last_name, email, password, rol
 (22, 'user', 'user', 'user', 'user.example@model.com', 'user', 'user', '1989-01-15', 1);
 
 ALTER TABLE user ADD COLUMN user_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE user
+MODIFY COLUMN username VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+MODIFY COLUMN password VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 UPDATE user
 SET password = SHA2(CONCAT(user_created, password), 224);
 

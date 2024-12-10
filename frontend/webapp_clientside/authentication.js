@@ -22,6 +22,9 @@ export default {
             successMessage: '',
             registerError: '',
             registerSuccess: '',
+
+            // Données utilisateur
+            userinfo: null,
         };
     },
         // Fonction générique pour soumettre des formulaires
@@ -59,8 +62,9 @@ export default {
                 if (response && this.userdata) {
                     this.successMessage = "Connexion réussie !";
                     alert(this.successMessage);
-                    // Vérifier et rediriger selon le rôle
-
+                    
+                    const userinfo = await this.getUserInfo();
+                    console.log("User info:", userinfo);
                     const role = response.role || "user";
                     if (role === "admin") {
                         this.$router.push("/adminPanel");
@@ -79,7 +83,20 @@ export default {
         },
 
         async getUserInfo() {
-            
+            try{
+                const response = await this.submitForm("get", "user");
+                if (response && response.success) {
+                    console.log("User info:", response.data);
+                } else {
+                    this.errorMessage = response.message || "Erreur lors de la récupération des informations.";
+                    alert(this.errorMessage);
+                }
+
+            } catch (error) {
+                console.error("Erreur lors de la récupération des informations :", error);
+                this.errorMessage = "Une erreur est survenue. Veuillez réessayer.";
+                alert(this.errorMessage);
+            }
         },
 
         // Gestion de la déconnexion
