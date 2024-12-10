@@ -23,7 +23,7 @@ const session = require("express-session");
 app.use(session({
     secret: "SecretRandomStringDskghadslkghdlkghdghaksdghdksh",
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day in msec
+    cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: false, secure: false }, // 1 day in msec
     resave: false
 })); 
 // if (request.session.cart===undefined) request.session.cart = [];
@@ -31,11 +31,12 @@ app.use(session({
 
 // enable Cross Origin Resource Sharing (needed for cross-origin API)
 const cors = require('cors');
-app.use(cors());
+app.use(cors({ origin: "http://localhost:8080", credentials: true, methods: [ 'GET', 'POST' ] }));
 
 // configure passport
-// const auth = require("./utils/users.auth");
-// auth.initializeAuthentications(app);
+const auth = require("./utils/users.auth");
+auth.initializeAuthentications(app);
+app.use("/auth", require("./controllers/auth.route"));
 
 // *** ROUTES/CONTROLLERS ***
 
@@ -43,7 +44,7 @@ app.use(cors());
 app.get('/', (request, response) => { // 'GET' as a HTTP VERB, not as a 'getter'!
     let clientIp = request.ip;
     response.send(`Hello, dear ${clientIp}. I am a nodejs website...`);
-    response.end(); // optional
+    //response.end(); // optional
 });
 
 // setup additional routes
