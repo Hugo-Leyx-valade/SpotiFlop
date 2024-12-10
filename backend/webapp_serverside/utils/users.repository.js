@@ -69,7 +69,7 @@ module.exports = {
 
         try {
             let conn = await pool.getConnection();
-            let sql = "SELECT id_user,username,email,role FROM user WHERE username = ? "; 
+            let sql = "SELECT id_user,username,email,role FROM user WHERE username = ?"; 
             // must leave out the password+hash info from result!
             const [rows, fields] = await pool.execute(sql, [ userName ]);
             if (rows.length == 1) {
@@ -111,7 +111,7 @@ module.exports = {
         }
         try {
           console.log("Vérification des identifiants :", { username, password });
-          let sql = "SELECT * FROM user WHERE username = ? AND password = ?";
+          let sql = "SELECT * FROM user WHERE username = ? AND password COLLATE utf8mb4_general_ci  = sha2(concat(user_created, ?), 224) COLLATE utf8mb4_general_ci ";
           const [rows] = await pool.execute(sql, [username, password]);
           console.log("Résultats de la requête :", rows);
       
@@ -127,22 +127,28 @@ module.exports = {
         }
       },
 
-    async createUser(username, first_name, last_name, email, password, date_of_birth, genre) {
+      async createUser(username, first_name, last_name, email, password, date_of_birth, genre) {
         if (!username || !email || !password) {
             throw new Error("Le nom d'utilisateur, l'email et le mot de passe sont obligatoires.");
         }
-
+    
         try {
-            const hashedPassword = crypto.createHash('sha256').update(password + username).digest('hex'); // Hash du mot de passe
-            const sql = `INSERT INTO user (username, first_name, last_name, email, password, role, date_of_birth, genre) VALUES (?, ?, ?, ?, ?, 'user', ?, ?)`;
-            await pool.execute(sql, [username, first_name, last_name, email, hashedPassword, formatDate(date_of_birth), genre]);
-
-            return {success:true};
+            const sqlInsert = `
+                INSERT INTO user 
+                (username, first_name, last_name, email, password, role, date_of_birth, genre, user_created) 
+                VALUES (?, ?, ?, ?, SHA2(CONCAT(CURRENT_TIMESTAMP, ?), 224), 'user', ?, ?, CURRENT_TIMESTAMP)
+            `;
+            await pool.execute(sqlInsert, [
+                username, first_name, last_name, email, password, formatDate(date_of_birth), genre,
+            ]);
+    
+            return { success: true };
         } catch (err) {
             console.error("Erreur dans createUser :", err);
             return { success: false, message: err.message };
         }
     },
+    
 
     async getPlaylistByUserId(userId){
         try {

@@ -132,13 +132,10 @@ import CryptoJS from 'crypto-js';
                     this.errorMessage = "Veuillez remplir tous les champs.";
                     return;
                 }
-    
-                const hashedPassword = CryptoJS.SHA256(this.password).toString(CryptoJS.enc.Hex);
-    
                 try {
                     let response = await this.submitForm("post", "login", {
                         username: this.username,
-                        userpass: hashedPassword,
+                        userpass: this.password,
                     });
                     
                     console.log(response); // Log the response to check its structure

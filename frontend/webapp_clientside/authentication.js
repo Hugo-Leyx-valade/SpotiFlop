@@ -49,19 +49,16 @@ export default {
                 this.errorMessage = "Veuillez remplir tous les champs.";
                 return;
             }
-
-            const hashedPassword = CryptoJS.SHA256(this.password).toString(CryptoJS.enc.Hex);
-            console.log("Username sent to backend:", this.username);
-
-
             try {
-                const response = await this.submitForm("post", "login", {
+                let response = await this.submitForm("post", "login", {
                     username: this.username,
-                    userpass: hashedPassword,
+                    userpass: this.password,
                 });
                 
                 console.log(response); // Log the response to check its structure
-                if (response && response.loginResult) {
+                this.userdata = await response.loginResult;
+                console.log("userdata : ",this.userdata);
+                if (response && this.userdata) {
                     this.successMessage = "Connexion réussie !";
                     alert(this.successMessage);
                     // Vérifier et rediriger selon le rôle
@@ -100,7 +97,9 @@ export default {
         // Gestion de la déconnexion
         async logoutUser() {
             try {
-                const response = await this.submitForm("get", "logout", null);
+                const response = await this.submitForm("get", "logout", {
+                    username: this.username,
+                });
                 console.log("Response from server:", response); // Log pour vérifier la structure
         
                 if (response && response.logoutResult) {
