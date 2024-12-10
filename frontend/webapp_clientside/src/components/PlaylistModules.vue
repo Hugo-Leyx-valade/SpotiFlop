@@ -109,7 +109,7 @@
     </textarea>
     <input v-if="id==='0'" type="number" min="0" v-model="onePlaylist.id_user" style="background-color: transparent; border-radius: 90px;color: aliceblue; width: 5%;">
 
-    <button type="submit" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px; border-width: 0px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">Submit</button>
+    <button type="submit" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px; border-width: 0px; color: aliceblue;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='transparent'">Submit</button>
   </div>
   
 </form>
@@ -146,7 +146,7 @@
         <td style="color: aliceblue; font-weight: bold;">{{ p.number_of_save }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ formatDate(p.date_of_post) }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ p.username }}</td>
-        <td><a :href="'/#/playlist/show/' + p.id_playlist" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'">SHOW</a></td>
+        <td><a :href="'/#/playlist/show/' + p.id_playlist" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px; color: aliceblue; padding: 10px;" onMouseOver="this.style.background='lightblue'" onMouseLeave="this.style.background='transparent'">SHOW</a></td>
       </tr>
     </table>
   </div>
@@ -154,7 +154,6 @@
   
   <script>
   import Home from './BacktohomeModule.vue';
-  import playlist from './playlist.json';
 
   export default {
     name: 'Playlist',

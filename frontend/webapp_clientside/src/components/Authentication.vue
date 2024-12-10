@@ -1,6 +1,5 @@
 <template>
     <div class="authentication" onload="changeBodyBackgroundColor()">
-        <BacktohomeModule></BacktohomeModule>
         <div v-if="action === 'option'">
             <img src="../assets/spotyflop.png" alt="logo" style="width: 65%; height: auto; display: block; margin: 0 auto;" />
             <div class="content d-flex justify-content-center" id="txt" style="display: flex; align-content: center;">

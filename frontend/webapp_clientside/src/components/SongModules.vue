@@ -31,53 +31,53 @@
     <form class="song-form" @submit.prevent="sendEditRequest" style="margin-left: 0%; z-index: 1; display: flex">
   <!-- Title -->
 
-  <div style="margin-top: 2.7%;margin-left:-13.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+  <div style="margin-top: 1.5%;margin-left:-13.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
     <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Title</p>
-    <input type="text" class="input" v-model="oneSong.title" style="width: 330%; margin-top: 75%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"  required />
+    <input type="text" class="input" v-model="oneSong.title" style="width: 330%; margin-top: 110%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"  required />
   </div>
 
 <!-- Duration -->
-<div style="margin-top: 18.5%;margin-left:11.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+<div style="margin-top: 17.2%;margin-left:11.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
   <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Duration</p>
   <input type="text" class="input" v-model="oneSong.duration" pattern="^([0-9][0-9]):([0-9][0-9])$"
   title="Enter a valid time in mm:ss format (e.g., 25:06 or 5:06)" 
-  required style="width: 100%; margin-top: 40%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;" />
+  required style="width: 100%; margin-top: 60%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;" />
 </div> 
 
 
   <!-- Number of Streams -->
-<div style="margin-top: 18.5%;margin-left:-24.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+<div style="margin-top: 17.2%;margin-left:-24.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
   <p class="label" style="color: aliceblue; font-weight: bold;font-size: 180%;">Number of Streams</p>
   <input
     type="text"
     class="input"
     v-model="oneSong.number_of_streams"
     required
-    style="width: 70%; margin-top: 22%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
+    style="width: 70%; margin-top: 30%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
 </div>
 
 
   <!-- Date of Post -->
-<div style="margin-top: 28.5%;margin-left:-6.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+<div style="margin-top: 27%;margin-left:-6.5%; display: flex; flex-direction: column; align-items: center; position: absolute;">
   <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Date of Post</p>
-  <input type="date" placeholder="01/06/2004" class="input" v-model.lazy="oneSong.date_of_post" required style="width: 70%; margin-top: 26%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
+  <input type="date" placeholder="01/06/2004" class="input" v-model.lazy="oneSong.date_of_post" required style="width: 70%; margin-top: 40%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
 </div>
 
   <!-- Lyrics -->
-<div style="margin-top: 5%;margin-left:30%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+<div style="margin-top: 3%;margin-left:30%; display: flex; flex-direction: column; align-items: center; position: absolute;">
   <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%; margin-left: 60%;">Lyrics</p>
-  <input type="text" class="textarea" role="textbox" v-model="oneSong.lyrics" contenteditable style="width: 400%; margin-top: 60%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"></input>
+  <input type="text" class="textarea" role="textbox" v-model="oneSong.lyrics" contenteditable style="width: 400%; margin-top: 80%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"></input>
 </div>
 
   <!-- Author -->
-<div style="margin-top: 4.8%;margin-left:12%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+<div style="margin-top: 3.5%;margin-left:12%; display: flex; flex-direction: column; align-items: center; position: absolute;">
   <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Author</p>
-  <input type="text" class="input" v-model="oneSong.alias" required style="width: 200%; margin-top: 45%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
+  <input type="text" class="input" v-model="oneSong.alias" required style="width: 200%; margin-top: 70%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
 </div>
   <!-- Genre -->
-  <div style="margin-top: 18.7%;margin-left:32%; display: flex; flex-direction: column; align-items: center; position: absolute;">
+  <div style="margin-top: 17.2%;margin-left:32%; display: flex; flex-direction: column; align-items: center; position: absolute;">
   <p class="label" style="color: aliceblue; font-weight: bold;font-size: 200%;">Genre</p>
-  <input type="text" class="input" v-model="oneSong.name" required style="width: 120%; margin-top: 50%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
+  <input type="text" class="input" v-model="oneSong.name" required style="width: 120%; margin-top: 85%; ;position: absolute; background-color: transparent; border-radius: 90px; border-width: 1px; text-align: center;color: aliceblue; font-weight: bold; position: absolute; font-size: 120%;"/>
 </div>
   <!-- Save Changes -->
   <button type="submit" style="position: absolute; border-radius: 90px; border-width: 0px; color: black; background-color: aliceblue; margin-top: 36%; padding: 0.5% 1%;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='aliceblue'">Submit</button>
@@ -101,8 +101,8 @@
         <td style="color: aliceblue; font-weight: bold;">{{ formatDate(s.date_of_post) }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ s.alias }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ s.name }}</td>
-        <td><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
-        <td><a :href="'/#/songs/edit/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
+        <td><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px; color: aliceblue;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='transparent'" >SHOW</a></td>
+        <td><a :href="'/#/songs/edit/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px; color: aliceblue;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='transparent'" >EDIT</a></td>
         <td><input type="button" value="DELETE" @click="sendDeleteRequest(s.id_song)" style="color: black;background-color: white; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#fa8c8c'" onMouseLeave="this.style.background='white'"  /></td>
       </tr>
     </table>

@@ -153,7 +153,7 @@ export default {
 .mosaic-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 30px;
     justify-content: center;
     background-color: #f9f9f900;
     padding: 20px;

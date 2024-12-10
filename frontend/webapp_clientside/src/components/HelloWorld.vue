@@ -5,11 +5,14 @@
       <source src="../assets/1013.mp4" type="video/mp4">
     </video>
 
-    <a href="/#/authentication/option"><img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)"></a>
-    <div class="content d-flex justify-content-center" id="txt">
-      <p id="txt1" >{{ msg }}</p>
-      <p id="txt2" >{{ msg }}</p>
-    </div>
+    <a href="/#/authentication/option">
+      <img id="logo-green" src="../assets/spotyflop.png" onmouseover="ChangeLogo(this)" class="d-block mx-auto">
+    </a>
+    <div class="content d-flex flex-column align-items-center" id="txt">
+      <p id="txt1" class="text-center">{{ msg }}</p>
+      <p id="txt2" class="text-center">{{ msg }}</p>
+</div>
+
   </div>
 </template>
 
@@ -82,6 +85,7 @@ body {
   font-size: 8em;
   position: absolute;
   justify-content: center;
+  margin-left: 34%;
 }
 
 .content p:nth-child(1) {

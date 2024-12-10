@@ -1,6 +1,7 @@
 <template>
     <div class="hello" onload="changeBodyBackgroundColor()">
-      <BacktohomeModule></BacktohomeModule>
+      <Home></Home>
+      <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; margin-top: -15%; margin-bottom: 7%;" >Genre</span>
       <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;"> 
         {{ oneGenre.name }}
       </p>
@@ -24,7 +25,7 @@
             <td>{{ formatDate(s.date_of_post) }}</td>
             <td>{{ s.duration }}</td>
             <td>{{ s.alias }}</td>
-            <td><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
+            <td><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='white'" onMouseLeave="this.style.background='transparent'" >SHOW</a></td>
           </tr>
         </tbody>
       </table>
@@ -34,29 +35,35 @@
 
       <!-- FOR List /songs/list/all -->
      <!-- Genre List Container -->
-     <div v-if="action === 'list'" class="container" style="margin-top: 20px; padding: 0 10px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-  
+
+     <div 
+  v-if="action === 'list'" 
+  class="container"
+  style="margin-top: 60px; display: grid; grid-template-columns: repeat(3, 10fr); gap: 20px; padding-left: 20%; padding-right: 20%;"
+>
   <!-- Genre Card -->
-      <div class="genre-card" 
-          v-for="g in genres" 
-          :key="g.id_genre" 
-          @click="$router.push('/genres/show/' + g.id_genre);" 
-          style="width: 250px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; cursor: pointer;" 
-          onMouseOver="this.style.transform='scale(1.05)'" 
-          onMouseLeave="this.style.transform='scale(1)'"> 
+  <div 
+    class="genre-card" 
+    v-for="g in genres" 
+    :key="g.id_genre" 
+    @click="$router.push('/genres/show/' + g.id_genre);"
+    style="background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; cursor: pointer;" 
+    onMouseOver="this.style.transform='scale(1.05)'" 
+    onMouseLeave="this.style.transform='scale(1)'"
+  >
     <!-- Genre Name -->
-    <div style="padding: 20px; text-align: center; font-size: 1.2rem; font-weight: bold; color: #333;">
+    <div style="padding: 20%; text-align: center; font-size: 1.1rem; font-weight: bold; color: #333;">
       {{ g.name }}
     </div>
   </div>
-
 </div>
+
   
     </div>
   </template>
   
   <script>
-  import Home from './homeModulesAdmin.vue';
+  import Home from './BacktohomeModule.vue';
   export default {
     name: 'Genres',
     components: {
@@ -160,27 +167,69 @@ async refreshOneGenre(){
     color: #42b983;
   }
   
-  #app table {
-    width: 95%; 
-    margin: 20px;
-    color: white;
-    background-color: #33333300;
-    border-radius: 8px;
-    overflow: hidden;
-    font-family: 'LilGrotesk', sans-serif;
-  }
-  
-  #app table tr{
-    background-color: #f1eeee00;
-  }
+  /* General table styling */
+/* General table styling */
+.table {
+  width: 80%; /* Adjust the table's width */
+  margin: 20px auto; /* Center the table on the page */
+  border-collapse: collapse;
+  font-size: 16px;
+  text-align: left;
+  background-color: rgba(255, 255, 255, 0.5); /* 50% transparent background */
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
 
-  #app td, #app th{
-    padding: 10px;
-    border: 2px solid #cfcfcf;
-    text-align: center;
-    font-weight: bold;
+/* Table headers styling */
+.table th {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  padding: 12px 15px;
+}
 
-  }
+/* Table cells styling */
+.table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+/* Zebra striping for rows */
+.table tbody tr:nth-child(even) {
+  background-color: rgba(200, 230, 201, 0.3); /* Slightly tinted for even rows */
+}
+
+/* Hover effect for table rows */
+.table tbody tr:hover {
+  background-color: rgba(143, 188, 143, 0.5); /* A soft hover effect */
+}
+
+/* "SHOW" link styling */
+.table tbody tr td a {
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.table tbody tr td a:hover {
+  background-color: #7efca4;
+  color: black;
+}
+
+/* Center the table and add spacing from other elements */
+body {
+  background-color: #f0f0f0; /* Ensure the body has a soft background for contrast */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
   
   </style>
   

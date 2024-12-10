@@ -78,10 +78,10 @@
     <td>{{ formatDate(p.date_of_post) }}</td>
     <td>{{ p.state }}</td>
     <td>
-      <a :href="'/#/playlist/show/' + p.id_playlist" class="action-button show">SHOW</a>
+      <a :href="'/#/playlist/show/' + p.id_playlist" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px; color: black; padding: 10px; background-color: white; border-width: 20px; border-color: black;" onMouseOver="this.style.background='lightgreen'" onMouseLeave="this.style.background='white'">SHOW</a>
     </td>
     <td>
-      <a :href="`/#/playlist/edit/${p.id_playlist}`" class="action-button edit">EDIT</a>
+      <a :href="`/#/playlist/edit/${p.id_playlist}`" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px; color: black; padding: 10px; background-color: white; border-width: 20px; border-color: black;" onMouseOver="this.style.background='lightblue'" onMouseLeave="this.style.background='white'">EDIT</a>
     </td>
     <td>
       <input type="button" value="DELETE" @click="playlistDelete(p.id_playlist)" class="action-button delete" />
@@ -150,9 +150,9 @@
 </thead>
 <tbody>
   <tr v-for="u in filteredUsers">
-    <td>{{ u.id_user }}</td>
-    <td>{{ u.username }}</td>
-    <td>{{ u.email }}</td>
+    <td style="color: black;">{{ u.id_user }}</td>
+    <td style="color: black;">{{ u.username }}</td>
+    <td style="color: black;">{{ u.email }}</td>
     <td>
       <a :href="'/#/users/show/'+u.id_user" class="action-button show">SHOW</a>
     </td>
@@ -405,7 +405,7 @@ a {
 #app table {
   width: 95%; 
   margin: 20px;
-  color: rgba(255, 255, 255, 0);
+  color: rgb(255, 255, 255);
   background-color: transparent;
   border-radius: 1px;
   overflow: hidden;
@@ -453,7 +453,7 @@ background-color:none;
 
 .action-button {
 display: inline-block;
-padding: 6px 12px;
+padding: 0px 5px;
 border-radius: 25px;
 text-decoration: none;
 color: black;
@@ -522,7 +522,7 @@ tbody tr td::before {
 
 /* Adjusting the action buttons for mobile */
 .action-button {
-  width: 100%;
+  width: 90%;
   padding: 8px;
   text-align: center;
 }
@@ -570,7 +570,7 @@ border-bottom: 1px solid #ddd;
 
 #playlist-user th {
 background-color: #f4f4f4;
-color: #333;
+color: #333333;
 }
 
 /* Responsive Adjustments */
