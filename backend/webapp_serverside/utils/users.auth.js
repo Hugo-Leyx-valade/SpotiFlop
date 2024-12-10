@@ -21,7 +21,7 @@ module.exports = {
     passport.serializeUser(function (userFromDb, doneFunction) { 
       console.log("SERIALIZING...");
       console.log(userFromDb);
-      const userObj = { "id": userFromDb.id_user, "name": userFromDb.username, "role": userFromDb.role }; // only the ID would be enough...
+      const userObj = { "id": userFromDb.id_user, "username": userFromDb.username, "role": userFromDb.role }; // only the ID would be enough...
       console.log(userObj);
       doneFunction(null, userObj);
     });

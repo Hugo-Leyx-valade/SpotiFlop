@@ -44,7 +44,7 @@ app.use("/auth", require("./controllers/auth.route"));
 app.get('/', (request, response) => { // 'GET' as a HTTP VERB, not as a 'getter'!
     let clientIp = request.ip;
     response.send(`Hello, dear ${clientIp}. I am a nodejs website...`);
-    response.end(); // optional
+    //response.end(); // optional
 });
 
 // setup additional routes

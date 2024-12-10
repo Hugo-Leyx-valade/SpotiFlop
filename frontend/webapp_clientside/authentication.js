@@ -1,5 +1,6 @@
 import CryptoJS from 'crypto-js';
 
+
 export default {
 
     data() {
@@ -104,6 +105,7 @@ export default {
         
                 if (response && response.logoutResult) {
                     alert("Vous avez été déconnecté.");
+                    this.username = "";
                     this.$router.push("/authentication/login");
                 } else {
                     alert("Erreur lors de la déconnexion.");
