@@ -173,7 +173,9 @@ INSERT INTO user (id_user, username, first_name, last_name, email, password, rol
 (20, 'nathan44', 'Nathan', 'Martin', 'nathan.martin@laposte.net', 'G5v!T3wP7kD', 'user', '1991-09-19', 1),
 (21, 'admin', 'admin', 'admin', 'admin.example@model.com', 'admin', 'admin', '1989-01-15', 1),
 (22, 'user', 'user', 'user', 'user.example@model.com', 'user', 'user', '1989-01-15', 1);
-
+ALTER TABLE user ADD COLUMN user_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+UPDATE user
+SET password = SHA2(CONCAT(user_created, password), 224);
 INSERT INTO genre (name) VALUES
     ('Rock'),
     ('Jazz'),

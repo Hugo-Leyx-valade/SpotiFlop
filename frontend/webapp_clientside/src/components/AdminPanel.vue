@@ -4,7 +4,6 @@ May be add graph on the frequency of the site and on the number of music added -
 
 <template>
     <div class="admin-panel" onload="changeBodyBackgroundColor()">
-        <BacktohomeModule></BacktohomeModule>
 
         <div class="logout_container">
             <button @click="logoutUser" class="logoutButton">Logout</button>
@@ -109,10 +108,11 @@ export default {
     },
 
     methods: {
-        logoutUser() {
+        async logoutUser() {
             try{
-                const response = authentication.logoutUser();
-                if(response && response.logoutResult) {
+                const response = await this.$http.get("http://localhost:9000/auth/logout");
+                var result = response.data;
+                if(result.logoutResult === true) {
                     this.$router.push('/authentication/login');
                 }else{
                     alert('An error occured while logging out');
@@ -122,6 +122,7 @@ export default {
 
             }
         },
+
         changeBodyBackgroundColor() {
             document.body.style.background ='linear-gradient(180deg, rgba(51, 204, 51,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
             document.body.style.backgroundSize = 'cover';

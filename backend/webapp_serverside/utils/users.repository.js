@@ -111,7 +111,7 @@ module.exports = {
         }
         try {
           console.log("Vérification des identifiants :", { username, password });
-          let sql = "SELECT * FROM user WHERE username = ? AND password COLLATE utf8mb4_general_ci  = sha2(concat(user_created, ?), 224) COLLATE utf8mb4_general_ci ";
+          let sql = "SELECT * FROM user WHERE username = ? AND password = sha2(concat(user_created, ?), 224)";
           const [rows] = await pool.execute(sql, [username, password]);
           console.log("Résultats de la requête :", rows);
       

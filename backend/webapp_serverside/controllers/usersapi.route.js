@@ -8,6 +8,7 @@ router.get('/list', usersListAction)
 router.get('/show/:userId', userShowAction);
 router.get('/del/:userId', userDelAction);
 router.post('/update/:userId', userUpdateAction);
+router.post('/retrieve', retrieveUserAction);
 
 // http://localhost:9000/carsapi/brands
 async function playlistAction(request, response) {
@@ -91,6 +92,11 @@ async function userUpdateAction(request, response){
         response.send(JSON.stringify(result));
         }
 
+}
+
+async function retrieveUserAction(request, response){
+    var user = await userRepo.getUserbyName(userObj.username);
+    response.send(JSON.stringify(user));
 }
 
 module.exports = router;

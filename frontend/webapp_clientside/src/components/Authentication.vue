@@ -1,6 +1,5 @@
     <template>
         <div class="authentication" onload="changeBodyBackgroundColor()">
-        <BacktohomeModule></BacktohomeModule>
         <div v-if="action === 'option'">
             <img
             src="../assets/spotyflop.png"
@@ -123,6 +122,23 @@ import BacktohomeModule from './BacktohomeModule.vue';
                     console.error(error);
                 }
             },
+
+            async getUserInfo() {
+            try{
+                const response = await this.submitForm("get", "user");
+                if (response && response.success) {
+                    console.log("User info:", response.data);
+                } else {
+                    this.errorMessage = response.message || "Erreur lors de la récupération des informations.";
+                    alert(this.errorMessage);
+                }
+
+            } catch (error) {
+                console.error("Erreur lors de la récupération des informations :", error);
+                this.errorMessage = "Une erreur est survenue. Veuillez réessayer.";
+                alert(this.errorMessage);
+            }
+        },
 
     
             // Gestion de la connexion
