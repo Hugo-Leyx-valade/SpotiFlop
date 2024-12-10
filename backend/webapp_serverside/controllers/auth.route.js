@@ -139,6 +139,7 @@ function logoutAction(request, response) {
       // return next(err);
     }
     response.send(JSON.stringify(resultObject));
+    response.end();
   });
 }
 

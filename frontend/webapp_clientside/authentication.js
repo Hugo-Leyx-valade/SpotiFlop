@@ -24,7 +24,7 @@ export default {
             registerSuccess: '',
 
             // Données utilisateur
-            userinfo: null,
+            user: null,
         };
     },
         // Fonction générique pour soumettre des formulaires
@@ -87,6 +87,9 @@ export default {
                 const response = await this.submitForm("get", "user");
                 if (response && response.success) {
                     console.log("User info:", response.data);
+                    this.user = response.data;
+                    return user;
+                    
                 } else {
                     this.errorMessage = response.message || "Erreur lors de la récupération des informations.";
                     alert(this.errorMessage);
@@ -101,15 +104,20 @@ export default {
 
         // Gestion de la déconnexion
         async logoutUser() {
+            const userinfo = await this.getUserInfo();
+            if(!userinfo){
+                alert("Impossible de récupérer les informations utilisateur. Déconnexion annulée.");
+                return;
+            }
             try {
                 const response = await this.submitForm("get", "logout", {
-                    username: this.username,
+                    username: userinfo.username,
                 });
                 console.log("Response from server:", response); // Log pour vérifier la structure
         
                 if (response && response.logoutResult) {
                     alert("Vous avez été déconnecté.");
-                    this.username = "";
+                    user = null;
                     this.$router.push("/authentication/login");
                 } else {
                     alert("Erreur lors de la déconnexion.");
