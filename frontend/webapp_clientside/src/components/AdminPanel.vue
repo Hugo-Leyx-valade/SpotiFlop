@@ -5,6 +5,14 @@ May be add graph on the frequency of the site and on the number of music added -
 <template>
     <div class="admin-panel" onload="changeBodyBackgroundColor()">
         <BacktohomeModule></BacktohomeModule>
+
+        <div class="logout_container">
+            <button @click="logoutUser" class="logoutButton">Logout</button>
+        </div>
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+            <i class="fa fa-search"></i>
+        </div>
         <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 35%;" >Admin Panel</span>
 
 
@@ -92,6 +100,7 @@ May be add graph on the frequency of the site and on the number of music added -
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
+import authentication from '../../authentication';
 
 export default {
     name: 'AdminPanel',
@@ -100,6 +109,19 @@ export default {
     },
 
     methods: {
+        logoutUser() {
+            try{
+                const response = authentication.logoutUser();
+                if(response && response.logoutResult) {
+                    this.$router.push('/authentication/login');
+                }else{
+                    alert('An error occured while logging out');
+                }
+            }catch(error){
+                console.log(error);
+
+            }
+        },
         changeBodyBackgroundColor() {
             document.body.style.background ='linear-gradient(180deg, rgba(51, 204, 51,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
             document.body.style.backgroundSize = 'cover';
@@ -115,6 +137,25 @@ export default {
 </script>
 
 <style scoped>
+
+.logout_container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10%;
+}
+
+.logoutButton {
+    background-color: #f2f2f2;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
 
 h1 {
     font-size: 80px;
@@ -260,5 +301,3 @@ h1 {
 }
 
 </style>
-
-
