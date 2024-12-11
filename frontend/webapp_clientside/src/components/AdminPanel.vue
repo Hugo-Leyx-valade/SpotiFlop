@@ -99,7 +99,7 @@ May be add graph on the frequency of the site and on the number of music added -
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
-import authentication from '../../authentication';
+import {logoutUser} from '../../authentication';
 
 export default {
     name: 'AdminPanel',

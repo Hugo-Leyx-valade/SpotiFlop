@@ -171,6 +171,7 @@ export default {
 
     };
     
+    
     export async function isConnected() {
         let connected = false;
         try{
