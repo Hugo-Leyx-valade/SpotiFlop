@@ -5,17 +5,13 @@ May be add graph on the frequency of the site and on the number of music added -
 <template>
     <div class="admin-panel" onload="changeBodyBackgroundColor()">
 
-        <div class="logout_container">
-            <button @click="logoutUser" class="logoutButton">Logout</button>
-        </div>
-        <div class="search-container">
-            <input type="text" placeholder="Search...">
-            <i class="fa fa-search"></i>
-        </div>
+        <div class="logout-container">
+  <button @click="logoutUser" class="logout-button">Logout</button>
+</div>
         <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 35%;" >Admin Panel</span>
 
 
-        <section class="content d-flex justify-content-center" id="slider">
+        <section class="content d-flex justify-content-center" id="slider" style="padding-top: 0; margin-top: -4%;">
             <input type="radio" name="slider" id="s1">
             <input type="radio" name="slider" id="s2">
             <input type="radio" name="slider" id="s3" checked>
@@ -109,6 +105,7 @@ export default {
 
     methods: {
         async logoutUser() {
+            console.log('Logging out');
             try{
                 const response = await this.$http.get("http://localhost:9000/auth/logout");
                 var result = response.data;
@@ -212,6 +209,7 @@ h1 {
 }
 
 #slider {
+    z-index: 2;
     height: 35vw;
     position: relative;
     perspective: 1000px;
@@ -299,6 +297,33 @@ h1 {
 #slide6 {
     background: rgb(82, 88, 124);
     background: linear-gradient(135deg, rgba(28,54,200,1) 0%, rgba(195,44,44,1) 39%, rgba(186,133));
+}
+
+.logout-button {
+    z-index: 3;
+  background: linear-gradient(90deg, #ff7eb3, #ff758c);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 25px;
+  margin-top: 100px;
+  cursor: pointer;
+  position: relative ;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background: linear-gradient(90deg, #ff758c, #58eb2b);
+  transform: scale(1.05);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.logout-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 </style>

@@ -154,7 +154,6 @@
   
   <script>
   import Home from './BacktohomeModule.vue';
-  import playlist from './playlist.json';
 
   export default {
     name: 'Playlist',

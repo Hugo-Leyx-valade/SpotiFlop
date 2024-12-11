@@ -173,12 +173,9 @@
 
 <script>
 import home from './homeModulesAdmin.vue';
-import user from "./users.json";
 import BacktohomeModule from './BacktohomeModule.vue';
 import $ from "jquery";
 
-
-console.log(user)
 
 export default {
   name: 'Users',
