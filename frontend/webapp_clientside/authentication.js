@@ -1,3 +1,4 @@
+import axios from "axios";
 
 export default {
 
@@ -167,6 +168,96 @@ export default {
                 this.registerError = "Une erreur est survenue. Veuillez réessayer.";
             }
         },
-    };
 
+    };
+    
+    export async function isConnected() {
+        let connected = false;
+        try{
+            const response = await submitForm("get", "protected");
+            console.log("role",response);
+            if (response === "admin" || response==="user") {
+                connected = true;
+                return connected;
+               
+            }else{
+                connected = false;
+                //this.$router.push("/authentication/login");
+                alert("CONNECTE TOAAAA");
+                return connected;
+
+            }
+        }catch(error){
+            console.error("Erreur lors de la vérification de la connexion :", error);
+            return false;
+        }
+    }
+
+    async function submitForm(method, endpoint, params) {
+        console.log("Requête envoyée :", params); // Affichez les données envoyées
+        try {
+            let response = null;
+            if (method === "post") {
+                response = await axios.post("http://localhost:9000/auth/" + endpoint, params);
+            } else {
+                response = await axios.get("http://localhost:9000/auth/" + endpoint);
+            }
+            return response.data; 
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    import { submitForm } from './authentication'; // Import de submitForm
+
+    export async function getUserInfo() {
+        try {
+            const response = await submitForm("get", "user"); // Appelle la fonction importée
+            if (response && response.success) {
+                console.log("User info:", response.data); // Log les données utilisateur
+                return response.data; // Retourne les données utilisateur
+            } else {
+                console.error("Erreur lors de la récupération des informations :", response.message);
+                return null; // Retourne null en cas d'erreur
+            }
+        } catch (error) {
+            console.error("Erreur lors de la récupération des informations utilisateur :", error);
+            return null; // Retourne null en cas d'erreur
+        }
+    }
+    
+
+    export async function checkRole() {
+        try {
+            let userInfo = await submitForm("get", "admin"); // Appelle getUserInfo pour obtenir les données utilisateur
+            console.log("User info:", userInfo); // Log les données utilisateur
+            console.log("User role:", userInfo.role); // Log le rôle de l'utilisateur
+            if (userInfo && userInfo.role === "admin") {
+                console.log("L'utilisateur est un administrateur.");
+                return { data: true }; // Retourne vrai si admin
+            } else {
+                console.log("L'utilisateur n'est pas un administrateur.");
+                return { data: false }; // Retourne faux sinon
+            }
+        } catch (error) {
+            console.error("Erreur lors de la vérification des droits d'administrateur :", error);
+            return { data: false }; // Défaut en cas d'erreur
+        }
+    }
+    
+    
+    
+
+    export async function isAdmin() {
+        const adminCheck = await checkRole(); // Vérifie si l'utilisateur est admin
+        console.log("L'utilisateur est admin ?", adminCheck.data);
+        if (!adminCheck.data) {
+            alert("YOU ARE NOT AN ADMIN YOU CAN'T DO ANYTHING");
+        }
+        return adminCheck.data; // Retourne le résultat de la vérification
+    }
+    
+
+
+        
 

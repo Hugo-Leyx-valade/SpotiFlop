@@ -18,7 +18,7 @@ router.get("/logout", logoutAction);
 // use same endpoints for both roles
 async function userdataAction(request, response) {
   let userJson = JSON.stringify(request.user); 
-  response.send(userJson);
+  response.send(userJson); // Renvoie toutes les données utilisateur
   try{
     const user = request.user;
     if(!user){
@@ -37,6 +37,7 @@ async function userdataAction(request, response) {
     response.status(500).send({success: false, message: "Internal server error"});
   }
 }
+
 
 //changing the function to have all the informations about the user
 async function protectedGetAction(request, response) {
