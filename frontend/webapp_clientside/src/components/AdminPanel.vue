@@ -187,7 +187,7 @@ export default {
         
         navigateTo() {
         window.location.href = "'/#/genres/show"+user.id;
-    },
+        },
 
         async retrieveUser() {
             try {
@@ -232,7 +232,6 @@ export default {
     } else {
         await this.$router.push("/authentication/login"); // Redirige si non connecté
     }
-
   },
 
     mounted() {

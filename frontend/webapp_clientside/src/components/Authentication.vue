@@ -237,6 +237,17 @@ import BacktohomeModule from './BacktohomeModule.vue';
                     this.registerError = "Une erreur est survenue. Veuillez réessayer.";
                 }
             },
+
+            changeBodyBackgroundColor() {
+            document.body.style.background ='linear-gradient(180deg, rgba(51, 204, 51,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.height = '100%';
+            document.body.style.backgroundColor = 'rgb(0,0,0)';
+        },
+        },
+
+        mounted() {
+            this.changeBodyBackgroundColor();
         },
     };
     </script>

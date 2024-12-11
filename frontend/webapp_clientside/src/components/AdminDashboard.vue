@@ -1,6 +1,7 @@
 <template>
-    
-    <div class="admin-dashboard">
+    <div v-if="isConnected">
+        <div v-if="isAdmin">
+            <div class="admin-dashboard">
         <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; margin-top: -5%; margin-bottom: 7%;" >Admin Dashboard</span>
         <BacktohomeModule></BacktohomeModule>
 
@@ -89,14 +90,20 @@
             </table>
         </div>
     </div>
-    </div>
+        </div>
+        </div>
+        
+    </div>    
+    
 </template>
 
 
 
 
 <script>
+import { isAdmin, isConnected } from '../../authentication';
 import BacktohomeModule from './BacktohomeModule.vue';
+import {isConnected as checkIfConnected} from '../../authentication.js';
 
 
 export default {
@@ -106,6 +113,8 @@ export default {
     },
     data() {
         return {
+            isAdmin: false,
+            isConnected: false,
             songsByAuthors: [], // Contient les données des auteurs
         };
     },
@@ -130,6 +139,15 @@ export default {
             document.body.style.backgroundColor = 'rgb(0,0,0)';
         }
 
+    },
+    
+    async created(){
+    this.isConnected = await checkIfConnected();
+    if (this.isConnected) {
+        this.isAdmin = await isAdmin(); // Vérifie si l'utilisateur est admin
+    } else {
+        await this.$router.push("/authentication/login"); // Redirige si non connecté
+    }
     },
 
     mounted() {

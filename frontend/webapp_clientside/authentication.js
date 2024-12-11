@@ -185,6 +185,7 @@ export default {
             }else{
                 connected = false;
                 //this.$router.push("/authentication/login");
+                console.log("not connected");
                 alert("CONNECTE TOAAAA");
                 return connected;
 
