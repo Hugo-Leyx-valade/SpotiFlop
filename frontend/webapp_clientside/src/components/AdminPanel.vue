@@ -8,7 +8,7 @@ May be add graph on the frequency of the site and on the number of music added -
         <div class="logout-container">
   <button @click="logoutUser" class="logout-button">Logout</button>
 </div>
-        <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 35%;" >Admin Panel</span>
+        <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 35%;" >Spotiflop</span>
 
 
         <section v-if="isAdmin" class="content d-flex justify-content-center" id="slider-admin" style="padding-top: 0; margin-top: -4%;">
@@ -186,7 +186,9 @@ export default {
     methods: {
         
         navigateTo() {
-        window.location.href = "'/#/genres/show"+user.id;
+            console.log("Admin: " + JSON.stringify(this.user.id_user));
+
+        window.location.href = "/#/users/show/"+this.user.id_user;
     },
 
         async retrieveUser() {
