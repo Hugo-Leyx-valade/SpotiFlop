@@ -13,29 +13,12 @@ router.get("/protected", protectedGetAction); // execute authorization in action
 router.post("/login", loginPostAction);
 //router.post("/register", registerPostAction);
 router.get("/logout", logoutAction);
-
+router.get("/info", userdataAction); // expose function only for USER roles
 
 // use same endpoints for both roles
 async function userdataAction(request, response) {
   let userJson = JSON.stringify(request.user); 
   response.send(userJson); // Renvoie toutes les données utilisateur
-  try{
-    const user = request.user;
-    if(!user){
-      response.status(401).send({success: false, message: "Unauthorized"});
-    }
-
-    const userFromDb = await userRepo.getUserbyName(user.username);
-    if(!userFromDb){
-      response.status(401).send({success: false, message: "Can't found user's data"});
-    }
-    response.status(200).send({success: true, data: userFromDb});
-
-
-  }catch(error){
-    console.error("Erreur dans userdataAction :", error);
-    response.status(500).send({success: false, message: "Internal server error"});
-  }
 }
 
 
@@ -45,6 +28,7 @@ async function protectedGetAction(request, response) {
   let userRole = "";
   if (request.isAuthenticated()) {
     if (request.user.user_role === "admin") {
+      console.log("User is admin" + JSON.stringify(request.user));
       userRole = "admin";
     } else {
       userRole = "user";
@@ -131,16 +115,19 @@ router.post("/register", async (req, res) => {
 
 
 function logoutAction(request, response) {
-  request.logout(function(err){
-    let resultObject = { "logoutResult": true, "timestamp": new Date().toLocaleString() };
-    if (err) { 
-      console.log("LOGINERROR");
-      console.log(err); 
-      areValid = false;
-      // return next(err);
+  console.log("User logged out:");
+  if (!request.isAuthenticated()) {
+    return response.status(400).json({ error: "User is already logged out." });
+  }
+
+  request.logout((err) => {
+    if (err) {
+      console.error("Error during logout:", err);
+      return response.status(500).json({ error: "Logout failed. Please try again." });
     }
-    response.send(JSON.stringify(resultObject));
-    response.end();
+    
+    console.log("User logged out successfully.");
+    response.json({ logoutResult: true, timestamp: new Date().toISOString() });
   });
 }
 

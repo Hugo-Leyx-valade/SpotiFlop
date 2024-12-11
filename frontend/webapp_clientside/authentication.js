@@ -174,6 +174,7 @@ export default {
     
     export async function isConnected() {
         let connected = false;
+        console.log("him here");
         try{
             const response = await submitForm("get", "protected");
             console.log("role",response);

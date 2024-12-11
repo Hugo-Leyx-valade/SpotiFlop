@@ -153,7 +153,7 @@ import BacktohomeModule from './BacktohomeModule.vue';
                         userpass: this.password,
                     });
                     
-                    console.log(response); // Log the response to check its structure
+                 // Log the response to check its structure
                     this.userdata = await response.loginResult;
                     console.log("userdata : ",this.userdata);
                     if (response && this.userdata) {

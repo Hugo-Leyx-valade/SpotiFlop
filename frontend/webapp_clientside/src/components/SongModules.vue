@@ -274,7 +274,7 @@ async sendAddRequest() {
     try {
       var response = await this.$http.get("http://localhost:9000/auth/user");
       var result = response.data;
-      console.log("user " + result.username);
+      console.log("user " + JSON.stringify(result.username));
     }
     catch (ex) { console.log(ex); }
   },
@@ -301,10 +301,10 @@ async sendAddRequest() {
 async created(){
     this.isConnected = await checkIfConnected();
     if (this.isConnected) {
-        await this.getAllData(); // Charge les données si l'utilisateur est connecté
+        this.getAllData(); // Charge les données si l'utilisateur est connecté
         this.isAdmin = await isAdmin(); // Vérifie si l'utilisateur est admin
     } else {
-        this.$router.push("/authentication/login"); // Redirige si non connecté
+        await this.$router.push("/authentication/login"); // Redirige si non connecté
     }
 
   },
