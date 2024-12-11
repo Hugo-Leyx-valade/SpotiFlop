@@ -1,7 +1,6 @@
 <template>
-    <div v-if="isConnected">
-        <div v-if="isAdmin">
-            <div class="admin-dashboard">
+    
+    <div class="admin-dashboard" v-if="isAdmin && isConnected">
         <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; margin-top: -5%; margin-bottom: 7%;" >Admin Dashboard</span>
         <BacktohomeModule></BacktohomeModule>
 
@@ -103,7 +102,8 @@
 <script>
 import { isAdmin, isConnected } from '../../authentication';
 import BacktohomeModule from './BacktohomeModule.vue';
-import {isConnected as checkIfConnected} from '../../authentication.js';
+import {isConnected as checkIfConnected, isConnected} from '../../authentication.js';
+import { isAdmin } from '../../authentication.js';
 
 
 export default {
@@ -116,6 +116,8 @@ export default {
             isAdmin: false,
             isConnected: false,
             songsByAuthors: [], // Contient les données des auteurs
+            isAdmin: false, // Vérifie si l'utilisateur est admin
+            isConnected: false, // Vérifie si l'utilisateur est connecté
         };
     },
     methods: {
@@ -153,8 +155,16 @@ export default {
     mounted() {
         this.changeBodyBackgroundColor();
     },
-    created() {
+    async created() {
         this.getAllData();
+        this.isConnected = await checkIfConnected();
+    if (this.isConnected) {
+        this.isAdmin = await isAdmin();
+        this.getALLData(); // Vérifie si l'utilisateur est admin
+        await this.retrieveUser();
+    } else {
+        await this.$router.push("/authentication/login"); // Redirige si non connecté
+    }
     },
 };
 </script>

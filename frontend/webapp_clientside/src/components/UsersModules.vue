@@ -2,14 +2,10 @@
   <div class="hello" onload="changeBodyBackgroundColor()">
 
     <BacktohomeModule></BacktohomeModule>
-    <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
-      User 
-      {{ action }} {{ id }}
-    </p>
     
-
+    <div v-if="action === 'show' && userRetrieve.id_user===user.id_user"> 
     <!-- FOR DATA SHEET /users/show/42 -->
-    <div v-if="action === 'show'" style="display: flex; justify-content: center;">
+    <div style="display: flex; justify-content: center;">
     <a :href="'/#/users/edit/' + user.id_user" class="button-33" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a>
 
   <!-- User Image -->
@@ -37,10 +33,10 @@
 </div>
 
 <!-- Playlist Header -->
-<h1 v-if="action === 'show'" id="mytable" style="font-size: 400%; font-weight: 900; margin-top: 30%; text-align: center; text-shadow: 2px 2px 4px green; color: aliceblue;">PLAYLIST</h1>
+<h1 id="mytable" style="font-size: 400%; font-weight: 900; margin-top: 30%; text-align: center; text-shadow: 2px 2px 4px green; color: aliceblue;">PLAYLIST</h1>
 <!-- Table -->
 
-<div v-if="action === 'show'" class="filters">
+<div class="filters">
 <!-- Search Input -->
 <input
   v-model="searchQuery"
@@ -59,7 +55,7 @@
 <a :href="'/#/playlist/edit/0'" style="background:white;padding: 0.7% 1%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
 
 </div>
-<table v-if="action === 'show'" class="playlist-user table table-striped table-bordered table-hover" style="width: 50%; margin: 0% auto; border-radius: 10px;">
+<table class="playlist-user table table-striped table-bordered table-hover" style="width: 50%; margin: 0% auto; border-radius: 10px;">
 <thead>
   <tr>  
     <th>Title</th>
@@ -89,10 +85,10 @@
   </tr>
 </tbody>
 </table>
-
-      
+</div>
+  
     <!-- FOR FORMS /users/edit/42 -->
-<div v-if="action === 'edit'" style="display: flex; justify-content: center;">
+<div v-if="action === 'edit' && userRetrieve.id_user===user.id_user" style="display: flex; justify-content: center;">
 <img v-if="user.genre === 1" src='../assets/boy2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
 <img v-if="user.genre === 0" src='../assets/girl2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
 
@@ -124,7 +120,7 @@
 
     
     <!-- FOR List /authors/list/all -->
-    <div v-if="action === 'list'" class="filters">
+<div v-if="action === 'list' && isAdmin" class="filters">
 <input 
   v-model="searchQuery" 
   type="text" 
@@ -174,7 +170,9 @@
 <script>
 import home from './homeModulesAdmin.vue';
 import BacktohomeModule from './BacktohomeModule.vue';
-import $ from "jquery";
+import {isConnected as checkIfConnected} from '../../authentication.js';
+import { isAdmin } from '../../authentication.js';
+
 
 
 export default {
@@ -199,15 +197,37 @@ export default {
         user_date_of_birth: 'K',
         user_genre:0,
         user_picture: '../assets/boy2.png',
-      }
+      },
+      isAdmin: false,
+      isConnected: false,
+      userRetrieve:[],
     }
   },
 
   mounted() {
   this.changeBodyBackgroundColor();
+  this.retrieveUser();
 },
 
   methods:{
+
+
+    navigateTo() {
+            console.log("Admin: " + JSON.stringify(this.user.id_user));
+
+        window.location.href = "/#/users/show/"+this.user.id_user;
+    },
+
+    async retrieveUser() {
+        try {
+                var response = await this.$http.get("http://localhost:9000/auth/info");
+                var result = response.data;
+                this.userRetrieve = result;
+                console.log("user " + JSON.stringify(result));
+        }
+        catch (ex) { console.log(ex); }
+    },
+
     async getALLData(){
       /*
       let responesAuthors = await this.$http.get("backend/url");
@@ -328,7 +348,7 @@ async playlistDelete(playlistId){
           alert("Field error");
       }else{
         alert("EDITED: " + response.data.rowsUpdated);
-        this.$router.push({ path: '/users/show/'+ this.user.id_user });
+        this.$router.push({ path: '/users/show/'+ this.userRetrieve.id_user });
         this.refreshOneUser();
         }
       }
@@ -342,14 +362,22 @@ async playlistDelete(playlistId){
       this.refreshOneUser();
       console.log(this.user) //to display if the new user has been added correctly 
 
+    },
+  },
+
+
+  
+  async created(){
+    this.isConnected = await checkIfConnected();
+    if (this.isConnected) {
+        this.isAdmin = await isAdmin();
+        this.getALLData(); // Vérifie si l'utilisateur est admin
+        await this.retrieveUser();
+    } else {
+        await this.$router.push("/authentication/login"); // Redirige si non connecté
     }
   },
 
-  created(){
-    this.getALLData();
-    console.log(this.users) //to display if the new user has been added correctly 
-  },
-  
   components: {
     home,
     BacktohomeModule,
@@ -372,12 +400,10 @@ searchPlaylist() {
     const matchesGenre = this.selectedGenre === "" || userPlaylist.state === (this.selectedGenre);
     return matchesSearch && matchesGenre;
   });
-}
-
 },
-
-
+  }
 }
+
 
 
 </script>
