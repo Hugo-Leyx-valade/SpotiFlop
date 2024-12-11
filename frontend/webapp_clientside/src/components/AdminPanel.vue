@@ -11,7 +11,7 @@ May be add graph on the frequency of the site and on the number of music added -
         <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 35%;" >Spotiflop</span>
 
 
-        <section v-if="isAdmin" class="content d-flex justify-content-center" id="slider-admin" style="padding-top: 0; margin-top: -4%;">
+        <section v-if="isAdmin==='admin'" class="content d-flex justify-content-center" id="slider-admin" style="padding-top: 0; margin-top: -4%;">
             <input type="radio" name="slider" id="s1">
             <input type="radio" name="slider" id="s2">
             <input type="radio" name="slider" id="s3" checked>
@@ -88,7 +88,7 @@ May be add graph on the frequency of the site and on the number of music added -
 
         </section>
 
-        <section v-if="!isAdmin" class="content d-flex justify-content-center" id="slider-user" style="padding-top: 0; margin-top: -4%;">
+        <section v-if="isAdmin==='user'" class="content d-flex justify-content-center" id="slider-user" style="padding-top: 0; margin-top: -4%;">
             <input type="radio" name="slider" id="su1">
             <input type="radio" name="slider" id="su2">
             <input type="radio" name="slider" id="su3" checked>
@@ -173,8 +173,7 @@ export default {
     return {
         isAdmin: false,
         isConnected: false,
-        user:null,
-        triks:1,
+        retrieveUser:null,
     }
 },
 
@@ -186,9 +185,9 @@ export default {
     methods: {
         
         navigateTo() {
-            console.log("Admin: " + JSON.stringify(this.user.id_user));
+            console.log("Admin: " + JSON.stringify(this.retrieveUser.id_user));
 
-        window.location.href = "/#/users/show/"+this.user.id_user;
+        window.location.href = "/#/users/show/"+this.retrieveUser.id_user;
     },
 
         async retrieveUser() {
@@ -229,8 +228,8 @@ export default {
     async created(){
     this.isConnected = await checkIfConnected();
     if (this.isConnected) {
-        this.isAdmin = await isAdmin(); // Vérifie si l'utilisateur est admin
-        await this.retrieveUser();
+        this.isAdmin = this.isConnected.role;
+        this.retrieveUser = this.isConnected // Vérifie si l'utilisateur est admin
     } else {
         await this.$router.push("/authentication/login"); // Redirige si non connecté
     }

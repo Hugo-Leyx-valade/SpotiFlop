@@ -110,7 +110,10 @@ export default {
         return {
             songsByAuthors: [], // Contient les données des auteurs
             isAdmin: false, // Vérifie si l'utilisateur est admin
-            isConnected: false, // Vérifie si l'utilisateur est connecté
+            isConnected: false,
+            population:[],
+            genreStatistique:[],
+            authorsWithoutImage:[],// Vérifie si l'utilisateur est connecté
         };
     },
     methods: {
@@ -139,17 +142,19 @@ export default {
     mounted() {
         this.changeBodyBackgroundColor();
     },
-    async created() {
-        this.getAllData();
-        this.isConnected = await checkIfConnected();
+
+    async created(){
+    this.isConnected = await checkIfConnected();
     if (this.isConnected) {
-        this.isAdmin = await isAdmin();
-        this.getALLData(); // Vérifie si l'utilisateur est admin
-        await this.retrieveUser();
+        this.isAdmin = this.isConnected.role;
+        this.retrieveUser = this.isConnected // Vérifie si l'utilisateur est admin
+        this.getAllData();
+
     } else {
         await this.$router.push("/authentication/login"); // Redirige si non connecté
     }
-    },
+
+  },
 };
 </script>
 

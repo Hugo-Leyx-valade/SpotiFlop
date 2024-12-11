@@ -3,7 +3,7 @@
 
     <BacktohomeModule></BacktohomeModule>
     
-    <div v-if="action === 'show' && userRetrieve.id_user===user.id_user"> 
+    <div v-if="action === 'show' && (isAdmin==='admin' || userRetrieve.id_user===user.id_user)  "> 
     <!-- FOR DATA SHEET /users/show/42 -->
     <div style="display: flex; justify-content: center;">
     <a :href="'/#/users/edit/' + user.id_user" class="button-33" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a>
@@ -86,9 +86,8 @@
 </tbody>
 </table>
 </div>
-  
     <!-- FOR FORMS /users/edit/42 -->
-<div v-if="action === 'edit' && userRetrieve.id_user===user.id_user" style="display: flex; justify-content: center;">
+<div v-if="action === 'edit' && (isAdmin==='admin' || userRetrieve.id_user===user.id_user)" style="display: flex; justify-content: center;">
 <img v-if="user.genre === 1" src='../assets/boy2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
 <img v-if="user.genre === 0" src='../assets/girl2.png' :alt="oneUser.user_picture" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: 0%;" />
 
@@ -120,7 +119,7 @@
 
     
     <!-- FOR List /authors/list/all -->
-<div v-if="action === 'list' && isAdmin" class="filters">
+<div v-if="action === 'list' && isAdmin==='admin'" class="filters">
 <input 
   v-model="searchQuery" 
   type="text" 
@@ -161,17 +160,23 @@
   </tr>
 </tbody>
 </table>
+
+<div v-if="(action === 'show' || action === 'edit') && (isAdmin!=='admin' && userRetrieve.id_user!==user.id_user)" style="display: flex; justify-content: center;">
+
+<h1 style="font-size: 400%; font-weight: 900; margin-top: 10%; text-align: center; text-shadow: 2px 2px 4px green; color: aliceblue; padding-bottom: 20%;">ACCESS DENIED, WRONG USER</h1>
+
+</div>
 <p v-if="action==='list'" style="margin-top: 5%; color: aliceblue;font-weight: 900;">SPOTIFLOP</p>
 <p v-if="action==='show'" style="margin-top: 5%; color: aliceblue;font-weight: 900;">SPOTIFLOP</p>
 <p v-if="action==='edit'" style="margin-top: 40%; color: aliceblue;font-weight: 900;">SPOTIFLOP</p>
+
 </div>
 </template>
 
 <script>
-import home from './homeModulesAdmin.vue';
 import BacktohomeModule from './BacktohomeModule.vue';
 import {isConnected as checkIfConnected} from '../../authentication.js';
-import { isAdmin } from '../../authentication.js';
+import { get } from 'jquery';
 
 
 
@@ -370,16 +375,16 @@ async playlistDelete(playlistId){
   async created(){
     this.isConnected = await checkIfConnected();
     if (this.isConnected) {
-        this.isAdmin = await isAdmin();
-        this.getALLData(); // Vérifie si l'utilisateur est admin
-        await this.retrieveUser();
+        this.isAdmin = this.isConnected.role;
+        this.getALLData();
+        this.retrieveUser = this.isConnected // Vérifie si l'utilisateur est admin
     } else {
         await this.$router.push("/authentication/login"); // Redirige si non connecté
     }
+
   },
 
   components: {
-    home,
     BacktohomeModule,
   },
 
