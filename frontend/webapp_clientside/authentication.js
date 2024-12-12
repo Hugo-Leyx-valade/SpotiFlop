@@ -176,18 +176,16 @@ export default {
         let connected = false;
         console.log("him here");
         try{
-            const response = await submitForm("get", "protected");
+            const response = await submitForm("get", "info");
             console.log("role",response);
-            if (response === "admin" || response==="user") {
-                connected = true;
-                return connected;
+            var result = response;
+            if (response.role === "admin" || response.role==="user") {
+                return result
                
             }else{
-                connected = false;
-                //this.$router.push("/authentication/login");
-                console.log("not connected");
                 alert("CONNECTE TOAAAA");
-                return connected;
+                this.$router.push("/authentication/login");
+                return false;
 
             }
         }catch(error){

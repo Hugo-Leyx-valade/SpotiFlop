@@ -56,11 +56,11 @@
   </template>
   
   <script>
-  import Home from './homeModulesAdmin.vue';
+  import BacktohomeModule from './BacktohomeModule.vue';
   export default {
     name: 'Genres',
     components: {
-      Home
+      BacktohomeModule
     },
     props:['action','id'],
     data () {

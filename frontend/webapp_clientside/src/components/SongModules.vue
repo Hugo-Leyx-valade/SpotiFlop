@@ -87,7 +87,7 @@
     <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
       qjsxnqkxsnqkxjnqkxnknxkqxnjqkxnjkqjnxkqxnjnk
       <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
-        <td>Title</td><td>Duration</td><td>Number Of Streams</td><td>Date Of Post</td><td>Author</td><td>Genre</td><td>SHOW DETAILS</td><td v-if="isAdmin">EDIT SONG</td><td v-if="isAdmin">DELETE SONG</td>
+        <td>Title</td><td>Duration</td><td>Number Of Streams</td><td>Date Of Post</td><td>Author</td><td>Genre</td><td>SHOW DETAILS</td><td v-if="isAdmin==='admin'">EDIT SONG</td><td v-if="isAdmin==='admin'">DELETE SONG</td>
         <a :href="'/#/songs/edit/0'" style="background:white;padding: 15% 25%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
       </tr>
       <tr v-for="s of song" v-bind:key="s.song_id">
@@ -99,8 +99,8 @@
         <td style="color: aliceblue; font-weight: bold;">{{ s.alias }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ s.name }}</td>
         <td ><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
-        <td v-if="isAdmin"><a :href="'/#/songs/edit/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
-        <td v-if="isAdmin"><input type="button" value="DELETE" @click="sendDeleteRequest(s.id_song)" style="color: black;background-color: white; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#fa8c8c'" onMouseLeave="this.style.background='white'"  /></td>
+        <td v-if="isAdmin==='admin'"><a :href="'/#/songs/edit/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
+        <td v-if="isAdmin==='admin'"><input type="button" value="DELETE" @click="sendDeleteRequest(s.id_song)" style="color: black;background-color: white; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#fa8c8c'" onMouseLeave="this.style.background='white'"  /></td>
       </tr>
     </table>
   <div style="margin-top: 16%;"></div>
@@ -117,7 +117,6 @@
 <script>
 //import 
 import BacktohomeModule from './BacktohomeModule.vue';
-import Home from './homeModulesAdmin.vue';
 import {isConnected as checkIfConnected} from '../../authentication.js';
 import { isAdmin } from '../../authentication.js';
 
@@ -125,7 +124,6 @@ export default {
  
   name: 'Songs',
   components: {
-    Home,
     BacktohomeModule
   },
   props:['action','id'],
@@ -271,14 +269,6 @@ async sendAddRequest() {
     catch (ex) { console.log(ex); }
   },
 
-  async retrieveUser() {
-    try {
-      var response = await this.$http.get("http://localhost:9000/auth/user");
-      var result = response.data;
-      console.log("user " + JSON.stringify(result.username));
-    }
-    catch (ex) { console.log(ex); }
-  },
 
     changeBodyBackgroundColor() {
       document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
@@ -294,22 +284,18 @@ async sendAddRequest() {
     }
   },
 
-  created(){
-  this.getAllData();
-  this.retrieveUser();
-},
-
 async created(){
     this.isConnected = await checkIfConnected();
-    if (this.isConnected) {
-        this.getAllData(); // Charge les données si l'utilisateur est connecté
-        this.isAdmin = await isAdmin(); // Vérifie si l'utilisateur est admin
+    if (this.isConnected !== false) {
+        this.getAllData();
+        this.isAdmin = this.isConnected.role;
+        this.retrieveUser = this.isConnected; // Vérifie si l'utilisateur est admin
+        
     } else {
         await this.$router.push("/authentication/login"); // Redirige si non connecté
     }
 
   },
-
 };
 const handleSearch = (value) => {
   searchfilter.value = value;

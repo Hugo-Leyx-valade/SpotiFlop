@@ -16,7 +16,7 @@
         <div style="margin-bottom: 15px; font-size: 16px; color: white; text-align: left;">
             <span style="color: #4CAF50;"></span> {{oneAuthor.biography}}
         </div>
-        <div style="text-align: center; margin-left: -91%; margin-top: 5%;">
+        <div v-if="isAdmin==='admin'" style="text-align: center; margin-left: -91%; margin-top: 5%;">
             <a :href="'/#/authors/edit/' + oneAuthor.id_author" 
                 style="color: green; background-color: aliceblue; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;"
                 >EDIT</a>
@@ -40,7 +40,7 @@
   </table>
 
     
-    <div v-if="action === 'edit'" class="container2 ">
+    <div v-if="action === 'edit' && isAdmin==='admin'" class="container2 ">
       <form class="song-form" @submit.prevent="sendEditRequest" enctype="multipart/form-data" 
       style="margin: 2% auto; z-index: 1; display: flex; flex-direction: column; align-items: center; background-color: #f9f9f9; padding: 2%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 50%;">
   
@@ -142,6 +142,7 @@
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
+import {isConnected as checkIfConnected} from '../../authentication.js';
 
 
 export default {
@@ -171,7 +172,10 @@ export default {
         author_biography:'',
         author_verified:0,
         author_image: "",
-      }
+      },
+      isAdmin: false,
+      isConnected: false,
+      userRetrieve:[],
     }
   },
 
@@ -286,9 +290,17 @@ id: function(newVal, oldVAl){
 
 },
 
-created(){
-this.getAllData();
-},
+async created(){
+    this.isConnected = await checkIfConnected();
+    if (this.isConnected) {
+        this.isAdmin = this.isConnected.role;
+        this.getAllData();
+        this.retrieveUser = this.isConnected // Vérifie si l'utilisateur est admin
+    } else {
+        await this.$router.push("/authentication/login"); // Redirige si non connecté
+    }
+
+  },
 
 
 
