@@ -1,17 +1,17 @@
 <template>
   <div class="hello" onload="changeBodyBackgroundColor()">
     <BacktohomeModule></BacktohomeModule>
-    
-
-    <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
+      <p style="font-family: 'LilGrotesk-bold'; color: white ; font-size: 60px; top:20%; left: 38.9%;">
       Songs 
       {{ action }} {{ id }}
     </p>
 
     <div class="flex items-center justify-between">
     </div>
+  
+  <div v-if="isConnected">
 
-    <!-- FOR DATA SHEET /songs/show/42 -->
+      <!-- FOR DATA SHEET /songs/show/42 -->
   <div v-if="action === 'show'" style="display: flex; justify-content: center;">
     <img src="../assets/pink-cover.png" alt="logo_white" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%;"/>
       <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 2.5%; margin-left: -23%; font-size: 200%;">Title</p>   <p style="color: aliceblue; font-weight: bold; position: absolute; margin-top: 5.4%; margin-left: -23%; font-size: 130%;">{{oneSong.title}}</p>
@@ -26,7 +26,7 @@
 
 
 
-  <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
+  <div v-if="action === 'edit' && isAdmin==='admin'" style="display: flex; justify-content: center;">
     <img src="../assets/pink-cover.png" alt="logo_white" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%; z-index: -1;"/>
     <form class="song-form" @submit.prevent="sendEditRequest" style="margin-left: 0%; z-index: 1; display: flex">
   <!-- Title -->
@@ -83,17 +83,13 @@
   <button type="submit" style="position: absolute; border-radius: 90px; border-width: 0px; color: black; background-color: aliceblue; margin-top: 36%; padding: 0.5% 1%;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='aliceblue'">Submit</button>
 </form>
   </div>
-
-
-
     <!-- FOR List /songs/list/all -->
     <table v-if="action === 'list'" class="table table-striped table-bordered table-hover">
       <tr style="color: white; text-transform: capitalize; font-weight: bolder;">
-        <td>ID</td><td>Title</td><td>Duration</td><td>Number Of Streams</td><td>Date Of Post</td><td>Author</td><td>Genre</td><td>SHOW DETAILS</td><td>EDIT SONG</td><td>DELETE SONG</td>
+        <td>Title</td><td>Duration</td><td>Number Of Streams</td><td>Date Of Post</td><td>Author</td><td>Genre</td><td>SHOW DETAILS</td><td v-if="isAdmin==='admin'">EDIT SONG</td><td v-if="isAdmin==='admin'">DELETE SONG</td>
         <a :href="'/#/songs/edit/0'" style="background:white;padding: 15% 25%; color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >ADD</a>
       </tr>
-      <tr v-for="s of song" v-bind:key="s.id_song">
-        <td style="color: aliceblue; font-weight: bold;">{{ s.id_song }}</td>
+      <tr v-for="s of song" v-bind:key="s.song_id">
         <td style="color: aliceblue; font-weight: bold;">{{ s.title }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ s.duration }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ s.number_of_streams }}</td>
@@ -101,28 +97,39 @@
         <td style="color: aliceblue; font-weight: bold;">{{ formatDate(s.date_of_post) }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ s.alias }}</td>
         <td style="color: aliceblue; font-weight: bold;">{{ s.name }}</td>
-        <td><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
-        <td><a :href="'/#/songs/edit/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
-        <td><input type="button" value="DELETE" @click="sendDeleteRequest(s.id_song)" style="color: black;background-color: white; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#fa8c8c'" onMouseLeave="this.style.background='white'"  /></td>
+        <td ><a :href="'/#/songs/show/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#7efca4'" onMouseLeave="this.style.background='white'" >SHOW</a></td>
+        <td v-if="isAdmin==='admin'"><a :href="'/#/songs/edit/' + s.id_song" style="color: black; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#6efff3'" onMouseLeave="this.style.background='white'" >EDIT</a></td>
+        <td v-if="isAdmin==='admin'"><input type="button" value="DELETE" @click="sendDeleteRequest(s.id_song)" style="color: black;background-color: white; font-weight: bold; text-decoration:none; border-radius: 25px;" onMouseOver="this.style.background='#fa8c8c'" onMouseLeave="this.style.background='white'"  /></td>
       </tr>
     </table>
   <div style="margin-top: 16%;"></div>
   <footer>
     <p style="color: white; font-weight: bold; font-size: 20px; position: absolute; top: 100%; left: 50%;" >Spotiflop</p>
   </footer>  
+  </div>
+
+  <div v-if="(action === 'edit') && (isAdmin!=='admin')" style="display: flex; justify-content: center;">
+
+    <h1 style="font-size: 400%; font-weight: 900; margin-top: 10%; text-align: center; text-shadow: 2px 2px 4px green; color: aliceblue; padding-bottom: 20%;">ACCESS DENIED, WRONG USER</h1>
+
 </div>
+
+</div>
+      
+
+    
 </template>
 
 <script>
 //import 
 import BacktohomeModule from './BacktohomeModule.vue';
-import Home from './homeModulesAdmin.vue';
+import {isConnected as checkIfConnected} from '../../authentication.js';
+import { isAdmin } from '../../authentication.js';
 
 export default {
  
   name: 'Songs',
   components: {
-    Home,
     BacktohomeModule
   },
   props:['action','id'],
@@ -138,7 +145,10 @@ export default {
         song_lyrics: 'lyrics',
         song_author: "",
         song_genre: ""
-      }
+      },
+
+      isAdmin: false,
+      isConnected: false,
     }
   },
 
@@ -148,6 +158,13 @@ export default {
 
 
   methods:{
+    async seeIfAdmin(){
+      this.isAdmin = await isAdmin();
+    },
+
+    async seeIfConnected(){
+      this.isConnected = await isConnected();
+    },  
 
     async getAllData() {
     try {
@@ -259,7 +276,6 @@ async sendAddRequest() {
   },
 
 
-
     changeBodyBackgroundColor() {
       document.body.style.background ='linear-gradient(180deg, rgba(28,200,89,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
       document.body.style.backgroundSize = 'cover';
@@ -274,16 +290,22 @@ async sendAddRequest() {
     }
   },
 
-  created(){
-  this.getAllData();
-}
+async created(){
+    this.isConnected = await checkIfConnected();
+    if (this.isConnected !== false) {
+        this.getAllData();
+        this.isAdmin = this.isConnected.role;
+        this.retrieveUser = this.isConnected; // Vérifie si l'utilisateur est admin
+        
+    } else {
+        await this.$router.push("/authentication/login"); // Redirige si non connecté
+    }
 
-}
-
+  },
+};
 const handleSearch = (value) => {
   searchfilter.value = value;
 }
-
 
 </script>
 

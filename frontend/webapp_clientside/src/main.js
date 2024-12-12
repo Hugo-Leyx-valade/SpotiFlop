@@ -6,8 +6,10 @@ import router from './router';
 import $ from 'jquery';
 // npm install axios@0.25.0
 import axios from 'axios'
-Vue.prototype.$http = axios
 
+axios.defaults.withCredentials = true;
+Vue.prototype.$http = axios;
+Vue.config.productionTip = false
 
 $(document).ready(function(){
     $("h1").click(function(){

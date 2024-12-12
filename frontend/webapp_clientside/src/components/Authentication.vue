@@ -1,214 +1,322 @@
-<template>
-    <div class="authentication" onload="changeBodyBackgroundColor()">
-        <BacktohomeModule></BacktohomeModule>
+    <template>
+        <div class="authentication" onload="changeBodyBackgroundColor()">
         <div v-if="action === 'option'">
-            <img src="../assets/spotyflop.png" alt="logo" style="width: 65%; height: auto; display: block; margin: 0 auto;" />
-            <div class="content d-flex justify-content-center" id="txt" style="display: flex; align-content: center;">
-                <p id="txt1" style="font-family: 'LilGrotesk-bold'; color: #22d05d ; font-size: 100px; position:fixed; top: 40%; left: 38.9%;">SpotiFlop</p>
+            <img
+            src="../assets/spotyflop.png"
+            alt="logo"
+            style="width: 65%; height: auto; display: block; margin: 0 auto;"
+            />
+            <div
+            class="content d-flex justify-content-center"
+            id="txt"
+            style="display: flex; align-content: center;"
+            >
+            <p
+                id="txt1"
+                style="font-family: 'LilGrotesk-bold'; color: #22d05d; font-size: 100px; position: fixed; top: 40%; left: 38.9%;"
+            >
+                SpotiFlop
+            </p>
             </div>
-            
-            <div style="display: flex; position: fixed; align-self: center; justify-content: center;">
-                <a href="/#/authentication/login" style="margin-top: 300%; margin-left: 200%;  border-radius: 100px; padding-bottom: 0%;"><input type="button" value=" Login  " style="padding-left: 180%; padding-right: 180%; border-radius: 100px; color: white; background-color: #22d05d;"/></a>
-            </div>
-
-            <div style="display: flex; position: fixed; align-self: center; justify-content: center;">
-                <a href="/#/authentication/register" style="margin-top: 350%; margin-left: 180%; border-radius: 100px;"><input type="button" value="Register" style="padding-left: 150%; padding-right: 150%; border-radius: 100px; color: whitesmoke; background-color: grey;"/></a>
-            </div>
-
-            
-        </div>
-        
-        <div v-if="action === 'login'" class="login">
-            <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%; color: white;" >Authentication</span>
-            <form @submit.prevent="submitForm" style="margin-top: 20%;">
-                <input v-model="username" placeholder="Username" />
-                <input v-model="password" type="password" placeholder="Password" />
-                <button type="submit" @click.prevent="submitForm()">Login</button>
-            </form>
-            <div id='text'></div>
-        </div>
-
-        <div v-if="action === 'register'" id="register" >
-            <span class="content d-flex justify-content-center" style="font-family: 'LilGrotesk-bold'; font-size: 100px; color: white; position: fixed; top: -1.3%; left: 33%; color: white;" >Authentication</span>
-            <form @submit.prevent="submitForm" style="margin-top: 20%;">
-                <input v-model="username" placeholder="Username" />
-                <input v-model="first_name" type="First Name" placeholder="First Name" />
-                <input v-model="last_name" type="Last Name" placeholder="Last Name" />
-                <input v-model="email" type="Email" placeholder="Email" />
-                <input v-model="date" type="date" placeholder="Date of Birth" />
-                <input v-model="password" type="password" placeholder="Password" />
-                <button type="submit" @click.prevent="registerNewUser()" placeholder="Register"/>
-            </form>
-            <div id='text'></div>
-        </div>
-
-    </div>
-</template>
-
-<script>
-import json from "../components/users.json";
-import BacktohomeModule from './BacktohomeModule.vue';
-
-export default {
-    name: 'Authentication',
-    props:['action'],
-    components: {
-    BacktohomeModule
-    },
     
-    mounted() {
-    this.changeBodyBackgroundColor();
-    },
+            <!-- Buttons Container -->
+            <div class="buttons-container">
+            <!-- Login Button -->
+            <a href="/#/authentication/login">
+                <input
+                type="button"
+                value="Login"
+                class="auth-button login-button"
+                />
+            </a>
+    
+            <!-- Register Button -->
+            <a href="/#/authentication/register">
+                <input
+                type="button"
+                value="Register"
+                class="auth-button register-button"
+                />
+            </a>
+            </div>
+        </div>
+    
+        <!-- Login Form -->
+        <form v-if="action === 'login'" @submit.prevent="loginUser">
+            <input type="text" v-model="username" placeholder="Username" required />
+            <input type="password" v-model="password" placeholder="Password" required />
+            <button type="submit">Login</button>
+            <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+            <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
+        </form>
 
-data() {
-    return {
-    username: '',
-    password: '',
-    myJson: json,
-    greetingMessage: '',
-    };
-},
+        <!-- Register Form -->
+        <form v-if="action === 'register'" @submit.prevent="registerUser">
+            <input type="text" v-model="newUsername" placeholder="Username" required />
+            <input type="text" v-model="newFirstname" placeholder="First Name" required />
+            <input type="text" v-model="newLastname" placeholder="Last Name" required />
+            <input type="email" v-model="email" placeholder="Email" required />
+            <input type="date" v-model="date_of_birth" placeholder="Date of Birth" required />
+            <input type="password" v-model="newPassword" placeholder="Password" required />
+            <input type="password" v-model="confirmPassword" placeholder="Confirm Password" required />
+            <select v-model="genderSelection" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <button type="submit">Register</button>
+            <p v-if="registerError" class="error-message">{{ registerError }}</p>
+            <p v-if="registerSuccess" class="success-message">{{ registerSuccess }}</p>
+        </form>
+        </div>
+    </template>
+    
 
-methods: {
-    submitForm : function () {
-        const myJson = this.myJson;
-        console.log(myJson);
-        const user = myJson.find(user => user.user_username === this.username && user.user_password === this.password);
-        if (user) {
-            if(user.user_role === "admin"){
-                console.log("Login successful");
-                this.$router.push('/adminPanel');
-            } else {
-                console.log("Login successful");
-                this.$router.push('/homeUser');
-            }
-        } else {
-            console.log("submit Login failed");
-        }
-    },
-
-
-    checkAllFieldsFilled : function (){ 
-        if(this.username === "" || this.first_name === "" || this.last_name === "" || this.email === "" || this.date === "" || this.password === ""){
-            return false;this
-        } else {
-            return true;
-        }
-    },
-
-    checkEmailExist : function(){
-            const myJson = this.myJson;
-            console.log('hugo'+ myJson);
-            if (myJson.find(user => user.user_email === this.email)) {
-                return true;
-            } else {
-                return false;
-            }
+    <script>
+import authentication from '../../authentication';
+import BacktohomeModule from './BacktohomeModule.vue';
+    
+    export default {
+        name: 'Authentication',
+        props: ['action'],
+        components: {
+            BacktohomeModule,
         },
-
-    checkUsernameExist : function (){
-            const myJson =  this.myJson;
-            if (myJson.find(user => user.user_username === this.username)) {
-                return true;
-            } else {
-                return false;
+        data() {
+            return {
+                // Champs pour le formulaire de connexion
+                username: '',
+                password: '',
+    
+                // Champs pour le formulaire d'inscription
+                newUsername: '',
+                newFirstname: '',
+                newLastname: '',
+                email: '',
+                newPassword: '',
+                confirmPassword: '',
+                date_of_birth: '',
+                genderSelection: '',
+    
+                // Messages d'erreur et de succès
+                errorMessage: '',
+                successMessage: '',
+                registerError: '',
+                registerSuccess: '',
             };
         },
+    
+        methods: {
+            // Fonction générique pour soumettre des formulaires
+            async submitForm(method, endpoint, params) {
+                console.log("Requête envoyée :", params); // Affichez les données envoyées
+                try {
+                    let response = null;
+                    if (method === "post") {
+                        response = await this.$http.post("http://localhost:9000/auth/" + endpoint, params);
+                    } else {
+                        response = await this.$http.get("http://localhost:9000/auth/" + endpoint);
+                    }
+                    return response.data; 
+                } catch (error) {
+                    console.error(error);
+                }
+            },
 
-    registerNewUser : function () {
-        const myJson = this.myJson;
-        console.log(myJson);
-        const newUser = {
-            user_username: this.username,
-            user_first_name: this.first_name,
-            user_last_name: this.last_name,
-            user_email: this.email,
-            user_date: this.date,
-            user_password: this.password,
-            user_role: "user"
-        };
-        if(this.checkAllFieldsFilled()){
-            if (this.checkEmailExist()) {
-                alert("An account with this email already exists please try login");
-                const container = document.getElementById("register");
-                var login = document.createElement("input");
-                login.setAttribute("type", "button")
-                login.setAttribute("id", "loginFromRegister")
-                login.setAttribute("value", "Login")
-                login.setAttribute("onclick", "location.href='/#/authentication/login'; document.getElementById('loginFromRegister').style='display: none';")
-                login.setAttribute("placeholder", "Login")
-                login.setAttribute("style", "padding-left: 44%; padding-right: 46%; border-radius: 100px; color: whitesmoke; background-color: grey; margin-top: 5%; padding-bottom: 2%; padding-top: 2%;");
-                container.appendChild(login);
-            } else if(this.checkUsernameExist()){
-                alert("Username already taken !");
-            } else {
-                console.log("Register successful");
-                this.myJson.push(newUser);
-                myJson.push(newUser);
-                this.$router.push('/homeUser');
-            }     
-        }else{
-            alert("Please fill all fields");
+            async getUserInfo() {
+            try{
+                const response = await this.submitForm("get", "user");
+                if (response && response.success) {
+                    console.log("User info:", response.data);
+                } else {
+                    this.errorMessage = response.message || "Erreur lors de la récupération des informations.";
+                    alert(this.errorMessage);
+                }
+
+            } catch (error) {
+                console.error("Erreur lors de la récupération des informations :", error);
+                this.errorMessage = "Une erreur est survenue. Veuillez réessayer.";
+                alert(this.errorMessage);
+            }
+        },
+
+    
+            // Gestion de la connexion
+            async loginUser() {
+                if (!this.username || !this.password) {
+                    this.errorMessage = "Veuillez remplir tous les champs.";
+                    return;
+                }
+                try {
+                    let response = await this.submitForm("post", "login", {
+                        username: this.username,
+                        userpass: this.password,
+                    });
+                    
+                 // Log the response to check its structure
+                    this.userdata = await response.loginResult;
+                    console.log("userdata : ",this.userdata);
+                    if (response && this.userdata) {
+                        this.successMessage = "Connexion réussie !";
+                        alert(this.successMessage);
+                        // Vérifier et rediriger selon le rôle
+
+                        const role = response.role || "user";
+                        if (role === "admin") {
+                            this.$router.push("/adminPanel");
+                        } else {
+                            this.$router.push("/adminPanel");
+                        }
+                    } else {
+                        this.errorMessage = "Nom d'utilisateur ou mot de passe incorrect.";
+                        alert(this.errorMessage);
+                    }
+                } catch (error) {
+                    console.error("Erreur lors de la connexion :", error);
+                    this.errorMessage = "Une erreur est survenue. Veuillez réessayer.";
+                    alert(this.errorMessage);
+                }
+            },
+    
+            // Gestion de la déconnexion
+            async logoutUser() {
+                try {
+                    const response = await authentication.submitForm("get", "logout", null);
+                    console.log("response", response); // Log the response to check its structure
+                    this.userdata = response.logoutResult;
+                    console.log("userdata : ",this.userdata);
+
+                    if (response && this.userdata) {
+                        this.userdata = null; // Supprimer les données utilisateur
+                        alert("Vous avez été déconnecté.");
+                        this.$router.push("/authentication/login");
+                    } else {
+                        alert("Erreur lors de la déconnexion.");
+                    }
+                } catch (error) {
+                    console.error("Erreur lors de la déconnexion :", error);
+                    alert("Une erreur est survenue. Veuillez réessayer.");
+                }
+            },
+    
+            // Gestion de l'inscription
+            async registerUser() {
+                if (!this.newUsername || !this.newPassword || !this.confirmPassword || !this.email || !this.newFirstname || !this.newLastname || !this.date_of_birth) {
+                    this.registerError = "Veuillez remplir tous les champs.";
+                    return;
+                }
+    
+                if (this.newPassword !== this.confirmPassword) {
+                    this.registerError = "Les mots de passe ne correspondent pas.";
+                    return;
+                }
+    
+                const genreMap = { male: 0, female: 1 };
+    
+                try {
+                    const response = await this.submitForm("post", "register", {
+                        username: this.newUsername,
+                        first_name: this.newFirstname,
+                        last_name: this.newLastname,
+                        email: this.email,
+                        password: this.newPassword,
+                        date_of_birth: this.date_of_birth,
+                        genre: genreMap[this.genderSelection] || "0",
+                    });
+    
+                    if (response.success) {
+                        this.registerSuccess = "Inscription réussie ! Vous pouvez maintenant vous connecter.";
+                        setTimeout(() => {
+                            this.$router.push("/authentication/login");
+                        }, 1000);
+                    } else {
+                        this.registerError = response.message || "Une erreur est survenue lors de l'inscription.";
+                    }
+                } catch (error) {
+                    console.error("Erreur lors de l'inscription :", error);
+                    this.registerError = "Une erreur est survenue. Veuillez réessayer.";
+                }
+            },
+        },
+    };
+    </script>
+    
+
+    <style scoped>
+    a,
+    input[type='button'] {
+        margin: 0 !important;
+        padding: 10px 20px !important;
+        display: block !important;
+        visibility: visible !important;
     }
-},
-
-
-
-    changeBodyBackgroundColor() {
-        document.body.style.background ='linear-gradient(180deg, rgba(255,255,250,1) 0%, rgba(0,0,0,1) 100%) no-repeat' ;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.height = '100%';
-        document.body.style.backgroundColor = 'rgb(0,0,0)';
+    
+    .buttons-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 60%;
     }
-},
-
-};
-
-
-</script>
-
-<style scoped>
-.authentication {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.authentication h1 {
-    text-align: center;
-}
-
-.authentication form {
-    display: flex;
-    flex-direction: column;
-}
-
-.authentication div {
-    margin-bottom: 15px;
-}
-
-.authentication label {
-    margin-bottom: 5px;
-}
-
-.authentication input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.authentication button {
-    padding: 10px;
-    background-color: #42b983;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.authentication button:hover {
-    background-color: #369f6b;
-}
-
-
-</style>
+    
+    .auth-button {
+        padding: 20px 60px;
+        border-radius: 100px;
+        margin-bottom: 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    
+    .login-button {
+        color: white;
+        background-color: #22d05d;
+    }
+    
+    .register-button {
+        color: whitesmoke;
+        background-color: grey;
+    }
+    
+    .authentication {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .authentication h1 {
+        text-align: center;
+    }
+    
+    .authentication form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .authentication div {
+        margin-bottom: 15px;
+    }
+    
+    .authentication label {
+        margin-bottom: 5px;
+    }
+    
+    .authentication input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    .authentication button {
+        padding: 10px;
+        background-color: #42b983;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .authentication button:hover {
+        background-color: #369f6b;
+    }
+    </style>
+    

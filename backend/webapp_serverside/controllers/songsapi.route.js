@@ -58,17 +58,20 @@ function formatDate(dateString) {
 
 async function songUpdateAction(request, response) {
     var songID = request.params.songId;
-    if(request.body.title.length === 0 || request.body.title.length === 0){
+    if(request.body.title.length === 0){
         response.send(JSON.stringify(false));
     }
     else{
-    var numRows = await songRepo.editOneSong(songID, 
+    var numRows = await songRepo.editOneSong(
+            songID, 
             request.body.title, 
             request.body.duration, 
-            request.body.number_of_streams, 
+            request.body.number_of_streams,
+            formatDate(request.body.date_of_post),
             request.body.lyrics,
-            request.body.id_author,
-            formatDate(request.body.date_of_post),);
+            request.body.alias,
+            request.body.name,
+            );
 
         let result = { rowsUpdated: numRows };
         response.send(JSON.stringify(result));

@@ -16,7 +16,7 @@
         <div style="margin-bottom: 15px; font-size: 16px; color: white; text-align: left;">
             <span style="color: #4CAF50;"></span> {{oneAuthor.biography}}
         </div>
-        <div style="text-align: center; margin-left: -91%; margin-top: 5%;">
+        <div v-if="isAdmin==='admin'" style="text-align: center; margin-left: -91%; margin-top: 5%;">
             <a :href="'/#/authors/edit/' + oneAuthor.id_author" 
                 style="color: green; background-color: aliceblue; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;"
                 >EDIT</a>
@@ -40,8 +40,8 @@
   </table>
 
     
-    <div v-if="action === 'edit'" class="container2 ">
-      <form class="song-form" @submit.prevent="sendEditRequest" 
+    <div v-if="action === 'edit' && isAdmin==='admin'" class="container2 ">
+      <form class="song-form" @submit.prevent="sendEditRequest" enctype="multipart/form-data" 
       style="margin: 2% auto; z-index: 1; display: flex; flex-direction: column; align-items: center; background-color: #f9f9f9; padding: 2%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); width: 50%;">
   
   <!-- Alias Input -->
@@ -116,16 +116,25 @@
        onMouseLeave="this.style.transform='scale(1)'">
 
     <!-- Image Container -->
-    <div class="image-container" style="position: relative; height: 150px; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center;">
-      <!-- Placeholder for an image -->
-      <span style="font-size: 100px; color: #ccc;">👤</span>
-      
-      <!-- Overlay with Author Name -->
-      <div class="overlay" style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.6); color: white; padding: 10px; text-align: center; font-size: 1rem; font-weight: bold;">
-        {{ a.alias }}
-      </div>
-    </div>
+    <div 
+  class="image-container" 
+  style="position: relative; height: 150px; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center;"
+>
+  <!-- Image Element -->
+  <img 
+  id="image" 
+  :src="require('@/assets/' + a.image)" 
+  alt="Author Image" 
+  style="height: 100%; object-fit: cover;" 
+/>
+  <!-- Overlay with Author Name -->
+  <div 
+    class="overlay" 
+    style="position: absolute; bottom: 0; width: 100%; background: rgba(0, 0, 0, 0.6); color: white; padding: 10px; text-align: center; font-size: 1rem; font-weight: bold;"
+  >
+    {{ a.alias }}
   </div>
+</div></div>
 
 </div>
   </div>
@@ -133,7 +142,8 @@
 
 <script>
 import BacktohomeModule from './BacktohomeModule.vue';
-import { images, defaultImage } from '../images.js';
+import {isConnected as checkIfConnected} from '../../authentication.js';
+
 
 export default {
   name: 'Authors',
@@ -150,6 +160,7 @@ export default {
 
   data () {
     return {
+      file: "",
       authors : [],
       songAuthor : [],
       song : [],
@@ -161,7 +172,10 @@ export default {
         author_biography:'',
         author_verified:0,
         author_image: "",
-      }
+      },
+      isAdmin: false,
+      isConnected: false,
+      userRetrieve:[],
     }
   },
 
@@ -202,7 +216,7 @@ try {
       this.songAuthor.push(result.object.songs[i]);
     }
     this.oneAuthor = result.object.author;
-    console.log("hugo" + JSON.stringify(this.oneAuthor));
+    console.log("hugo" + JSON.stringify(this.oneAuthor.image));
     // this.oneCar = this.cars.find(car => car.car_id == this.$props.id);
   }else{
     alert("Can't resolve ! ")
@@ -228,11 +242,12 @@ async sendDeleteRequest(authorsId) {
 
 async sendEditRequest() {
 try {
+  this.oneAuthor.image="default.png";
   if(this.$props.id === "0"){
       let response = await this.$http.post(
                 "http://localhost:9000/authorsapi/add/",this.oneAuthor);
-  if(response.data === false){
-      alert("There is no alias bro")
+  if(response.data.state === false){
+      alert(response.data.message);
   }else{
             alert("Added: " + response.data.rowsUpdated);
             this.$router.push({ path: '/authors/list/all' });
@@ -275,9 +290,17 @@ id: function(newVal, oldVAl){
 
 },
 
-created(){
-this.getAllData();
-},
+async created(){
+    this.isConnected = await checkIfConnected();
+    if (this.isConnected) {
+        this.isAdmin = this.isConnected.role;
+        this.getAllData();
+        this.retrieveUser = this.isConnected // Vérifie si l'utilisateur est admin
+    } else {
+        await this.$router.push("/authentication/login"); // Redirige si non connecté
+    }
+
+  },
 
 
 

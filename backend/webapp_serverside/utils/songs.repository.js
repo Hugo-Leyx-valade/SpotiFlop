@@ -4,6 +4,7 @@ pool = require(__dirname + "\\db.include.js"); // use same folder as the current
 async function deleteInPlaylist(songId){
     let sql = " DELETE FROM playlist_has_song WHERE song_id_song = ?";
     await pool.execute(sql,[songId]);
+    
 }
 
 
@@ -25,9 +26,9 @@ function formatDate(dateString) {
 }
 
 async function getGenreIdByName(genreName) {
-    let sql = "SELECT id_genre FROM genre WHERE upper(name) = upper(?)";
+    let sql = "SELECT id_genre FROM genre WHERE upper(name) = upper(?);";
     const [rows, fields] = await pool.execute(sql, [genreName]);
-
+    console.log(rows);
     // Check if a genre was found
     if (rows.length > 0) {
         return rows[0].id_genre; // Return the genre's ID
@@ -65,7 +66,7 @@ module.exports = {
             let sql = "SELECT * FROM genres";
 			// .execute() does: getConnection() + prepare() + query() + releaseConnection()
             const [rows, fields] = await pool.execute(sql); 
-            console.log("GENRE FETCHED: "+rows.length);
+            console.log("BRANDS FETCHED: "+rows.length);
             return rows;
         }
         catch (err) {
@@ -162,7 +163,7 @@ module.exports = {
                 (title, duration, number_of_streams, date_of_post, lyrics, id_author, id_genre) 
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             `;
-            const [okPacket, fields] = await pool.execute(sql,[
+            const [okPacket, fields] = await pool.execute(sql, [
                 songTitle,
                 songDuration,
                 parseInt(songNumberOfStream),
@@ -180,24 +181,23 @@ module.exports = {
 
 
     
-    async editOneSong(songGenre, songTitle, songDuration, songNumberOfStream,dateOfPost, songLyrics, songAuthor, songId) {
+    async editOneSong(songId, songTitle, songDuration, songNumberOfStream,dateOfPost, songLyrics, songAuthor, songGenre) {
         try {
-            if (!songGenre || typeof songGenre !== "string") {
-                throw new Error("Invalid genre name provided.");
-            }
-            if (!songTitle || typeof songTitle !== "string") {
-                throw new Error("Invalid song title provided.");
-            }
+            console.log(songGenre);
             const genreId = await getGenreIdByName(songGenre);
-            if(!genreId){
+            if(genreId===false){
+                console.log("genreId not found");
                 return false;
             }
             const authorId = await getAuthorIdByAlias(songAuthor) // Translate genre name to ID
             if(!authorId){
+                console.log("authorId not found");
+
                 return false;
             }
             const time = await isTimeFormated(songDuration);
             if(time===false){
+                console.log("time not found");
                 return false;
             }
             let sql = `

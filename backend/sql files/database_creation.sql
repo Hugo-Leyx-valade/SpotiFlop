@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS projet_harone_hugo.author (
   last_name VARCHAR(45),
   biography VARCHAR(1000),
   verified BOOLEAN NOT NULL DEFAULT FALSE,
+  image VARCHAR(50),
   PRIMARY KEY (id_author)
 ) ENGINE = InnoDB;
 
@@ -126,27 +127,27 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-INSERT INTO author (alias, first_name, last_name, biography, verified) VALUES
-('Earth, Wind & Fire', NULL, NULL, NULL, 1),
-('MJ', 'Michael', 'Jackson', NULL, 1),
-('Imagine Dragons', NULL, NULL, NULL, 1),
-('The Weeknd', NULL, NULL, NULL, 1),
-('Lady Gaga', 'Stefani', 'Germanotta', NULL, 1),
-('Eminem', 'Marshall Bruce', 'Mathers', NULL, 1),
-('FEMTOGO', NULL, NULL, NULL, 0),
-('Daft Punk', NULL, NULL, NULL, 1),
-('Kenrick Lamar', 'Kendrick', 'Lamar', NULL, 1),
-('David Guetta', 'David', 'Guetta', NULL, 1),
-('Adele', 'Adele', 'Adkins', NULL, 1),
-('Beyoncé', 'Beyoncé', 'Knowles', NULL, 1),
-('Ed Sheeran', 'Ed', 'Sheeran', NULL, 1),
-('Justin Bieber', 'Justin', 'Bieber', NULL, 1),
-('Bruno Mars', 'Bruno', 'Mars', NULL, 1),
-('Coldplay', NULL, NULL, NULL, 1),
-('Post Malone', 'Austin', 'Post', NULL, 1),
-('Rihanna', 'Robyn', 'Fenty', NULL, 1),
-('Drake', 'Aubrey', 'Graham', NULL, 1),
-('Billie Eilish', 'Billie', 'Connell', NULL, 1);
+INSERT INTO author (alias, first_name, last_name, biography, verified, image) VALUES
+('Earth, Wind & Fire', NULL, NULL, NULL, 1, "EarthWindAndFire.jpg"),
+('MJ', 'Michael', 'Jackson', NULL, 1, "MichaelJackson.jpg"),
+('Imagine Dragons', NULL, NULL, NULL, 1,"ImagineDragons.jpeg"),
+('The Weeknd', NULL, NULL, NULL, 1,"TheWeeknd.jpg"),
+('Lady Gaga', 'Stefani', 'Germanotta', NULL, 1,"LadyGaga.jpg"),
+('Eminem', 'Marshall Bruce', 'Mathers', NULL, 1,"eminem.jpg"),
+('FEMTOGO', NULL, NULL, NULL, 0,"Femt0go.jpg"),
+('Daft Punk', NULL, NULL, NULL, 1,"Daft_Punk.jpg"),
+('Kenrick Lamar', 'Kendrick', 'Lamar', NULL, 1,"KendrickLamar.jpg"),
+('David Guetta', 'David', 'Guetta', NULL, 1,"David_Guetta.jpg"),
+('Adele', 'Adele', 'Adkins', NULL, 1,"Adele.jpg"),
+('Beyoncé', 'Beyoncé', 'Knowles', NULL, 1,"Beyonce.png"),
+('Ed Sheeran', 'Ed', 'Sheeran', NULL, 1,"EdSheeran.jpg"),
+('Justin Bieber', 'Justin', 'Bieber', NULL, 1,"JustinBieber.jpg"),
+('Bruno Mars', 'Bruno', 'Mars', NULL, 1,"BrunoMars.jpg"),
+('Coldplay', NULL, NULL, NULL, 1,"ColdPlay.jpg"),
+('Post Malone', 'Austin', 'Post', NULL, 1,"PostMalone.jpg"),
+('Rihanna', 'Robyn', 'Fenty', NULL, 1,"Rihanna.jpg"),
+('Drake', 'Aubrey', 'Graham', NULL, 1,"Drake.jpg"),
+('Billie Eilish', 'Billie', 'Connell', NULL, 1,"BillieEilish.jpg");
 
 -- Insert data into the user table
 INSERT INTO user (id_user, username, first_name, last_name, email, password, role, date_of_birth, genre) VALUES
@@ -172,7 +173,9 @@ INSERT INTO user (id_user, username, first_name, last_name, email, password, rol
 (20, 'nathan44', 'Nathan', 'Martin', 'nathan.martin@laposte.net', 'G5v!T3wP7kD', 'user', '1991-09-19', 1),
 (21, 'admin', 'admin', 'admin', 'admin.example@model.com', 'admin', 'admin', '1989-01-15', 1),
 (22, 'user', 'user', 'user', 'user.example@model.com', 'user', 'user', '1989-01-15', 1);
-
+ALTER TABLE user ADD COLUMN user_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+UPDATE user
+SET password = SHA2(CONCAT(user_created, password), 224);
 INSERT INTO genre (name) VALUES
     ('Rock'),
     ('Jazz'),
@@ -550,10 +553,25 @@ FROM song;
 SELECT
     FLOOR(SUM(SUBSTRING_INDEX(duration, ':', 1))  + SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) / 60) AS total_minutes,
     SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(duration, ':', -1), ':', 1)) % 60 AS remaining_seconds
-FROM song	;
+FROM song;
 
 select * from playlist;
 
 INSERT INTO playlist 
                 (title, state,date_of_post, _description, user_id) 
                 VALUES ("triks", "public","2024-10-12", "uoi", 1);
+
+
+select * from song;
+DELETE playlist_has_song FROM playlist_has_song inner join song on song.id_song = playlist_has_song.song_id_song where song.id_author = 1;
+select * from user;
+
+SELECT genre, role, COUNT(id_user) AS number_of_users FROM projet_harone_hugo.user GROUP BY genre, role ORDER BY genre ASC, role ASC;
+
+SELECT genre, role, COUNT(id_user) AS number_of_users
+FROM projet_harone_hugo.user
+GROUP BY genre, role
+UNION ALL
+(SELECT 'Total' AS genre, 'All' AS role, COUNT(id_user) AS number_of_users
+FROM projet_harone_hugo.user)
+ORDER BY genre ASC, role ASC;

@@ -1,5 +1,6 @@
 // utils/songs.repository.js
 pool = require(__dirname + "\\db.include.js"); // use same folder as the current file
+const crypto = require('crypto');
 
 async function deleteInPlaylist(userId){
     let sql = " DELETE playlist_has_song FROM playlist_has_song INNER JOIN playlist ON playlist_id_playlist = id_playlist WHERE playlist.user_id = ?;";
@@ -54,8 +55,8 @@ module.exports = {
             throw err; 
         }
     },
-    async getUserbyName(name){ 
-        try {
+    async getUserbyName(userName){ 
+        /*try {
             let sql = "SELECT * FROM user where upper(name) like upper(?)";
             const [rows, fields] = await pool.execute(sql, [ `%${name}%` ]);
             console.log("songs FILTERED: "+rows.length);
@@ -64,14 +65,31 @@ module.exports = {
         catch (err) {
             console.log(err);
             throw err; 
-        }
-    },
+        }*/
+
+        try {
+            let conn = await pool.getConnection();
+            let sql = "SELECT id_user,username,email,role FROM user WHERE username = ?"; 
+            // must leave out the password+hash info from result!
+            const [rows, fields] = await pool.execute(sql, [ userName ]);
+            if (rows.length == 1) {
+                return rows[0];
+            } else {
+                return false;
+            }
+            } catch (err) {
+                console.log(err);
+                throw err;
+            }
+        },
     async getOneUser(userId){ 
         try {
             // sql = "SELECT * FROM songs INNER JOIN genres ON song_genre=genre_id WHERE song_id = "+songId; 
             // SQL INJECTION => !!!!ALWAYS!!!! sanitize user input!
             // escape input (not very good) OR prepared statements (good) OR use orm (GOOD!)
-            
+            if (!userId) {
+                throw new Error("userId is undefined or null");
+            }
             let sql = "select * from user where id_user=?;";
             const [rows, fields] = await pool.execute(sql, [ userId ]);
             console.log("user : "+rows.values);
@@ -82,10 +100,55 @@ module.exports = {
             }
         }
         catch (err) {
-            console.log(err);
+            console.log("Error in getOneUser", err);
             throw err; 
         }
     },
+
+    async areValidCredentials(username, password) {
+        if (!username || !password) {
+          throw new Error("Missing username or password for login.");
+        }
+        try {
+          console.log("Vérification des identifiants :", { username, password });
+          let sql = "SELECT * FROM user WHERE username = ? AND password = sha2(concat(user_created, ?), 224)";
+          const [rows] = await pool.execute(sql, [username, password]);
+          console.log("Résultats de la requête :", rows);
+      
+          if (rows.length === 1) {
+            return rows[0]; // Retourne l'utilisateur
+          } else {
+            console.log("Aucune correspondance trouvée pour les identifiants.");
+            return null;
+          }
+        } catch (err) {
+          console.error("Erreur dans areValidCredentials :", err);
+          throw err;
+        }
+      },
+
+      async createUser(username, first_name, last_name, email, password, date_of_birth, genre) {
+        if (!username || !email || !password) {
+            throw new Error("Le nom d'utilisateur, l'email et le mot de passe sont obligatoires.");
+        }
+    
+        try {
+            const sqlInsert = `
+                INSERT INTO user 
+                (username, first_name, last_name, email, password, role, date_of_birth, genre, user_created) 
+                VALUES (?, ?, ?, ?, SHA2(CONCAT(CURRENT_TIMESTAMP, ?), 224), 'user', ?, ?, CURRENT_TIMESTAMP)
+            `;
+            await pool.execute(sqlInsert, [
+                username, first_name, last_name, email, password, formatDate(date_of_birth), genre,
+            ]);
+    
+            return { success: true };
+        } catch (err) {
+            console.error("Erreur dans createUser :", err);
+            return { success: false, message: err.message };
+        }
+    },
+    
 
     async getPlaylistByUserId(userId){
         try {
@@ -146,8 +209,6 @@ module.exports = {
             throw err;
         }
     },
-
-
     
     async editOneUser(username, first_name, last_name, email, password, role, date_of_birth,genre,id_user) {
         try {

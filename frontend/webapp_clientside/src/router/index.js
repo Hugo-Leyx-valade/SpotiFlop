@@ -4,11 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import AuthorsModules from '@/components/AuthorsModules'
 import UsersModules from '@/components/UsersModules'
 import SongModules from '@/components/SongModules'
-import homeModules from '../components/homeModulesAdmin.vue'
 import Authentication from '../components/Authentication.vue'
-import users from '../components/users.json'
-import HomeModulesAdmin from '../components/homeModulesAdmin.vue'
-import HomeModulesUser from '../components/homeModulesUser.vue'
 import AdminPanel from '../components/AdminPanel.vue'
 import PlaylistModules from '../components/PlaylistModules.vue'
 import GenreModule from '../components/GenreModule.vue'
@@ -75,18 +71,6 @@ export default new Router({
       component: GenreModule,
       props:  true,
     },
-
-
-    {
-      path: '/homeAdmin',
-      name: 'homeAdmin',
-      component: HomeModulesAdmin,
-    },     
-    {
-      path: '/homeUser',
-      name: 'homeUser',
-      component: HomeModulesUser,
-    },
     {
       path :'/authentication',
       redirect: '/authentication/option',
@@ -103,13 +87,8 @@ export default new Router({
     },
     {
       path: '/panel',
-      redirect: '/adminDashboard/list/all'
-    },
-    {
-      path: '/adminDashboard/:action/:id',
-      name: 'songs',
+      name: 'panel',
       component: AdminDashboard,
-      props:  true,
     },
   ]
 })
