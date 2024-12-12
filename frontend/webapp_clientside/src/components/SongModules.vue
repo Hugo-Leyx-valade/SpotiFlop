@@ -26,7 +26,7 @@
 
 
 
-  <div v-if="action === 'edit'" style="display: flex; justify-content: center;">
+  <div v-if="action === 'edit' && isAdmin==='admin'" style="display: flex; justify-content: center;">
     <img src="../assets/pink-cover.png" alt="logo_white" style="position: absolute; width: 45%; height: auto; margin-top: 5%; margin-left: -5%; z-index: -1;"/>
     <form class="song-form" @submit.prevent="sendEditRequest" style="margin-left: 0%; z-index: 1; display: flex">
   <!-- Title -->
@@ -107,6 +107,13 @@
     <p style="color: white; font-weight: bold; font-size: 20px; position: absolute; top: 100%; left: 50%;" >Spotiflop</p>
   </footer>  
   </div>
+
+  <div v-if="(action === 'edit') && (isAdmin!=='admin')" style="display: flex; justify-content: center;">
+
+    <h1 style="font-size: 400%; font-weight: 900; margin-top: 10%; text-align: center; text-shadow: 2px 2px 4px green; color: aliceblue; padding-bottom: 20%;">ACCESS DENIED, WRONG USER</h1>
+
+</div>
+
 </div>
       
 
