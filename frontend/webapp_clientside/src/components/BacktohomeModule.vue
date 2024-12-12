@@ -1,7 +1,9 @@
 <template>
     <div>
         <header>
-            <a id="icon_link" href="/#/adminPanel"><img id="icon" src="../assets/spotify-playlist_white.png" alt="logo_white" ></a>
+            <router-link id="icon_link" to="/adminPanel">
+                <img id="icon" src="../assets/spotify-playlist_white.png" alt="logo_white" />
+            </router-link>
         </header>
     </div>
 </template>
@@ -13,9 +15,6 @@ export default {
 </script>
 
 <style scoped>
-
-
-
 #icon {
     position: fixed;
     width: 4%;
@@ -24,7 +23,6 @@ export default {
     left: 1%;
 }
 
-
 #icon_link {
     position: fixed;
     width: 4%;
@@ -32,4 +30,5 @@ export default {
     top: 2.7%;
     left: 1%;
 }
+
 </style>

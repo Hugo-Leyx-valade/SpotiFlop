@@ -89,9 +89,6 @@
             </table>
         </div>
     </div>
-        </div>
-        </div>
-        
     </div>    
     
 </template>
@@ -100,10 +97,8 @@
 
 
 <script>
-import { isAdmin, isConnected } from '../../authentication';
 import BacktohomeModule from './BacktohomeModule.vue';
-import {isConnected as checkIfConnected, isConnected} from '../../authentication.js';
-import { isAdmin } from '../../authentication.js';
+import {isConnected as checkIfConnected, isAdmin} from '../../authentication.js';
 
 
 export default {

@@ -17,6 +17,7 @@ async function genreListAction(request, response) {
 }
 
 async function songListAction(request, response) {
+    console.log("je suis dans songListAction");
     var songs = await songRepo.getAllSongs();
     response.send(JSON.stringify(songs));
 }
